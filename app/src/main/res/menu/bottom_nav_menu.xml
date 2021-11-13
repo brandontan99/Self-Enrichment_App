@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/destGoals"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/btm_nav_title_goals" />
-    <item
-        android:id="@+id/destLessons"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/btm_nav_title_lessons" />
-    <item
-        android:id="@+id/destDashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/btm_nav_title_dashboard" />
-    <item
-        android:id="@+id/destHealth"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/btm_nav_title_health" />
 
     <item
-        android:id="@+id/destMood"
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/title_dashboard" />
+
+    <item
+        android:id="@+id/navigation_notifications"
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/btm_nav_title_mood" />
+        android:title="@string/title_notifications" />
 
 </menu>
