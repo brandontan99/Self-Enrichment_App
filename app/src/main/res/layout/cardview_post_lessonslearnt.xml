@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clLessonsLearnt"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.lessons.LessonsLearntFragment">
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/cvPost"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clPost"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvLesson"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="I have learnt that mobile application" />
+
+            <TextView
+                android:id="@+id/tvLikeCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="17"
+                app:layout_constraintStart_toEndOf="@+id/ivLike"
+                app:layout_constraintTop_toBottomOf="@+id/tvLesson" />
+
+            <TextView
+                android:id="@+id/tvCommentCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="12 Comments"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvLesson" />
+
+            <Button
+                android:id="@+id/btnLike"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/default_edit_text_background"
+                android:drawableLeft="@android:drawable/arrow_up_float"
+                android:text="Like"
+                app:layout_constraintEnd_toStartOf="@+id/btnComment"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvLikeCount" />
+
+            <Button
+                android:id="@+id/btnComment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/default_edit_text_background"
+                android:drawableLeft="@android:drawable/arrow_up_float"
+                android:text="Comment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnLike"
+                app:layout_constraintTop_toBottomOf="@+id/tvCommentCount" />
+
+            <ImageView
+                android:id="@+id/ivLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:src="@android:drawable/arrow_up_float"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvLesson" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </soup.neumorphism.NeumorphCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

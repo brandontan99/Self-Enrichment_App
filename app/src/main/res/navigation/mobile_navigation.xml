@@ -3,23 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@id/destDashboard">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.self_enrichmentapp.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
-
+        android:id="@+id/destLessons"
+        android:name="com.example.self_enrichmentapp.ui.lessons.LessonsLearntFragment"
+        android:label="@string/title_lessons"
+        tools:layout="@layout/fragment_lessonslearnt" />
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/destDashboard"
         android:name="com.example.self_enrichmentapp.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
-
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.self_enrichmentapp.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/destGoals"
+        android:name="com.example.self_enrichmentapp.ui.goals.GoalsFragment"
+        android:label="@string/title_goals"
+        tools:layout="@layout/fragment_goals" />
+    <fragment
+        android:id="@+id/destHealth"
+        android:name="com.example.self_enrichmentapp.ui.health.HealthFragment"
+        android:label="@string/title_health"
+        tools:layout="@layout/fragment_health" />
+    <fragment
+        android:id="@+id/destMood"
+        android:name="com.example.self_enrichmentapp.ui.mood.MoodFragment"
+        android:label="@string/title_mood"
+        tools:layout="@layout/fragment_mood" />
+
 </navigation>
