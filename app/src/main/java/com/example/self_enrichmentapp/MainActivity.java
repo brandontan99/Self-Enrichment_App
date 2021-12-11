@@ -1,9 +1,11 @@
 package com.example.self_enrichmentapp;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
@@ -13,14 +15,17 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity {
-
+    TextView tvTitle;
+    BottomNavigationView bnvMain;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        BottomNavigationView bnvMain = findViewById(R.id.bnvMain);
+        bnvMain = findViewById(R.id.bnvMain);
+        tvTitle = findViewById(R.id.tvTitle);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         NavHostFragment host = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nhfMain);
@@ -29,5 +34,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bnvMain, navController);
     }
-
+    public void setToolbarTitle(int stringRes){
+        String title = getResources().getString(stringRes);
+        tvTitle.setText(title);
+    }
 }

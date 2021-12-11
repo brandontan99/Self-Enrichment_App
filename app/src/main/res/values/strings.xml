@@ -1,10 +1,15 @@
 <resources>
     <string name="app_name">Self-Enrichment App</string>
-    <string name="title_goals">Goals</string>
-    <string name="title_lessons">Lessons</string>
+    <string name="title_goals">Goals Tracker</string>
+    <string name="title_lessons">Lessons Learnt</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_health">Health</string>
-    <string name="title_mood">Mood</string>
+    <string name="title_health">Health &amp; Fitness</string>
+    <string name="title_mood">Mood Diary</string>
+    <string name="btm_nav_title_goals">Goals</string>
+    <string name="btm_nav_title_lessons">Lessons</string>
+    <string name="btm_nav_title_dashboard">Dashboard</string>
+    <string name="btm_nav_title_health">Health</string>
+    <string name="btm_nav_title_mood">Mood</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

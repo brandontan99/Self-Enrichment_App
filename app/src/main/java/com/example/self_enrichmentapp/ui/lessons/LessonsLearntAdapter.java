@@ -18,14 +18,13 @@ public class LessonsLearntAdapter extends RecyclerView.Adapter<LessonsLearntAdap
     private LayoutInflater layoutInflater;
     private List<LessonPost> data;
 
-    LessonsLearntAdapter(Context context, List<LessonPost> data){
-        this.layoutInflater = LayoutInflater.from(context);
+    LessonsLearntAdapter(List<LessonPost> data){
         this.data= data;
-
     }
     @NonNull
     @Override
     public LessonsLearntAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        this.layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.cardview_post_lessonslearnt, parent, false);
         return new ViewHolder(view);
     }
@@ -33,9 +32,9 @@ public class LessonsLearntAdapter extends RecyclerView.Adapter<LessonsLearntAdap
     @Override
     public void onBindViewHolder(@NonNull LessonsLearntAdapter.ViewHolder holder, int position) {
         LessonPost lessonPost = data.get(position);
-        holder.TVLesson.setText(lessonPost.getLesson());
-        holder.TVLikeCount.setText(String.valueOf(lessonPost.getLikeCount()));
-        holder.TVCommentCount.setText(String.valueOf(lessonPost.getCommentCount()) + " Comments");
+        holder.tvLesson.setText(lessonPost.getLesson());
+        holder.tvLikeCount.setText(String.valueOf(lessonPost.getLikeCount()));
+        holder.tvCommentCount.setText(String.valueOf(lessonPost.getCommentCount()) + " Comments");
     }
 
     @Override
@@ -43,13 +42,13 @@ public class LessonsLearntAdapter extends RecyclerView.Adapter<LessonsLearntAdap
         return data.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView TVLesson, TVLikeCount, TVCommentCount;
+        TextView tvLesson, tvLikeCount, tvCommentCount;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            TVLesson = itemView.findViewById(R.id.tvLesson);
-            TVLikeCount = itemView.findViewById(R.id.tvLikeCount);
-            TVCommentCount = itemView.findViewById(R.id.tvCommentCount);
+            tvLesson = itemView.findViewById(R.id.tvLesson);
+            tvLikeCount = itemView.findViewById(R.id.tvLikeCount);
+            tvCommentCount = itemView.findViewById(R.id.tvCommentCount);
         }
     }
 }

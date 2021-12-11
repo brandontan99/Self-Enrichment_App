@@ -2,12 +2,15 @@ package com.example.self_enrichmentapp.ui.dashboard;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.self_enrichmentapp.MainActivity;
 import com.example.self_enrichmentapp.R;
 
 /**
@@ -60,7 +63,10 @@ public class DashboardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // TODO: This code below is causing error ... and I dk why
+//        ((MainActivity)getActivity()).setToolbarTitle(R.string.title_dashboard);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
+
 }
