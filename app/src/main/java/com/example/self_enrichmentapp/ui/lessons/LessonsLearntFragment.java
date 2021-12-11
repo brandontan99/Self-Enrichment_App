@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.self_enrichmentapp.MainActivity;
 import com.example.self_enrichmentapp.R;
 import com.example.self_enrichmentapp.data.model.LessonPost;
 
@@ -27,16 +28,13 @@ public class LessonsLearntFragment extends Fragment {
     private LessonsLearntAdapter lessonsLearntAdapter;
     private List<LessonPost> items;
 
-    public static LessonsLearntFragment newInstance() {
-        return new LessonsLearntFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        ((MainActivity)getActivity()).setToolbarTitle(R.string.title_lessons);
         View view = inflater.inflate(R.layout.fragment_lessonslearnt, container, false);
-        rvPosts = view.findViewById(R.id.RVPosts);
-        lessonsLearntAdapter = new LessonsLearntAdapter(getActivity(),items);
+        rvPosts = view.findViewById(R.id.rvPosts);
+        lessonsLearntAdapter = new LessonsLearntAdapter(items);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         rvPosts.setLayoutManager(layoutManager);
         rvPosts.setAdapter(lessonsLearntAdapter);
@@ -58,5 +56,10 @@ public class LessonsLearntFragment extends Fragment {
         items.add(new LessonPost("I am a good guy",1,2));
         items.add(new LessonPost("I am a good guy",1,2));
         items.add(new LessonPost("I am a good guy",1,2));
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 }
