@@ -7,27 +7,27 @@
 
     <fragment
         android:id="@+id/destLessons"
-        android:name="com.example.self_enrichmentapp.ui.lessons.LessonsLearntFragment"
+        android:name="com.example.self_enrichment_app.ui.lessons.LessonsLearntFragment"
         android:label="@string/title_lessons"
         tools:layout="@layout/fragment_lessonslearnt" />
     <fragment
         android:id="@+id/destDashboard"
-        android:name="com.example.self_enrichmentapp.ui.dashboard.DashboardFragment"
+        android:name="com.example.self_enrichment_app.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
     <fragment
         android:id="@+id/destGoals"
-        android:name="com.example.self_enrichmentapp.ui.goals.GoalsFragment"
+        android:name="com.example.self_enrichment_app.ui.goals.GoalsFragment"
         android:label="@string/title_goals"
         tools:layout="@layout/fragment_goals" />
     <fragment
         android:id="@+id/destHealth"
-        android:name="com.example.self_enrichmentapp.ui.health.HealthFragment"
+        android:name="com.example.self_enrichment_app.ui.health.HealthFragment"
         android:label="@string/title_health"
         tools:layout="@layout/fragment_health" />
     <fragment
         android:id="@+id/destMood"
-        android:name="com.example.self_enrichmentapp.ui.mood.MoodFragment"
+        android:name="com.example.self_enrichment_app.ui.mood.MoodFragment"
         android:label="@string/title_mood"
         tools:layout="@layout/fragment_mood" />
 

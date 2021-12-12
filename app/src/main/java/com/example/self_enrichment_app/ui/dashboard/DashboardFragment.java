@@ -1,4 +1,4 @@
-package com.example.self_enrichmentapp.ui.health;
+package com.example.self_enrichment_app.ui.dashboard;
 
 import android.os.Bundle;
 
@@ -8,15 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.self_enrichmentapp.MainActivity;
-import com.example.self_enrichmentapp.R;
+import com.example.self_enrichment_app.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link HealthFragment#newInstance} factory method to
+ * Use the {@link DashboardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HealthFragment extends Fragment {
+public class DashboardFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,7 +26,7 @@ public class HealthFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public HealthFragment() {
+    public DashboardFragment() {
         // Required empty public constructor
     }
 
@@ -37,11 +36,11 @@ public class HealthFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HealthFragment.
+     * @return A new instance of fragment DashboardFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HealthFragment newInstance(String param1, String param2) {
-        HealthFragment fragment = new HealthFragment();
+    public static DashboardFragment newInstance(String param1, String param2) {
+        DashboardFragment fragment = new DashboardFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,9 +60,10 @@ public class HealthFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ((MainActivity)getActivity()).setToolbarTitle(R.string.title_health);
+        // TODO: This code below is causing error ... and I dk why
+//        ((MainActivity)getActivity()).setToolbarTitle(R.string.title_dashboard);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_health, container, false);
+        return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
 
 }

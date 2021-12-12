@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "905098476433",
+    "project_id": "self-enrichment-app",
+    "storage_bucket": "self-enrichment-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905098476433:android:b96da8a834e7830c14b830",
+        "android_client_info": {
+          "package_name": "com.example.self_enrichment_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905098476433-ds5bcur9q51vq099uipoi4iusqaed8ap.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvW6nn80JZdUUIeAwgHW-CAq-0OS81t_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "905098476433-ds5bcur9q51vq099uipoi4iusqaed8ap.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

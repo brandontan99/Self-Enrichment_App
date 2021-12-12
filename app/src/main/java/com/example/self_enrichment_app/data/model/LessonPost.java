@@ -1,4 +1,4 @@
-package com.example.self_enrichmentapp.data.model;
+package com.example.self_enrichment_app.data.model;
 
 public class LessonPost {
     private String lesson;
@@ -23,8 +23,11 @@ public class LessonPost {
         return likeCount;
     }
 
-    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
+    public void like() {
+        this.likeCount ++;
+    }
+    public void unlike() {
+        this.likeCount --;
     }
 
     public int getCommentCount() {
