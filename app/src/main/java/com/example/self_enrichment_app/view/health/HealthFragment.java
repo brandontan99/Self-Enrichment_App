@@ -1,4 +1,4 @@
-package com.example.self_enrichment_app.ui.health;
+package com.example.self_enrichment_app.view.health;
 
 import android.os.Bundle;
 

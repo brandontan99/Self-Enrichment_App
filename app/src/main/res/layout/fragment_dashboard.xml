@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.self_enrichment_app.ui.dashboard.DashboardFragment">
+    tools:context="com.example.self_enrichment_app.view.dashboard.DashboardFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

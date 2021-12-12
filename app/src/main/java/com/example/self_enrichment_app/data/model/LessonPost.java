@@ -1,14 +1,32 @@
 package com.example.self_enrichment_app.data.model;
 
+import com.google.firebase.firestore.DocumentId;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class LessonPost {
     private String lesson;
     private int likeCount;
-    private int commentCount;
+    private List<Comment> commentList;
+    @DocumentId
+    private String lessonPostId;
 
-    public LessonPost(String lesson, int likeCount, int commentCount) {
+    public LessonPost() {
+    }
+
+    public LessonPost(String lesson) {
         this.lesson = lesson;
-        this.likeCount = likeCount;
-        this.commentCount = commentCount;
+        this.likeCount = 0;
+        this.commentList = null;
+    }
+
+    public String getLessonPostId() {
+        return lessonPostId;
+    }
+
+    public void setLessonPostId(String lessonPostId) {
+        this.lessonPostId = lessonPostId;
     }
 
     public String getLesson() {
@@ -23,18 +41,15 @@ public class LessonPost {
         return likeCount;
     }
 
-    public void like() {
-        this.likeCount ++;
-    }
-    public void unlike() {
-        this.likeCount --;
+    public List<Comment> getCommentList() {
+        return commentList;
     }
 
-    public int getCommentCount() {
-        return commentCount;
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
     }
 
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
     }
 }

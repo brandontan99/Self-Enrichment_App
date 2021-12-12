@@ -1,4 +1,4 @@
-package com.example.self_enrichment_app.ui.mood;
+package com.example.self_enrichment_app.view.mood;
 
 import android.os.Bundle;
 

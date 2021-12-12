@@ -5,7 +5,7 @@
     android:id="@+id/clLessonsLearnt"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.example.self_enrichment_app.ui.lessons.LessonsLearntFragment">
+    tools:context="com.example.self_enrichment_app.view.lessons.LessonsLearntFragment">
 
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/cvPost"
@@ -64,7 +64,7 @@
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="0.1dp"
                 android:layout_marginTop="8dp"
                 android:background="@android:color/black"
                 app:layout_constraintEnd_toEndOf="parent"
