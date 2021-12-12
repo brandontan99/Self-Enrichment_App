@@ -1,15 +1,14 @@
-package com.example.self_enrichmentapp;
+package com.example.self_enrichment_app;
 
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.self_enrichment_app.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;

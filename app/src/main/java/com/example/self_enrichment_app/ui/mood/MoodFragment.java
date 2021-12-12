@@ -1,4 +1,4 @@
-package com.example.self_enrichmentapp.ui.mood;
+package com.example.self_enrichment_app.ui.mood;
 
 import android.os.Bundle;
 
@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.self_enrichmentapp.MainActivity;
-import com.example.self_enrichmentapp.R;
+import com.example.self_enrichment_app.MainActivity;
+import com.example.self_enrichment_app.R;
 
 /**
  * A simple {@link Fragment} subclass.

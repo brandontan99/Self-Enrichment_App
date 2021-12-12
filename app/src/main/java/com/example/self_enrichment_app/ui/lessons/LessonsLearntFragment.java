@@ -1,4 +1,4 @@
-package com.example.self_enrichmentapp.ui.lessons;
+package com.example.self_enrichment_app.ui.lessons;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,9 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.self_enrichmentapp.MainActivity;
-import com.example.self_enrichmentapp.R;
-import com.example.self_enrichmentapp.data.model.LessonPost;
+import com.example.self_enrichment_app.MainActivity;
+import com.example.self_enrichment_app.R;
+import com.example.self_enrichment_app.data.model.LessonPost;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class LessonsLearntFragment extends Fragment {
 
     private LessonsLearntViewModel mViewModel;
     private RecyclerView rvPosts;
-    private LessonsLearntAdapter lessonsLearntAdapter;
+    private LessonPostsAdapter lessonPostsAdapter;
     private List<LessonPost> items;
 
     @Override
@@ -34,10 +34,10 @@ public class LessonsLearntFragment extends Fragment {
         ((MainActivity)getActivity()).setToolbarTitle(R.string.title_lessons);
         View view = inflater.inflate(R.layout.fragment_lessonslearnt, container, false);
         rvPosts = view.findViewById(R.id.rvPosts);
-        lessonsLearntAdapter = new LessonsLearntAdapter(items);
+        lessonPostsAdapter = new LessonPostsAdapter(items);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         rvPosts.setLayoutManager(layoutManager);
-        rvPosts.setAdapter(lessonsLearntAdapter);
+        rvPosts.setAdapter(lessonPostsAdapter);
         return view;
     }
 

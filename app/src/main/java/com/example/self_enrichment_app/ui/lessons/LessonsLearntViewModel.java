@@ -1,4 +1,4 @@
-package com.example.self_enrichmentapp.ui.lessons;
+package com.example.self_enrichment_app.ui.lessons;
 
 import androidx.lifecycle.ViewModel;
 

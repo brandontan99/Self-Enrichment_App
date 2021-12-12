@@ -1,4 +1,4 @@
-package com.example.self_enrichmentapp;
+package com.example.self_enrichment_app;
 
 import org.junit.Test;
 
