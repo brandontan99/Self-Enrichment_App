@@ -5,7 +5,7 @@
     android:id="@+id/clLessonsLearnt"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.self_enrichment_app.ui.lessons.LessonsLearntFragment">
+    tools:context="com.example.self_enrichment_app.view.lessons.LessonsLearntFragment">
 
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/cvETPost"
@@ -20,14 +20,29 @@
         app:layout_constraintTop_toTopOf="parent"
         app:neumorph_shapeType="pressed">
 
-        <EditText
-            android:id="@+id/etPost"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:ems="10"
-            android:fontFamily="@font/montserrat"
-            android:hint="What you have learnt?"
-            android:inputType="textPersonName" />
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etLesson"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:fontFamily="@font/montserrat"
+                android:hint="What you have learnt?"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/btnSendPost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Post"
+                android:textAllCaps="false" />
+        </LinearLayout>
+
     </soup.neumorphism.NeumorphCardView>
 
     <androidx.recyclerview.widget.RecyclerView
