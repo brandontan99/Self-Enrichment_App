@@ -3,9 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/drawable/bottomsheet_rounded_background.xml" value="0.14583333333333334" />
+        <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/drawable/bottomsheetdialog_rounded.xml" value="0.2703125" />
+        <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/drawable/checkbox_like.xml" value="0.14947916666666666" />
         <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.2703125" />
+        <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.14583333333333334" />
         <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/layout/btmsheetfragment_comments_lessonslearnt.xml" value="0.2" />
+        <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/layout/btmsheetfragment_comments_lessonslearnt.xml" value="0.264" />
         <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/layout/btmsheetlayout_comments_lessonslearnt.xml" value="0.15307971014492755" />
         <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/layout/btmsheetlayout_lessonslearnt.xml" value="0.264" />
         <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/layout/card_view_post.xml" value="0.1598731884057971" />
@@ -17,6 +21,9 @@
         <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/layout/fragment_lessonslearnt.xml" value="0.2" />
         <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/layout/fragment_notifications.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2703125" />
+        <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/mipmap-anydpi-v26/ic_like_count.xml" value="0.2703125" />
+        <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/mipmap-anydpi-v26/ic_like_count_round.xml" value="0.14947916666666666" />
       </map>
     </option>
   </component>

@@ -57,6 +57,16 @@ public class LessonsLearntRepository {
         });
         return commentList;
     }
+    public MutableLiveData<Integer> getLikeCountMutableLiveData(String documentId) {
+        MutableLiveData<Integer> likeCount = new MutableLiveData<>();
+        firestore.collection("LessonPost").document(documentId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot doc, @Nullable FirebaseFirestoreException error) {
+                likeCount.postValue(doc.toObject(LessonPost.class).getLikeCount());
+            }
+        });
+        return likeCount;
+    }
 
     public void updateLessonPost(String documentId, String field, int updateCount){
         // Update an existing document

@@ -21,6 +21,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/ivLikeCount"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvLesson"
+                app:srcCompat="@mipmap/ic_like_count_foreground" />
+
             <TextView
                 android:id="@+id/tvLesson"
                 android:layout_width="0dp"
@@ -46,7 +56,7 @@
                 android:fontFamily="@font/montserrat_light"
                 android:text="17"
                 android:textColor="@color/black"
-                app:layout_constraintStart_toEndOf="@+id/ivLike"
+                app:layout_constraintStart_toEndOf="@+id/ivLikeCount"
                 app:layout_constraintTop_toBottomOf="@+id/tvLesson" />
 
             <TextView
@@ -71,23 +81,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvLikeCount" />
 
-            <ImageView
-                android:id="@+id/ivLike"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:src="@android:drawable/arrow_up_float"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvLesson" />
-
             <Button
                 android:id="@+id/btnComment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#FFFFFF"
-                android:drawableLeft="@drawable/ic_home_black_24dp"
+                android:drawableLeft="@drawable/ic_comment"
                 android:fontFamily="@font/montserrat_light"
+                android:stateListAnimator="@null"
                 android:text="Comment"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
@@ -100,12 +101,17 @@
                 android:id="@+id/cbLike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_like"
                 android:fontFamily="@font/montserrat_light"
+                android:paddingStart="10dp"
                 android:text="Like"
+                android:textColorHighlight="@color/orange"
+                android:textColorLink="@color/orange"
                 app:layout_constraintEnd_toStartOf="@+id/btnComment"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view" />
+                app:layout_constraintTop_toBottomOf="@+id/view"
+                app:useMaterialThemeColors="false" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </soup.neumorphism.NeumorphCardView>

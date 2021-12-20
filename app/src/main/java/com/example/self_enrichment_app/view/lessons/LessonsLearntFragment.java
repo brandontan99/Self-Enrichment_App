@@ -32,7 +32,6 @@ public class LessonsLearntFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         ((MainActivity)getActivity()).setToolbarTitle(R.string.title_lessons);
-
         return inflater.inflate(R.layout.fragment_lessonslearnt, container, false);
     }
 

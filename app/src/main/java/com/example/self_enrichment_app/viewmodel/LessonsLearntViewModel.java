@@ -25,6 +25,9 @@ public class LessonsLearntViewModel extends ViewModel {
     public MutableLiveData<List<Comment>> getLiveCommentData(String documentId) {
         return lessonsLearntRepository.getCommentListMutableLiveData(documentId);
     }
+    public MutableLiveData<Integer> getLiveLikeCountData(String documentId) {
+        return lessonsLearntRepository.getLikeCountMutableLiveData(documentId);
+    }
     public void updateLikeCount(String documentId, int updateCount){
         lessonsLearntRepository.updateLessonPost(documentId, "likeCount", updateCount);
     }

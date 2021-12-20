@@ -28,17 +28,20 @@
             <EditText
                 android:id="@+id/etLesson"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:fontFamily="@font/montserrat"
                 android:hint="What you have learnt?"
-                android:inputType="textPersonName" />
+                android:inputType="textLongMessage|textAutoCorrect|textMultiLine|textPersonName|textCapSentences|textAutoComplete" />
 
             <Button
                 android:id="@+id/btnSendPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:backgroundTint="@color/light_orange"
+                android:fontFamily="@font/montserrat_bold"
                 android:text="Post"
                 android:textAllCaps="false" />
         </LinearLayout>
@@ -48,14 +51,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPosts"
         android:layout_width="0dp"
-        android:layout_height="520dp"
+        android:layout_height="0dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cvETPost"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/cvETPost" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
