@@ -63,14 +63,16 @@ public class LessonsLearntRepository {
             @Override
             public void onEvent(@Nullable DocumentSnapshot doc, @Nullable FirebaseFirestoreException error) {
                 List<Comment> fBCommentList = doc.toObject(LessonPost.class).getCommentList();
-                Collections.sort(fBCommentList, new Comparator<Comment>(){
+                if (fBCommentList != null){
+                    Collections.sort(fBCommentList, new Comparator<Comment>(){
 
-                    public int compare(Comment o1, Comment o2)
-                    {
-                        // Descensing order
-                        return o2.getCreatedAt().compareTo(o1.getCreatedAt());
-                    }
-                });
+                        public int compare(Comment o1, Comment o2)
+                        {
+                            // Descensing order
+                            return o2.getCreatedAt().compareTo(o1.getCreatedAt());
+                        }
+                    });
+                }
                 commentList.postValue(fBCommentList);
             }
         });

@@ -12,4 +12,5 @@
     <color name="orange">#E67E22</color>
     <color name="red">#E74C3C</color>
     <color name="black_50_alpha">#80000000</color>
+    <color name="light_red">#E74C3C</color>
 </resources>

@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         NavHostFragment host = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nhfMain);
         NavController navController = host.getNavController();
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.destGoals,R.id.destLessons,R.id.destDashboard,R.id.destHealth,R.id.destMood).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bnvMain, navController);
     }
