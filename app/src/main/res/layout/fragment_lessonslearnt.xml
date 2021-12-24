@@ -33,7 +33,9 @@
                 android:ems="10"
                 android:fontFamily="@font/montserrat"
                 android:hint="What you have learnt?"
-                android:inputType="textLongMessage|textAutoCorrect|textMultiLine|textPersonName|textCapSentences|textAutoComplete" />
+                android:inputType="textLongMessage|textAutoCorrect|textMultiLine|textPersonName|textCapSentences|textAutoComplete"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black_50_alpha" />
 
             <Button
                 android:id="@+id/btnSendPost"
@@ -43,7 +45,8 @@
                 android:backgroundTint="@color/light_orange"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="Post"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:cornerRadius="36.5dp" />
         </LinearLayout>
 
     </soup.neumorphism.NeumorphCardView>

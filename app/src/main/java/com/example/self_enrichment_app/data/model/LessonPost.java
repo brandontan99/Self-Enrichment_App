@@ -9,6 +9,7 @@ public class LessonPost {
     private String lesson;
     private int likeCount;
     private List<Comment> commentList;
+    private Long createdAt;
     @DocumentId
     private String lessonPostId;
 
@@ -19,6 +20,15 @@ public class LessonPost {
         this.lesson = lesson;
         this.likeCount = 0;
         this.commentList = null;
+        this.createdAt = System.currentTimeMillis();
+    }
+
+    public Long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Long createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getLessonPostId() {
