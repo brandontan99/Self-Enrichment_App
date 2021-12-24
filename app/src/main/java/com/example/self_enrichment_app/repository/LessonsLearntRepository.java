@@ -16,6 +16,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +44,14 @@ public class LessonsLearntRepository {
                         lessonPostList.add(doc.toObject(LessonPost.class));
                     }
                 }
+                Collections.sort(lessonPostList, new Comparator<LessonPost>(){
+
+                    public int compare(LessonPost o1, LessonPost o2)
+                    {
+                        // Descensing order
+                        return o2.getCreatedAt().compareTo(o1.getCreatedAt());
+                    }
+                });
                 lessonPostListMutableLiveData.postValue(lessonPostList);
             }
         });
@@ -52,7 +62,16 @@ public class LessonsLearntRepository {
         firestore.collection("LessonPost").document(documentId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot doc, @Nullable FirebaseFirestoreException error) {
-                commentList.postValue(doc.toObject(LessonPost.class).getCommentList());
+                List<Comment> fBCommentList = doc.toObject(LessonPost.class).getCommentList();
+                Collections.sort(fBCommentList, new Comparator<Comment>(){
+
+                    public int compare(Comment o1, Comment o2)
+                    {
+                        // Descensing order
+                        return o2.getCreatedAt().compareTo(o1.getCreatedAt());
+                    }
+                });
+                commentList.postValue(fBCommentList);
             }
         });
         return commentList;

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.self_enrichment_app.MainActivity;
 import com.example.self_enrichment_app.R;
@@ -58,6 +59,13 @@ public class LessonsLearntFragment extends Fragment {
             @Override
             public void onClick(View btnView) {
                 etLesson = view.findViewById(R.id.etLesson);
+                if (etLesson.getText().toString().trim().length()==0){
+                    Toast.makeText(getActivity(), "The post cannot be empty.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Toast.makeText(getActivity(), "You have posted a lesson successfully.",
+                        Toast.LENGTH_SHORT).show();
                 lessonsLearntViewModel.addLessonPost(new LessonPost(etLesson.getText().toString()));
             }
         });
