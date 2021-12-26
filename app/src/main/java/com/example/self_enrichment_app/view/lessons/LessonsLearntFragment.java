@@ -95,6 +95,7 @@ public class LessonsLearntFragment extends Fragment {
                 Toast.makeText(getActivity(), "You have posted a lesson successfully.",
                         Toast.LENGTH_SHORT).show();
                 lessonsLearntViewModel.addLessonPost(new LessonPost(etLesson.getText().toString()));
+                etLesson.getText().clear();
             }
         });
     }
