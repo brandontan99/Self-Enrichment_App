@@ -189,6 +189,7 @@ public class CommentsBottomSheetFragment extends BottomSheetDialogFragment {
                 Toast.makeText(getActivity(), "You have sent a comment successfully.",
                         Toast.LENGTH_SHORT).show();
                 lessonsLearntViewModel.addComment(lessonPostId, new Comment(etComment.getText().toString()));
+                etComment.getText().clear();
             }
         });
         CheckBox cbLike = view.findViewById(R.id.cbLikeComment);
