@@ -4,7 +4,7 @@ Please go to tool - firebase and connect to auth, realtime db and storage before
 
 For now only has Login, Register, Profile, Edit Profile, and Logout
 
-Only success action has tested, failed actions for each activity have not completed yet (haven't added)
+Only success action has tested, failed actions for each activity have not completed yet (actually just some pop out message, some got some don't have)
 
 For Login, there are two types of login, custom login and google sign in
 custom login can check at firebase for the dummy email and password (at realtime database) or just make a new one at register page.
