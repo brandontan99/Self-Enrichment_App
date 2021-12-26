@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.self_enrichment_app.data.model.Comment;
 import com.example.self_enrichment_app.data.model.LessonPost;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -34,50 +35,7 @@ public class LessonsLearntRepository {
 
     }
 
-    public MutableLiveData<List<LessonPost>> getLessonPostListMutableLiveData() {
-        firestore.collection("LessonPost").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                List<LessonPost> lessonPostList = new ArrayList<>();
-                for (QueryDocumentSnapshot doc : value) {
-                    if (doc != null) {
-                        lessonPostList.add(doc.toObject(LessonPost.class));
-                    }
-                }
-                Collections.sort(lessonPostList, new Comparator<LessonPost>(){
 
-                    public int compare(LessonPost o1, LessonPost o2)
-                    {
-                        // Descensing order
-                        return o2.getCreatedAt().compareTo(o1.getCreatedAt());
-                    }
-                });
-                lessonPostListMutableLiveData.postValue(lessonPostList);
-            }
-        });
-        return lessonPostListMutableLiveData;
-    }
-    public MutableLiveData<List<Comment>> getCommentListMutableLiveData(String documentId) {
-        MutableLiveData<List<Comment>> commentList = new MutableLiveData<>();
-        firestore.collection("LessonPost").document(documentId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot doc, @Nullable FirebaseFirestoreException error) {
-                List<Comment> fBCommentList = doc.toObject(LessonPost.class).getCommentList();
-                if (fBCommentList != null){
-                    Collections.sort(fBCommentList, new Comparator<Comment>(){
-
-                        public int compare(Comment o1, Comment o2)
-                        {
-                            // Descensing order
-                            return o2.getCreatedAt().compareTo(o1.getCreatedAt());
-                        }
-                    });
-                }
-                commentList.postValue(fBCommentList);
-            }
-        });
-        return commentList;
-    }
     public MutableLiveData<Integer> getLikeCountMutableLiveData(String documentId) {
         MutableLiveData<Integer> likeCount = new MutableLiveData<>();
         firestore.collection("LessonPost").document(documentId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -98,7 +56,10 @@ public class LessonsLearntRepository {
         firestore.collection("LessonPost").add(newLessonPost);
     }
     public void addComment(String documentId, Comment newComment){
+        CollectionReference colRef = firestore.collection("LessonPost").document(documentId).collection("Comment");
+        colRef.add(newComment);
+        // Update commentCount
         DocumentReference docRef = firestore.collection("LessonPost").document(documentId);
-        docRef.update("commentList", FieldValue.arrayUnion(newComment));
+        docRef.update("commentCount", FieldValue.increment(1));
     }
 }

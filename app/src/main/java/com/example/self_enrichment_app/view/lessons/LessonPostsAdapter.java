@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,19 +22,22 @@ import com.example.self_enrichment_app.data.model.LessonPost;
 import com.example.self_enrichment_app.R;
 import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
 
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class LessonPostsAdapter extends RecyclerView.Adapter<LessonPostsAdapter.ViewHolder> {
+public class LessonPostsAdapter extends FirestoreRecyclerAdapter<LessonPost, LessonPostsAdapter.ViewHolder> {
     private LayoutInflater layoutInflater;
-    private List<LessonPost> data;
     private Context context;
-    private LessonsLearntViewModel lessonsLearntViewModel;
 
-    LessonPostsAdapter(List<LessonPost> data, LessonsLearntViewModel lessonsLearntViewModel){
-        this.data= data;
-        this.lessonsLearntViewModel = lessonsLearntViewModel;
+    public LessonPostsAdapter(@NonNull FirestoreRecyclerOptions<LessonPost> options) {
+        super(options);
     }
+
     @NonNull
     @Override
     public LessonPostsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,8 +48,7 @@ public class LessonPostsAdapter extends RecyclerView.Adapter<LessonPostsAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LessonPostsAdapter.ViewHolder holder, int position) {
-        LessonPost lessonPost = data.get(position);
+    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull LessonPost lessonPost) {
         holder.tvLesson.setText(lessonPost.getLesson());
         if(lessonPost.getLikeCount()==0){
             holder.tvLikeCount.setVisibility(View.GONE);
@@ -55,22 +58,28 @@ public class LessonPostsAdapter extends RecyclerView.Adapter<LessonPostsAdapter.
             holder.ivLikeCount.setVisibility(View.VISIBLE);
             holder.tvLikeCount.setText(String.valueOf(lessonPost.getLikeCount()));
         }
-        int commentCount = (lessonPost.getCommentList() == null) ? 0 : lessonPost.getCommentList().size();
+        int commentCount = lessonPost.getCommentCount();
         if(commentCount==0){
             holder.tvCommentCount.setVisibility(View.GONE);
         }else{
             holder.tvCommentCount.setVisibility(View.VISIBLE);
-            holder.tvCommentCount.setText(String.valueOf(commentCount) + " Comments");
+            holder.tvCommentCount.setText(commentCount + " Comments");
         }
+        holder.ibDeletePost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LessonsLearntHelper.deleteLessonPost(lessonPost.getLessonPostId());
+            }
+        });
         holder.cbLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(holder.cbLike.isChecked()){
-                    lessonsLearntViewModel.updateLikeCount(lessonPost.getLessonPostId(),1);
+                    LessonsLearntHelper.updateLikeCount(lessonPost.getLessonPostId(),1);
                     holder.cbLike.setTextColor(context.getResources().getColor(R.color.orange));
                     holder.cbLike.setTypeface(ResourcesCompat.getFont(context, R.font.montserrat_bold));
                 }else{
-                    lessonsLearntViewModel.updateLikeCount(lessonPost.getLessonPostId(),-1);
+                    LessonsLearntHelper.updateLikeCount(lessonPost.getLessonPostId(),-1);
                     holder.cbLike.setTextColor(context.getResources().getColor(R.color.black));
                     holder.cbLike.setTypeface(ResourcesCompat.getFont(context, R.font.montserrat_light));
                 }
@@ -86,21 +95,17 @@ public class LessonPostsAdapter extends RecyclerView.Adapter<LessonPostsAdapter.
                 bundle.putString("lessonPostId",lessonPost.getLessonPostId());
                 bundle.putInt("likeCount",lessonPost.getLikeCount());
                 commentsFragment.setArguments(bundle);
-//                fragmentManager.beginTransaction().replace(R.id.content, commentsFragment).commit();
                 commentsFragment.show(fragmentManager,commentsFragment.getTag());
             }
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return data.size();
-    }
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView tvLesson, tvLikeCount, tvCommentCount;
         Button btnComment;
         CheckBox cbLike;
         ImageView ivLikeCount;
+        ImageButton ibDeletePost;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -110,6 +115,8 @@ public class LessonPostsAdapter extends RecyclerView.Adapter<LessonPostsAdapter.
             btnComment = itemView.findViewById(R.id.btnComment);
             cbLike = itemView.findViewById(R.id.cbLike);
             ivLikeCount = itemView.findViewById(R.id.ivLikeCount);
+            ibDeletePost = itemView.findViewById(R.id.ibDeletePost);
         }
     }
+
 }
