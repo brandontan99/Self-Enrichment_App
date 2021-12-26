@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profilePictureView"
+        android:layout_width="152dp"
+        android:layout_height="123dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_baseline_account_circle_96"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/profileNameView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="28dp"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/profilePictureView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/hiThereView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="164dp"
+        android:text="@string/hi_there"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileNameView" />
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/cardViewProfileEditProfileButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="67dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/hiThereView">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/EditProfileBtn"
+            android:layout_width="150dp"
+            android:layout_height="130dp"
+            android:background="@drawable/profile_button"
+            android:drawableTop="@drawable/ic_baseline_edit_48"
+            android:text="@string/edit_profile">
+
+        </androidx.appcompat.widget.AppCompatButton>
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/cardViewProfileSettingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="45dp"
+        app:layout_constraintStart_toEndOf="@+id/cardViewProfileEditProfileButton"
+        app:layout_constraintTop_toBottomOf="@+id/hiThereView">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/SettingsBtn"
+            android:layout_width="150dp"
+            android:layout_height="130dp"
+            android:background="@drawable/profile_button"
+            android:drawableTop="@drawable/ic_baseline_settings_48"
+            android:text="@string/settings">
+
+        </androidx.appcompat.widget.AppCompatButton>
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/cardViewProfileReviewAppButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewProfileEditProfileButton">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/ReviewAppBtn"
+            android:layout_width="150dp"
+            android:layout_height="130dp"
+            android:background="@drawable/profile_button"
+            android:drawableTop="@drawable/ic_baseline_rate_review_48"
+            android:text="@string/review_app">
+
+        </androidx.appcompat.widget.AppCompatButton>
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/cardViewProfileContactUsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/cardViewProfileReviewAppButton"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewProfileSettingsButton">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/ContactUsBtn"
+            android:layout_width="150dp"
+            android:layout_height="130dp"
+            android:background="@drawable/profile_button"
+            android:drawableTop="@drawable/ic_baseline_contact_support_48"
+            android:text="@string/contact_us">
+
+        </androidx.appcompat.widget.AppCompatButton>
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/cardViewProfileAboutUsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:neumorph_backgroundColor="#F8F8F8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewProfileReviewAppButton">
+
+        <Button
+            android:id="@+id/AboutUsBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_us"
+            android:textColor="#000000"
+            tools:layout_editor_absoluteX="76dp"
+            tools:layout_editor_absoluteY="36dp"
+            style="?android:attr/buttonBarButtonStyle">
+
+        </Button>
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/cardViewProfileLogOutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:neumorph_backgroundColor="#F8F8F8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewProfileAboutUsButton" >
+
+        <Button
+            android:id="@+id/LogoutBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/logout"
+            android:textColor="#000000"
+            tools:layout_editor_absoluteX="76dp"
+            tools:layout_editor_absoluteY="36dp"
+            style="?android:attr/buttonBarButtonStyle">
+
+        </Button>
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <TextView
+        android:id="@+id/AppVersionView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="0dp"
+        android:text="@string/app_version"
+        android:textSize="12sp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewProfileLogOutButton" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginBottom="0dp"
+        app:menu="@menu/bottom_nav_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
