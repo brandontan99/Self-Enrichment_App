@@ -7,7 +7,9 @@
     </style>
 
     <style name="AppModalStyle"
-        parent="Widget.Design.BottomSheet.Modal"></style>
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottomsheet_rounded_background</item>
+    </style>
     <style name="Widget.BottomNavigationView"
         parent="Widget.Design.BottomNavigationView">
         <item name="fontFamily">@font/montserrat_bold</item>
