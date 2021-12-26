@@ -46,6 +46,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:text="Post"
                 android:textAllCaps="false"
+                android:visibility="gone"
                 app:cornerRadius="36.5dp" />
         </LinearLayout>
 

@@ -15,16 +15,12 @@ public class LessonsLearntViewModel extends ViewModel {
 
     public LessonsLearntViewModel() {
         lessonsLearntRepository = new LessonsLearntRepository();
-        lessonPostListMutableLiveData =  lessonsLearntRepository.getLessonPostListMutableLiveData();
     }
 
     public MutableLiveData<List<LessonPost>> getLiveLessonPostData() {
         return lessonPostListMutableLiveData;
     }
 
-    public MutableLiveData<List<Comment>> getLiveCommentData(String documentId) {
-        return lessonsLearntRepository.getCommentListMutableLiveData(documentId);
-    }
     public MutableLiveData<Integer> getLiveLikeCountData(String documentId) {
         return lessonsLearntRepository.getLikeCountMutableLiveData(documentId);
     }

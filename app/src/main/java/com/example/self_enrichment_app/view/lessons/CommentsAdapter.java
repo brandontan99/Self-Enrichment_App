@@ -11,17 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.self_enrichment_app.data.model.Comment;
 import com.example.self_enrichment_app.R;
+import com.example.self_enrichment_app.data.model.LessonPost;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
+public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment,CommentsAdapter.ViewHolder> {
     private LayoutInflater layoutInflater;
-    private List<Comment> data;
 
-    CommentsAdapter(List<Comment> data){
-        this.data= data;
+    public CommentsAdapter(@NonNull FirestoreRecyclerOptions<Comment> options) {
+        super(options);
     }
+
     @NonNull
     @Override
     public CommentsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -31,20 +34,12 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CommentsAdapter.ViewHolder holder, int position) {
-        Comment comment = data.get(position);
+    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Comment comment) {
         holder.tvName.setText(comment.getName());
         holder.tvComment.setText(String.valueOf(comment.getCommentMsg()));
         Picasso.get().load(comment.getImageURL()).resize(45, 45).into(holder.ivProfilePic);
     }
 
-    @Override
-    public int getItemCount() {
-        if (data == null){
-            return 0;
-        }
-        return data.size();
-    }
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView tvName, tvComment;
         ImageView ivProfilePic;

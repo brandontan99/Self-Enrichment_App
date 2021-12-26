@@ -8,7 +8,7 @@ import java.util.List;
 public class LessonPost {
     private String lesson;
     private int likeCount;
-    private List<Comment> commentList;
+    private int commentCount;
     private Long createdAt;
     @DocumentId
     private String lessonPostId;
@@ -19,7 +19,7 @@ public class LessonPost {
     public LessonPost(String lesson) {
         this.lesson = lesson;
         this.likeCount = 0;
-        this.commentList = null;
+        this.commentCount = 0;
         this.createdAt = System.currentTimeMillis();
     }
 
@@ -51,15 +51,15 @@ public class LessonPost {
         return likeCount;
     }
 
-    public List<Comment> getCommentList() {
-        return commentList;
+    public int getCommentCount() {
+        return commentCount;
     }
 
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
 
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
     }
 }
