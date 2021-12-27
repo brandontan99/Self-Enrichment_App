@@ -136,6 +136,19 @@ public class LoginActivity extends AppCompatActivity {
 
         registerUsingEmail.setOnClickListener(OCLRegisterUsingEmail);
 
+        //Forget Password
+        TextView forgetPasswordBtn = (TextView) findViewById(R.id.LoginForgetPasswordBtn);
+
+        View.OnClickListener OCLForgetPassword = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
+                finish();
+            }
+        };
+
+        forgetPasswordBtn.setOnClickListener(OCLForgetPassword);
+
 
         //Send request to google
         createRequest();
@@ -204,14 +217,4 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-        }
-    }
 }

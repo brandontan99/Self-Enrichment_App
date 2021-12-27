@@ -69,7 +69,49 @@ public class ProfileActivity extends AppCompatActivity {
 
         editProfile.setOnClickListener(OCLeditProfile);
 
-        getUserInfo();
+        //navigate to settings
+        View.OnClickListener OCLSettings = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, SettingsActivity.class));
+                finish();
+            }
+        };
+
+        settings.setOnClickListener(OCLSettings);
+
+        //navigate to review app
+        View.OnClickListener OCLReviewApps = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, ReviewAppActivity.class));
+                finish();
+            }
+        };
+
+        reviewApp.setOnClickListener(OCLReviewApps);
+
+        //navigate to contact us
+        View.OnClickListener OCLContactUs = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, ContactUsActivity.class));
+                finish();
+            }
+        };
+
+        contactUs.setOnClickListener(OCLContactUs);
+
+        ////navigate to about us
+        View.OnClickListener OCLAboutUs = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, AboutUsActivity.class));
+                finish();
+            }
+        };
+
+        aboutUs.setOnClickListener(OCLAboutUs);
 
         //logout button
         View.OnClickListener OCLLogOut = new View.OnClickListener() {
@@ -81,6 +123,8 @@ public class ProfileActivity extends AppCompatActivity {
         };
 
         logOut.setOnClickListener(OCLLogOut);
+
+        getUserInfo();
     }
 
     private void logOutUser() {
