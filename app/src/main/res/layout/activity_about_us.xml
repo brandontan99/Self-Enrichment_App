@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AboutUsActivity">
+
+    <ImageButton
+        android:id="@+id/aboutUsCloseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:minHeight="48dp"
+        android:src="?attr/actionModeCloseDrawable"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/aboutUsView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/about_us"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/aboutUsCloseButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/aboutUsIKIGAIView"
+        android:layout_width="248dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="44dp"
+        android:text="@string/tracker_name"
+        android:textAlignment="center"
+        android:textColor="#E67E22"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUsView" />
+
+    <TextView
+        android:id="@+id/aboutUsAppDescView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
+        android:text="@string/app_descr"
+        android:textColor="#E67E22"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUsIKIGAIView" />
+
+    <TextView
+        android:id="@+id/aboutUsVersionView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="146dp"
+        android:text="@string/version"
+        android:textColor="#95A5A6"
+        android:textSize="16sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUsAppDescView" />
+
+    <ImageView
+        android:id="@+id/aboutUsIKIGAILogoView"
+        android:layout_width="199dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="85dp"
+        android:src="@drawable/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUsVersionView" />
+
+    <TextView
+        android:id="@+id/aboutUsTeamView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/team"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUsTeamNameView" />
+
+    <TextView
+        android:id="@+id/aboutUsMembersView"
+        android:layout_width="133dp"
+        android:layout_height="228dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/name"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUsTeamView" />
+
+    <TextView
+        android:id="@+id/aboutUsTeamNameView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/group_name"
+        android:textColor="#95A5A6"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/aboutUsCView"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUsIKIGAILogoView" />
+
+    <ImageView
+        android:id="@+id/aboutUsCView"
+        android:layout_width="36dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="134dp"
+        android:src="@drawable/c"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUsIKIGAILogoView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
