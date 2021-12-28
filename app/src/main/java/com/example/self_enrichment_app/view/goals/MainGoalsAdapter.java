@@ -2,11 +2,15 @@ package com.example.self_enrichment_app.view.goals;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.self_enrichment_app.R;
@@ -24,6 +30,8 @@ import com.example.self_enrichment_app.view.lessons.LessonPostsAdapter;
 import com.example.self_enrichment_app.viewmodel.GoalsTrackerViewModel;
 import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainGoalsAdapter extends RecyclerView.Adapter<MainGoalsAdapter.ViewHolder>{
@@ -31,6 +39,7 @@ public class MainGoalsAdapter extends RecyclerView.Adapter<MainGoalsAdapter.View
     private List<MainGoals> data;
     private Context context;
     private GoalsTrackerViewModel goalsTrackerViewModel;
+
 
     MainGoalsAdapter(List<MainGoals> data, GoalsTrackerViewModel goalsTrackerViewModel){
         this.data= data;
@@ -41,45 +50,26 @@ public class MainGoalsAdapter extends RecyclerView.Adapter<MainGoalsAdapter.View
     public MainGoalsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         this.layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.cardview_post_goalstracker, parent, false);
+        View view = layoutInflater.inflate(R.layout.cardview_maingoals_goalstracker, parent, false);
         return new MainGoalsAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LessonPostsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MainGoalsAdapter.ViewHolder holder, int position) {
         MainGoals mainGoals = data.get(position);
-        /*holder.goal.setText(mainGoals.getGoal());
-        if(lessonPost.getLikeCount()==0){
-            holder.tvLikeCount.setVisibility(View.GONE);
-            holder.ivLikeCount.setVisibility(View.GONE);
-        }else{
-            holder.tvLikeCount.setVisibility(View.VISIBLE);
-            holder.ivLikeCount.setVisibility(View.VISIBLE);
-            holder.tvLikeCount.setText(String.valueOf(lessonPost.getLikeCount()));
-        }
-        int commentCount = (lessonPost.getCommentList() == null) ? 0 : lessonPost.getCommentList().size();
-        if(commentCount==0){
-            holder.tvCommentCount.setVisibility(View.GONE);
-        }else{
-            holder.tvCommentCount.setVisibility(View.VISIBLE);
-            holder.tvCommentCount.setText(String.valueOf(commentCount) + " Comments");
-        }
-        holder.cbLike.setOnClickListener(new View.OnClickListener() {
+        holder.ETMainGoal.setText(mainGoals.getGoal());
+        holder.ETMainGoal.setInputType(InputType.TYPE_NULL);
+        holder.ETMainGoal.setTextIsSelectable(false);
+        holder.ETMainGoal.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public void onClick(View view) {
-                if(holder.cbLike.isChecked()){
-                    lessonsLearntViewModel.updateLikeCount(lessonPost.getLessonPostId(),1);
-                    holder.cbLike.setTextColor(context.getResources().getColor(R.color.orange));
-                    holder.cbLike.setTypeface(ResourcesCompat.getFont(context, R.font.montserrat_bold));
-                }else{
-                    lessonsLearntViewModel.updateLikeCount(lessonPost.getLessonPostId(),-1);
-                    holder.cbLike.setTextColor(context.getResources().getColor(R.color.black));
-                    holder.cbLike.setTypeface(ResourcesCompat.getFont(context, R.font.montserrat_light));
-                }
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                return true;  // Blocks input from hardware keyboards.
             }
         });
-
-        holder.btnComment.setOnClickListener(new View.OnClickListener() {
+        holder.ETMainGoal.setClickable(false);
+        holder.ETMainGoal.setBackground(null);
+        holder.btnDeleteMainGoal.setVisibility(View.GONE);
+        /*holder.btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
@@ -92,6 +82,14 @@ public class MainGoalsAdapter extends RecyclerView.Adapter<MainGoalsAdapter.View
                 commentsFragment.show(fragmentManager,commentsFragment.getTag());
             }
         });*/
+        List<String> subGoals = mainGoals.getSubGoals();
+        List<Boolean> subGoalsCompletion = mainGoals.getSubGoalsCompletion();
+        Log.d("test","Ok");
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+        holder.rvSubGoals.setLayoutManager(layoutManager);
+        SubGoalsAdapter subGoalsAdapter = new SubGoalsAdapter(subGoals,subGoalsCompletion,goalsTrackerViewModel);
+        holder.rvSubGoals.setAdapter(subGoalsAdapter);
+        subGoalsAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -99,22 +97,17 @@ public class MainGoalsAdapter extends RecyclerView.Adapter<MainGoalsAdapter.View
         return data.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
-        /*TextView tvLesson, tvLikeCount, tvCommentCount;
-        Button btnComment;
-        CheckBox cbLike;
-        ImageView ivLikeCount;
+        EditText ETMainGoal;
+        Button btnDeleteMainGoal;
+        CheckBox CBMainGoal;
+        RecyclerView rvSubGoals;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvLesson = itemView.findViewById(R.id.tvLesson);
-            tvLikeCount = itemView.findViewById(R.id.tvLikeCount);
-            tvCommentCount = itemView.findViewById(R.id.tvCommentCount);
-            btnComment = itemView.findViewById(R.id.btnComment);
-            cbLike = itemView.findViewById(R.id.cbLike);
-            ivLikeCount = itemView.findViewById(R.id.ivLikeCount);
-        }*/
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
+            ETMainGoal = itemView.findViewById(R.id.ETMainGoal);
+            btnDeleteMainGoal = itemView.findViewById(R.id.btnDeleteMainGoal);
+            CBMainGoal = itemView.findViewById(R.id.CBMainGoal);
+            rvSubGoals = itemView.findViewById(R.id.rvSubGoals);
         }
     }
 }

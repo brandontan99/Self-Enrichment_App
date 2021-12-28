@@ -24,6 +24,18 @@
         <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2703125" />
         <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/mipmap-anydpi-v26/ic_like_count.xml" value="0.2703125" />
         <entry key="..\:/Users/BrandonTan/AndroidStudioProjects/SelfEnrichmentApp/app/src/main/res/mipmap-anydpi-v26/ic_like_count_round.xml" value="0.14947916666666666" />
+        <entry key="..\:/Users/goy/Documents/GitHub/Self-Enrichment_App/app/src/main/res/drawable/bottomsheet_rounded_background.xml" value="0.1390625" />
+        <entry key="..\:/Users/goy/Documents/GitHub/Self-Enrichment_App/app/src/main/res/drawable/checkbox_like.xml" value="0.1390625" />
+        <entry key="..\:/Users/goy/Documents/GitHub/Self-Enrichment_App/app/src/main/res/drawable/ic_edit.xml" value="0.1390625" />
+        <entry key="..\:/Users/goy/Documents/GitHub/Self-Enrichment_App/app/src/main/res/layout/btmsheetfragment_comments_lessonslearnt.xml" value="0.1265625" />
+        <entry key="..\:/Users/goy/Documents/GitHub/Self-Enrichment_App/app/src/main/res/layout/cardview_comment_lessonslearnt.xml" value="0.1265625" />
+        <entry key="..\:/Users/goy/Documents/GitHub/Self-Enrichment_App/app/src/main/res/layout/cardview_maingoals_goalstracker.xml" value="0.176" />
+        <entry key="..\:/Users/goy/Documents/GitHub/Self-Enrichment_App/app/src/main/res/layout/cardview_post_lessonslearnt.xml" value="0.1265625" />
+        <entry key="..\:/Users/goy/Documents/GitHub/Self-Enrichment_App/app/src/main/res/layout/cardview_subgoals_goalstracker.xml" value="0.11927083333333334" />
+        <entry key="..\:/Users/goy/Documents/GitHub/Self-Enrichment_App/app/src/main/res/layout/fragment_dashboard.xml" value="0.12291666666666666" />
+        <entry key="..\:/Users/goy/Documents/GitHub/Self-Enrichment_App/app/src/main/res/layout/fragment_goals.xml" value="0.176" />
+        <entry key="..\:/Users/goy/Documents/GitHub/Self-Enrichment_App/app/src/main/res/layout/fragment_lessonslearnt.xml" value="0.136" />
+        <entry key="..\:/Users/goy/Documents/GitHub/Self-Enrichment_App/app/src/main/res/layout/fragment_mood.xml" value="0.1265625" />
       </map>
     </option>
   </component>

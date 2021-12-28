@@ -1,5 +1,10 @@
 package com.example.self_enrichment_app.data.model;
 
+import android.util.Log;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainGoals {
@@ -37,12 +42,12 @@ public class MainGoals {
 
     public List<String> getSubGoals() {return subGoals;}
 
-    public void setSubGoals(String subGoal,String newSubGoal){
+    public List<Boolean> getSubGoalsCompletion() {return subGoalsCompletion;}
+
+    /*public void setSubGoals(String subGoal,String newSubGoal){
         int index=this.subGoals.indexOf(subGoal);
         this.subGoals.set(index,newSubGoal);
     }
-
-    public List<Boolean> getSubGoalsCompletion() {return subGoalsCompletion;}
 
     public void setSubGoalsCompletion(String subGoal,boolean isCompleted){
         int index=this.subGoalsCompletion.indexOf(subGoal);
@@ -58,7 +63,7 @@ public class MainGoals {
         int index=this.subGoals.indexOf(subGoal);
         this.subGoals.remove(index);
         this.subGoalsCompletion.remove(index);
-    }
+    }*/
 
 }
 
