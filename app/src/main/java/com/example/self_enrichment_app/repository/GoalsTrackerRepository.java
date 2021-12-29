@@ -38,28 +38,15 @@ public class GoalsTrackerRepository {
 
     }
 
-    public MutableLiveData<List<MainGoals>> getMainGoalsListMutableLiveData() {
-        firestore.collection("MainGoals").addSnapshotListener(new EventListener<QuerySnapshot>() {
+    public MutableLiveData<String> getMainGoalsListMutableLiveData(String documentId) {
+        MutableLiveData<String> mainGoal = new MutableLiveData<>();
+        firestore.collection("MainGoals").document(documentId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                List<MainGoals> mainGoalsList = new ArrayList<>();
-                for (QueryDocumentSnapshot doc : value) {
-                    if (doc != null) {
-                        mainGoalsList.add(doc.toObject(MainGoals.class));
-                    }
-                }
-                Collections.sort(mainGoalsList, new Comparator<MainGoals>(){
-
-                    public int compare(MainGoals o1, MainGoals o2)
-                    {
-                        // Descensing order
-                        return o2.getCreatedAt().compareTo(o1.getCreatedAt());
-                    }
-                });
-                mainGoalsListMutableLiveData.postValue(mainGoalsList);
+            public void onEvent(@Nullable DocumentSnapshot doc, @Nullable FirebaseFirestoreException error) {
+                mainGoal.postValue(doc.toObject(MainGoals.class).getGoal());
             }
         });
-        return mainGoalsListMutableLiveData;
+        return mainGoal;
     }
 
     public void updateMainGoals(String documentId, String newMainGoal){

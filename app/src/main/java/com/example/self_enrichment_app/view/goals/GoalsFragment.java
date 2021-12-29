@@ -6,9 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,9 @@ import com.example.self_enrichment_app.data.model.MainGoals;
 import com.example.self_enrichment_app.view.lessons.LessonPostsAdapter;
 import com.example.self_enrichment_app.viewmodel.GoalsTrackerViewModel;
 import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.List;
 
@@ -30,7 +35,7 @@ public class GoalsFragment extends Fragment {
 
     private GoalsTrackerViewModel goalsTrackerViewModel;
     private RecyclerView rvGoals;
-    private MainGoalsAdapter mainGoalAdapter;
+    private MainGoalsAdapter mainGoalsAdapter;
 
     public GoalsFragment() {
         // Required empty public constructor
@@ -55,11 +60,18 @@ public class GoalsFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         rvGoals = view.findViewById(R.id.rvGoals);
         rvGoals.setLayoutManager(layoutManager);
+        rvGoals.setItemAnimator(new DefaultItemAnimator());
         goalsTrackerViewModel = new ViewModelProvider(this).get(GoalsTrackerViewModel.class);
-        goalsTrackerViewModel.getLiveMainGoalData().observe(getViewLifecycleOwner(), mainGoalList -> {
-            mainGoalAdapter = new MainGoalsAdapter(mainGoalList, goalsTrackerViewModel);
-            rvGoals.setAdapter(mainGoalAdapter);
-            mainGoalAdapter.notifyDataSetChanged();
+        Query query = FirebaseFirestore.getInstance()
+                .collection("MainGoals").orderBy("goal", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<MainGoals> options = new FirestoreRecyclerOptions.Builder<MainGoals>().setQuery(query, MainGoals.class).build();
+        Log.d("test",options.toString());
+        mainGoalsAdapter = new MainGoalsAdapter(options);
+        mainGoalsAdapter.registerAdapterDataObserver( new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                rvGoals.scrollToPosition(0);
+            }
         });
         Button btnEditGoals = view.findViewById(R.id.btnEditGoals);
         btnEditGoals.setOnClickListener(new View.OnClickListener() {
@@ -84,5 +96,18 @@ public class GoalsFragment extends Fragment {
                 btnActiveGoals.setBackgroundColor(getResources().getColor(R.color.white));
             }
         });
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mainGoalsAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mainGoalsAdapter.stopListening();
     }
 }

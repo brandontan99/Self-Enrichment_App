@@ -23,12 +23,11 @@ public class GoalsTrackerViewModel extends ViewModel {
 
     public GoalsTrackerViewModel() {
         goalsTrackerRepository = new GoalsTrackerRepository();
-        mainGoalsListMutableLiveData =  goalsTrackerRepository.getMainGoalsListMutableLiveData();
     }
 
-    public MutableLiveData<List<MainGoals>> getLiveMainGoalData() {
+    /*public MutableLiveData<List<MainGoals>> getLiveMainGoalData() {
         return mainGoalsListMutableLiveData;
-    }
+    }*/
 
     public List<String> getSubGoalData(MainGoals mainGoals) {
         return mainGoals.getSubGoals();
