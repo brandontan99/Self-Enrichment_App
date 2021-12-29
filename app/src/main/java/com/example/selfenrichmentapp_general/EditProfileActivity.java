@@ -4,29 +4,42 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.StringBufferInputStream;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -39,14 +52,19 @@ public class EditProfileActivity extends AppCompatActivity {
     //https://www.youtube.com/watch?v=Em31dkFkwV8&t=664s
 
     FirebaseAuth mauth;
-    FirebaseDatabase db;
-    DatabaseReference userReference;
     CircleImageView editProfilePicture, editProfilePictureBtn;
 
     private Uri imageUri;
     private String myUri = "";
-    private StorageTask uploadTask;
-    private StorageReference storageReference;
+
+    UploadTask uploadTask;
+    FirebaseStorage firebaseStorage;
+    StorageReference storageReference;
+    FirebaseFirestore db;
+    DocumentReference documentReference;
+    FirebaseUser firebaseUser;
+    String userID;
+
     private TextView editFullName, editUserName, editBirthdayYear, editBirthdayMonth, editBirthdayDay, editEmailAddress;
 
     @Override
@@ -69,10 +87,12 @@ public class EditProfileActivity extends AppCompatActivity {
 
         editEmailAddress = (TextView) findViewById(R.id.editProfileEmailAddress);
 
-        //Initialization of Firebase Auth, Firebase Realtime Databae and Firebase Storage
+        //Initialization of Firebase Auth, Firebase Realtime Database and Firebase Storage
         mauth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance("https://self-enrichment-app-default-rtdb.asia-southeast1.firebasedatabase.app");
-        userReference = db.getReference("User");
+        db = FirebaseFirestore.getInstance();
+        firebaseUser = mauth.getCurrentUser();
+        userID = firebaseUser.getUid();
+        documentReference = db.collection("Users").document(userID);
         storageReference = FirebaseStorage.getInstance().getReference("Profile Picture");
 
         //Close Button
@@ -90,7 +110,8 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 validateAndSave();
-                startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
+
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
             }
         };
 
@@ -112,12 +133,12 @@ public class EditProfileActivity extends AppCompatActivity {
     //Method to validate and save the changed user information to database
     private void validateAndSave() {
 
-        String fullName = editFullName.getText().toString();
-        String userName = editUserName.getText().toString();
-        String birthdayYear = editBirthdayYear.getText().toString();
-        String birthdayMonth = editBirthdayMonth.getText().toString();
-        String birthdayDay = editBirthdayDay.getText().toString();
-        String emailAddress = editEmailAddress.getText().toString();
+        String fullName = editFullName.getText().toString().trim();
+        String userName = editUserName.getText().toString().trim();
+        String birthdayYear = editBirthdayYear.getText().toString().trim();
+        String birthdayMonth = editBirthdayMonth.getText().toString().trim();
+        String birthdayDay = editBirthdayDay.getText().toString().trim();
+        String emailAddress = editEmailAddress.getText().toString().trim();
 
         //Empty check
         if(fullName.isEmpty()){
@@ -133,55 +154,76 @@ public class EditProfileActivity extends AppCompatActivity {
         }else if(emailAddress.isEmpty()){
             Toast.makeText(EditProfileActivity.this, "Please enter your email address.", Toast.LENGTH_SHORT).show();
         }else{
-            HashMap<String, Object> userMap = new HashMap<>();
-            userMap.put("fullName", fullName);
-            userMap.put("userName", userName);
-            userMap.put("birthdayYear", birthdayYear);
-            userMap.put("birthdayMonth", birthdayMonth);
-            userMap.put("birthdayDay", birthdayDay);
-            userMap.put("emailAddress", emailAddress);
 
-            //Update the new user information to database
-            userReference.child(mauth.getCurrentUser().getUid()).updateChildren(userMap);
+            HashMap<String, Object> userMap = new HashMap<>();
+            userMap.put("Full Name", fullName);
+            userMap.put("User Name", userName);
+            userMap.put("Birthday (year)", birthdayYear);
+            userMap.put("Birthday (month)", birthdayMonth);
+            userMap.put("Birthday (day)", birthdayDay);
+            userMap.put("Email Address", emailAddress);
 
             uploadProfileImage();
+
+            //Update the new user information to database
+            documentReference.update(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    firebaseUser.updateEmail(emailAddress).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(EditProfileActivity.this, "Profile updated.", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(EditProfileActivity.this, "Profile failed to update.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(EditProfileActivity.this, "Error occurs. Please try again.", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
     //Method to get user information from database to app
     private void getUserInfo() {
-        userReference.child(mauth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if(snapshot.exists() && snapshot.getChildrenCount() > 0){
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.getResult().exists()){
+                    String userName = task.getResult().getString("User Name");
+                    String fullName = task.getResult().getString("Full Name");
+                    String birthdayYear = task.getResult().getString("Birthday (year)");
+                    String birthdayMonth = task.getResult().getString("Birthday (month)");
+                    String birthdayDay = task.getResult().getString("Birthday (day)");
+                    String emailAddress = task.getResult().getString("Email Address");
+                    String Uri = task.getResult().getString("Url");
 
-                    String fullName = snapshot.child("fullName").getValue().toString();
-                    String userName = snapshot.child("userName").getValue().toString();
-                    String birthdayYear = snapshot.child("birthdayYear").getValue().toString();
-                    String birthdayMonth = snapshot.child("birthdayMonth").getValue().toString();
-                    String birthdayDay = snapshot.child("birthdayDay").getValue().toString();
-                    String emailAddress = snapshot.child("emailAddress").getValue().toString();
-
-                    editFullName.setText(fullName);
+                    Picasso.get().load(Uri).into(editProfilePicture);
                     editUserName.setText(userName);
+                    editFullName.setText(fullName);
                     editBirthdayYear.setText(birthdayYear);
                     editBirthdayMonth.setText(birthdayMonth);
                     editBirthdayDay.setText(birthdayDay);
                     editEmailAddress.setText(emailAddress);
 
-                    if(snapshot.hasChild("image")){
-                        String image = snapshot.child("image").getValue().toString();
-                        Picasso.get().load(image).into(editProfilePicture);
-                    }
+                }else{
+                    Toast.makeText(EditProfileActivity.this, "No Profile exist", Toast.LENGTH_SHORT).show();
                 }
             }
-
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(EditProfileActivity.this, "Error occurs. Please try again.", Toast.LENGTH_SHORT).show();
+            public void onFailure(@NonNull Exception e) {
+
             }
         });
-    }
+    };
+
 
     //Get and crop from phone
     @Override
@@ -191,44 +233,57 @@ public class EditProfileActivity extends AppCompatActivity {
         if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK && data != null){
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             imageUri = result.getUri();
-            editProfilePicture.setImageURI(imageUri);
+            Picasso.get().load(imageUri).into(editProfilePicture);
         }else{
             Toast.makeText(EditProfileActivity.this, "Error, Please Try Again.", Toast.LENGTH_SHORT).show();
         }
 
     }
 
+
+    private String getFileExt(Uri uri){
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
     //Method to upload cropped profile picture to firebase storage
     private void uploadProfileImage() {
 
         if(imageUri != null){
-            final StorageReference fileRef = storageReference.child(mauth.getCurrentUser().getUid()+ ".jpg");
+            final StorageReference fileRef = storageReference.child(System.currentTimeMillis() + "." + getFileExt(imageUri));
+            //final StorageReference fileRef = storageReference.child(mauth.getCurrentUser().getUid() + "jpg");
 
             uploadTask = fileRef.putFile(imageUri);
 
-            uploadTask.continueWithTask(new Continuation() {
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
-                public Object then(@NonNull Task task) throws Exception {
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                     if(task.isSuccessful()){
                         throw task.getException();
                     }
                     return fileRef.getDownloadUrl();
-
                 }
             }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
-                    if(task.isSuccessful()){
+                    if(task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
-                        myUri = downloadUri.toString();
+                        myUri = downloadUri.toString().trim();
 
                         HashMap<String, Object> userMap = new HashMap<>();
-                        userMap.put("image", myUri);
+                        userMap.put("Url", myUri);
 
-                        userReference.child(mauth.getCurrentUser().getUid()).updateChildren(userMap);
+                        documentReference.update(userMap);
                     }
                 }
+            }).addOnCanceledListener(new OnCanceledListener() {
+                @Override
+                public void onCanceled() {
+                    Toast.makeText(EditProfileActivity.this, "Canceled.", Toast.LENGTH_SHORT).show();
+                }
             });
+
         }
         else{
             Toast.makeText(EditProfileActivity.this, "Image not selected", Toast.LENGTH_SHORT).show();

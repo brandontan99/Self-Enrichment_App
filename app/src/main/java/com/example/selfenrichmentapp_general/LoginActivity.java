@@ -26,6 +26,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -37,7 +38,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.HashMap;
 import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {
@@ -59,8 +65,10 @@ public class LoginActivity extends AppCompatActivity {
     
     GoogleSignInClient mGoogleSignInClient;
     FirebaseAuth mAuth;
-    FirebaseDatabase db;
-    DatabaseReference userReference;
+    FirebaseFirestore db;
+    DocumentReference documentReference;
+    FirebaseUser firebaseUser;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +80,10 @@ public class LoginActivity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance("https://self-enrichment-app-default-rtdb.asia-southeast1.firebasedatabase.app");
-        userReference = db.getReference("User");
+        db = FirebaseFirestore.getInstance();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        //userID = firebaseUser.getUid();
+        //documentReference = db.collection("Users").document(userID);
 
         //Login button (custom login)
         Button loginBtn = (Button) findViewById(R.id.buttonlogin);
@@ -96,26 +106,14 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             //if email address and password match with the registered user in database
-                            if(task.isSuccessful()){
-                                userReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        GlobalVariable.currentUser = snapshot.getValue(User.class);
-                                        Toast.makeText(LoginActivity.this, "Sign In Successful.", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
-                                        finish();
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
+                            if(task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "Sign In Successful.", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                                finish();
                             }else{
                                 Toast.makeText(LoginActivity.this, "Sign In Failed.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
+                            };
+                        };
                     });
                 }
             }
@@ -215,6 +213,17 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
 }

@@ -38,14 +38,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
 
-        FirebaseUser user = mauth.getCurrentUser();
-        if (user != null) {
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
-        }
-    }
 }
