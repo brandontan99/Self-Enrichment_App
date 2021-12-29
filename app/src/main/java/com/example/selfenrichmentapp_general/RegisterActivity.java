@@ -7,6 +7,7 @@ import androidx.navigation.Navigation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.service.autofill.Dataset;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,11 +19,17 @@ import android.widget.Toast;
 import com.example.selfenrichmentapp_general.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -31,8 +38,10 @@ public class RegisterActivity extends AppCompatActivity {
     //https://www.youtube.com/watch?v=nF3rzpy2H-I
 
     FirebaseAuth mauth;
-    FirebaseDatabase db;
-    DatabaseReference userReference;
+    FirebaseFirestore db;
+    DocumentReference documentReference;
+    FirebaseUser firebaseUser;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +55,19 @@ public class RegisterActivity extends AppCompatActivity {
         TextView registerBirthdayMonth = (TextView) findViewById(R.id.editRegisterBirthdayMonth);
         TextView registerBirthdayDay = (TextView) findViewById(R.id.editRegisterBirthdayDay);
 
-        TextView registerEmailAddress = (TextView) findViewById(R.id.editTextEmailAddress);
+        TextView registerEmailAddress = (TextView) findViewById(R.id.editTextRegisterEmailAddress);
         TextView registerPassword = (TextView) findViewById(R.id.editRegisterPassword);
 
         CheckBox registerCheck = (CheckBox) findViewById(R.id.checkBox);
 
         //initialise firebase instance (auth, realtime db)
         mauth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance("https://self-enrichment-app-default-rtdb.asia-southeast1.firebasedatabase.app");
-        userReference = db.getReference("User");
+        db = FirebaseFirestore.getInstance();
+
+        if(mauth.getCurrentUser() != null){
+            startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+            finish();
+        }
 
         //Register button
         Button registerBtn = (Button) findViewById(R.id.buttonRegister);
@@ -62,13 +75,13 @@ public class RegisterActivity extends AppCompatActivity {
         View.OnClickListener OCLRegister = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String fullName = registerFullName.getText().toString();
-                String userName = registerUserName.getText().toString();
-                String birthdayYear = registerBirthdayYear.getText().toString();
-                String birthdayMonth = registerBirthdayMonth.getText().toString();
-                String birthdayDay = registerBirthdayDay.getText().toString();
-                String emailAddress = registerEmailAddress.getText().toString();
-                String password = registerPassword.getText().toString();
+                String fullName = registerFullName.getText().toString().trim();
+                String userName = registerUserName.getText().toString().trim();
+                String birthdayYear = registerBirthdayYear.getText().toString().trim();
+                String birthdayMonth = registerBirthdayMonth.getText().toString().trim();
+                String birthdayDay = registerBirthdayDay.getText().toString().trim();
+                String emailAddress = registerEmailAddress.getText().toString().trim();
+                String password = registerPassword.getText().toString().trim();
 
                 //check empty
                 if(fullName.isEmpty()){
@@ -98,33 +111,39 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                User user = new User();
-                                user.setUserName(registerUserName.getText().toString());
-                                user.setFullName(registerFullName.getText().toString());
-                                user.setBirthdayYear(registerBirthdayYear.getText().toString());
-                                user.setBirthdayMonth(registerBirthdayMonth.getText().toString());
-                                user.setBirthdayDay(registerBirthdayDay.getText().toString());
-                                user.setEmailAddress(registerEmailAddress.getText().toString());
-                                user.setPassword(registerPassword.getText().toString());
+                                firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                                userID = firebaseUser.getUid();
+                                documentReference = db.collection("Users").document(userID);
 
-                                userReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                HashMap<String, Object> userMap = new HashMap<>();
+                                userMap.put("Full Name", fullName );
+                                userMap.put("User Name", userName);
+                                userMap.put("Birthday (year)", birthdayYear );
+                                userMap.put("Birthday (month)", birthdayMonth);
+                                userMap.put("Birthday (day)", birthdayDay);
+                                userMap.put("Email Address", emailAddress);
+                                userMap.put("Password", password);
+                                userMap.put("User ID", userID);
+
+                                documentReference.set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
+                                    public void onSuccess(Void unused) {
                                         Toast.makeText(RegisterActivity.this, "User Register Sucessfully", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                                        finish();
+
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(RegisterActivity.this, "User Register Failed"+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RegisterActivity.this, "User Register Failed", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-
+                                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                            }else{
+                                Toast.makeText(RegisterActivity.this, "User Register Failed", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
+
 
                 }
             }
