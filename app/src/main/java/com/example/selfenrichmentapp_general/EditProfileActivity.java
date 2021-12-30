@@ -47,10 +47,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    //reference video
-    //https://www.youtube.com/watch?v=e_04jFbbnq4
-    //https://www.youtube.com/watch?v=Em31dkFkwV8&t=664s
-
     FirebaseAuth mauth;
     CircleImageView editProfilePicture, editProfilePictureBtn;
 
@@ -87,13 +83,14 @@ public class EditProfileActivity extends AppCompatActivity {
 
         editEmailAddress = (TextView) findViewById(R.id.editProfileEmailAddress);
 
-        //Initialization of Firebase Auth, Firebase Realtime Database and Firebase Storage
+        //Initialization of Firebase Auth, Firebase Firestore Database and Firebase Storage
         mauth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         firebaseUser = mauth.getCurrentUser();
         userID = firebaseUser.getUid();
         documentReference = db.collection("Users").document(userID);
-        storageReference = FirebaseStorage.getInstance().getReference("Profile Picture");
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference("Profile Picture");
 
         //Close Button
         View.OnClickListener OCLCloseBtn = new View.OnClickListener() {
@@ -155,6 +152,7 @@ public class EditProfileActivity extends AppCompatActivity {
             Toast.makeText(EditProfileActivity.this, "Please enter your email address.", Toast.LENGTH_SHORT).show();
         }else{
 
+            //update new field value to each field
             HashMap<String, Object> userMap = new HashMap<>();
             userMap.put("Full Name", fullName);
             userMap.put("User Name", userName);
@@ -169,6 +167,7 @@ public class EditProfileActivity extends AppCompatActivity {
             documentReference.update(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
+                    //Update the email address at auth
                     firebaseUser.updateEmail(emailAddress).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
@@ -248,6 +247,9 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     //Method to upload cropped profile picture to firebase storage
+    //Until now still cannot update the profile image, not sure what the situation is
+    //Can save to storage but cannot create a new field in document
+    //Need Help!!!!!!!!!!!!!
     private void uploadProfileImage() {
 
         if(imageUri != null){

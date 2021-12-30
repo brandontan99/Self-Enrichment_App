@@ -65,10 +65,6 @@ public class LoginActivity extends AppCompatActivity {
     
     GoogleSignInClient mGoogleSignInClient;
     FirebaseAuth mAuth;
-    FirebaseFirestore db;
-    DocumentReference documentReference;
-    FirebaseUser firebaseUser;
-    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +76,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        //userID = firebaseUser.getUid();
-        //documentReference = db.collection("Users").document(userID);
 
         //Login button (custom login)
         Button loginBtn = (Button) findViewById(R.id.buttonlogin);
@@ -102,10 +94,10 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Please enter your password.", Toast.LENGTH_SHORT).show();
 
                 }else{
+                    //Sign in with Email and Password
                     mAuth.signInWithEmailAndPassword(emailAddress, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            //if email address and password match with the registered user in database
                             if(task.isSuccessful()) {
                                 Toast.makeText(LoginActivity.this, "Sign In Successful.", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
@@ -148,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
         forgetPasswordBtn.setOnClickListener(OCLForgetPassword);
 
 
+        //////////////////////////////Google Sign in///////////////////////////////////////
         //Send request to google
         createRequest();
 

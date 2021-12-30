@@ -42,6 +42,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         newPassword = (TextView) findViewById(R.id.changePassowordEditNewPassword);
         confirmNewPassword = (TextView) findViewById(R.id.changePasswordEditConfirmNewPassword);
 
+        //Initialise auth and firestore
         mauth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         firebaseUser = mauth.getCurrentUser();
@@ -71,6 +72,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 String changeNewPassword = newPassword.getText().toString().trim();
                 String confirmChangeNewPassword = confirmNewPassword.getText().toString().trim();
 
+                //Empty check
                 if(changeNewPassword.isEmpty()){
                     Toast.makeText(ChangePasswordActivity.this, "Please enter your new password.", Toast.LENGTH_SHORT).show();
 
@@ -82,9 +84,11 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     HashMap<String, Object> userMap = new HashMap<>();
                     userMap.put("Password", changeNewPassword );
 
+                    //Update password value in password field
                     documentReference.update(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
+                            //update the password at auth
                             firebaseUser.updatePassword(changeNewPassword).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -113,6 +117,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         doneBtn.setOnClickListener(OCLDoneBtn);
     }
 
+    //Get the password value for current user
     private void getUserInfo() {
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
