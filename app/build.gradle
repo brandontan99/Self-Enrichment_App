@@ -7,7 +7,7 @@ android {
     compileSdk 30
 
     defaultConfig {
-        applicationId "com.example.self_enrichment_app"
+        applicationId "com.example.selfenrichmentapp_general"
         minSdk 21
         targetSdk 30
         versionCode 1
