@@ -41,11 +41,13 @@ public class ReviewAppActivity extends AppCompatActivity {
         review = (TextView) findViewById(R.id. reviewAppEditDescription);
         rateCount = (TextView) findViewById(R.id.reviewAppRateCount);
 
+        //Initialise auth and firestore
         mauth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         userID = mauth.getCurrentUser().getUid();
         documentReference = db.collection("Users").document(userID);
 
+        //Create a text view for rating bar (beside the rating bar)
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
@@ -88,6 +90,7 @@ public class ReviewAppActivity extends AppCompatActivity {
                 String rateValue = rateCount.getText().toString().trim();
 
 
+                //Empty check
                 if(reviewApp.isEmpty()){
                     Toast.makeText(ReviewAppActivity.this, "Your review is empty.", Toast.LENGTH_SHORT).show();
 
@@ -95,10 +98,12 @@ public class ReviewAppActivity extends AppCompatActivity {
                     Toast.makeText(ReviewAppActivity.this, "Your rating is empty.", Toast.LENGTH_SHORT).show();
 
                 } else{
+                    //Add rating and review field and field value
                     HashMap<String, Object> userMap = new HashMap<>();
                     userMap.put("Rating", rateValue);
                     userMap.put("Review", reviewApp);
 
+                    //Update the current document in firestore
                     documentReference.update(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

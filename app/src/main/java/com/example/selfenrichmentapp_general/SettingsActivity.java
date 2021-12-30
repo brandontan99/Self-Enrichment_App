@@ -37,6 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
         accountId = (TextView) findViewById(R.id.settingsAccountID);
         accountName = (TextView) findViewById(R.id.settingsAccount);
 
+        //Initialise auth and firestore
         mauth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         firebaseUser = mauth.getCurrentUser();
@@ -63,14 +64,14 @@ public class SettingsActivity extends AppCompatActivity {
         View.OnClickListener OCLDoneBtn = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SettingsActivity.this, ProfileActivity.class));
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 finish();
             }
         };
         doneBtn.setOnClickListener(OCLDoneBtn);
 
 
-        //Change passoword
+        //Change password
         ImageButton changePasswordBtn = (ImageButton) findViewById(R.id.settingsChangePasswordButton);
 
         View.OnClickListener OCLChangePasswordBtn = new View.OnClickListener() {
@@ -85,6 +86,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
+    //Get user Id and email address
     private void getUserInfo() {
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

@@ -35,9 +35,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    //Reference Video
-    //https://www.youtube.com/watch?v=3l_T9FyqCTw
-
     FirebaseAuth mauth;
     FirebaseFirestore db;
     DocumentReference documentReference;
@@ -64,7 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        //Initialize firebase auth and realtime db
+        //Initialize firebase auth and firestore
         mauth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         userID = mauth.getCurrentUser().getUid();

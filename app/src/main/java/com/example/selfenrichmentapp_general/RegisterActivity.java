@@ -33,9 +33,6 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    //Video for reference
-    //https://www.youtube.com/watch?v=fOwh16lzDP8&t=590s
-    //https://www.youtube.com/watch?v=nF3rzpy2H-I
 
     FirebaseAuth mauth;
     FirebaseFirestore db;
@@ -60,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         CheckBox registerCheck = (CheckBox) findViewById(R.id.checkBox);
 
-        //initialise firebase instance (auth, realtime db)
+        //initialise firebase instance (auth, firestore)
         mauth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
@@ -106,15 +103,17 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Please enter your password.", Toast.LENGTH_SHORT).show();
 
                 }else{
-                    //Create a new user in auth and create a new dataset to store user information in realtime database
+                    //Create a new user in auth and create a new dataset to store user information in firestore database
                     mauth.createUserWithEmailAndPassword(emailAddress, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
+                                //Collection: Users, Document:user UID
                                 firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                                 userID = firebaseUser.getUid();
                                 documentReference = db.collection("Users").document(userID);
 
+                                //Add fields and fields value
                                 HashMap<String, Object> userMap = new HashMap<>();
                                 userMap.put("Full Name", fullName );
                                 userMap.put("User Name", userName);
