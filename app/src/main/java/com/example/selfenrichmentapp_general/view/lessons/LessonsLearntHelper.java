@@ -1,9 +1,5 @@
-package com.example.self_enrichment_app.view.lessons;
+package com.example.selfenrichmentapp_general.view.lessons;
 
-import androidx.lifecycle.MutableLiveData;
-
-import com.example.self_enrichment_app.data.model.Comment;
-import com.example.self_enrichment_app.data.model.LessonPost;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;

@@ -1,9 +1,8 @@
-package com.example.self_enrichment_app.view.lessons;
+package com.example.selfenrichmentapp_general.view.lessons;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,7 +19,6 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -28,10 +26,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.self_enrichment_app.data.model.Comment;
-import com.example.self_enrichment_app.R;
-import com.example.self_enrichment_app.data.model.LessonPost;
-import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
+import com.example.selfenrichmentapp_general.data.model.Comment;
+import com.example.selfenrichmentapp_general.R;
+import com.example.selfenrichmentapp_general.viewmodel.LessonsLearntViewModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;

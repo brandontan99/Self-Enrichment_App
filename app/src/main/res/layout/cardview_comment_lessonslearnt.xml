@@ -5,7 +5,7 @@
     android:id="@+id/clComment"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context="com.example.self_enrichment_app.view.lessons.LessonsLearntFragment">
+    tools:context="com.example.selfenrichmentapp_general.view.lessons.LessonsLearntFragment">
 
     <ImageView
         android:id="@+id/ivProfilePic"

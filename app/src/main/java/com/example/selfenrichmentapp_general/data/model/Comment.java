@@ -1,4 +1,4 @@
-package com.example.self_enrichment_app.data.model;
+package com.example.selfenrichmentapp_general.data.model;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.example.self_enrichment_app.view.lessons;
+package com.example.selfenrichmentapp_general.view.lessons;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,18 +17,11 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.self_enrichment_app.data.model.Comment;
-import com.example.self_enrichment_app.data.model.LessonPost;
-import com.example.self_enrichment_app.R;
-import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
+import com.example.selfenrichmentapp_general.data.model.LessonPost;
+import com.example.selfenrichmentapp_general.R;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LessonPostsAdapter extends FirestoreRecyclerAdapter<LessonPost, LessonPostsAdapter.ViewHolder> {
     private LayoutInflater layoutInflater;

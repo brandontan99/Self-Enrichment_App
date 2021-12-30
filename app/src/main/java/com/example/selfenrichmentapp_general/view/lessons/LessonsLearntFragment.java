@@ -1,4 +1,4 @@
-package com.example.self_enrichment_app.view.lessons;
+package com.example.selfenrichmentapp_general.view.lessons;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,10 +20,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.self_enrichment_app.MainActivity;
-import com.example.self_enrichment_app.R;
-import com.example.self_enrichment_app.data.model.LessonPost;
-import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
+import com.example.selfenrichmentapp_general.MainActivity;
+import com.example.selfenrichmentapp_general.R;
+import com.example.selfenrichmentapp_general.data.model.LessonPost;
+import com.example.selfenrichmentapp_general.viewmodel.LessonsLearntViewModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;

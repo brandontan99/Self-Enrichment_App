@@ -1,4 +1,4 @@
-package com.example.self_enrichment_app.view.lessons;
+package com.example.selfenrichmentapp_general.view.lessons;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.self_enrichment_app.data.model.Comment;
-import com.example.self_enrichment_app.R;
-import com.example.self_enrichment_app.data.model.LessonPost;
+import com.example.selfenrichmentapp_general.data.model.Comment;
+import com.example.selfenrichmentapp_general.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment,CommentsAdapter.ViewHolder> {
     private LayoutInflater layoutInflater;

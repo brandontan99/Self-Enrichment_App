@@ -5,7 +5,7 @@
     android:id="@+id/clLessonsLearnt"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.example.self_enrichment_app.view.lessons.LessonsLearntFragment">
+    tools:context="com.example.selfenrichmentapp_general.view.lessons.LessonsLearntFragment">
 
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/cvPost"

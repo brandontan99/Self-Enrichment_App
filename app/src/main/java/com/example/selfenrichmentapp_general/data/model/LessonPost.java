@@ -1,9 +1,6 @@
-package com.example.self_enrichment_app.data.model;
+package com.example.selfenrichmentapp_general.data.model;
 
 import com.google.firebase.firestore.DocumentId;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LessonPost {
     private String lesson;

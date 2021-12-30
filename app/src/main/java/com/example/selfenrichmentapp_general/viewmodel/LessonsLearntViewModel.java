@@ -1,11 +1,11 @@
-package com.example.self_enrichment_app.viewmodel;
+package com.example.selfenrichmentapp_general.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.self_enrichment_app.data.model.Comment;
-import com.example.self_enrichment_app.data.model.LessonPost;
-import com.example.self_enrichment_app.repository.LessonsLearntRepository;
+import com.example.selfenrichmentapp_general.data.model.Comment;
+import com.example.selfenrichmentapp_general.data.model.LessonPost;
+import com.example.selfenrichmentapp_general.repository.LessonsLearntRepository;
 
 import java.util.List;
 

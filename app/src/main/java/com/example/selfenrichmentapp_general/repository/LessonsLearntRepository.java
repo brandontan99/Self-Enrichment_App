@@ -1,10 +1,10 @@
-package com.example.self_enrichment_app.repository;
+package com.example.selfenrichmentapp_general.repository;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.self_enrichment_app.data.model.Comment;
-import com.example.self_enrichment_app.data.model.LessonPost;
+import com.example.selfenrichmentapp_general.data.model.Comment;
+import com.example.selfenrichmentapp_general.data.model.LessonPost;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -12,16 +12,8 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class LessonsLearntRepository {
     MutableLiveData<List<LessonPost>> lessonPostListMutableLiveData;

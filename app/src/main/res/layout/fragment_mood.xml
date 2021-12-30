@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.self_enrichment_app.view.mood.MoodFragment">
+    tools:context="com.example.selfenrichmentapp_general.view.mood.MoodFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
