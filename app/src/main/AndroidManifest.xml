@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.self_enrichment_app">
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,15 +12,50 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SelfEnrichmentApp">
         <activity
-            android:name="com.example.self_enrichment_app.MainActivity"
-            android:exported="true"
-            android:label="@string/app_name">
+            android:name=".view.MainActivity"
+            android:exported="false"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".view.general.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.general.AboutUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.general.ContactUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.general.ReviewAppActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.general.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.general.ForgetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.general.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.general.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.general.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.general.LoginActivity"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"
+            />
     </application>
 
 </manifest>

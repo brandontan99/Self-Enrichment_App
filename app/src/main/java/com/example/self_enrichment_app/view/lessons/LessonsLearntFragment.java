@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.self_enrichment_app.MainActivity;
+import com.example.self_enrichment_app.view.MainActivity;
 import com.example.self_enrichment_app.R;
 import com.example.self_enrichment_app.data.model.LessonPost;
 import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
