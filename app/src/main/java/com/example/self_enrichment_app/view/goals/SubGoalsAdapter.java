@@ -2,6 +2,7 @@ package com.example.self_enrichment_app.view.goals;
 
 import android.content.Context;
 import android.text.InputType;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,34 +17,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.self_enrichment_app.R;
 import com.example.self_enrichment_app.data.model.MainGoals;
 import com.example.self_enrichment_app.viewmodel.GoalsTrackerViewModel;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import java.util.List;
 
-public class SubGoalsAdapter extends RecyclerView.Adapter<SubGoalsAdapter.ViewHolder>{
+public class SubGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,SubGoalsAdapter.ViewHolder> {
     private LayoutInflater layoutInflater;
-    private List<String> data;
-    private List<Boolean> subData;
     private Context context;
-    private GoalsTrackerViewModel goalsTrackerViewModel;
 
-    SubGoalsAdapter(List<String> data, List<Boolean> subData, GoalsTrackerViewModel goalsTrackerViewModel){
-        this.data= data;
-        this.subData=subData;
-        this.goalsTrackerViewModel=goalsTrackerViewModel;
+    public SubGoalsAdapter(@NonNull FirestoreRecyclerOptions<MainGoals> options) {
+        super(options);
     }
     @NonNull
     @Override
     public SubGoalsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         this.layoutInflater = LayoutInflater.from(context);
+        Log.d("SubGoals","Test");
         View view = layoutInflater.inflate(R.layout.cardview_subgoals_goalstracker, parent, false);
         return new SubGoalsAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SubGoalsAdapter.ViewHolder holder, int position) {
-        String subGoals = data.get(position);
-        holder.ETSubGoal.setText(subGoals);
+    public void onBindViewHolder(@NonNull SubGoalsAdapter.ViewHolder holder, int position, MainGoals mainGoals) {
+        holder.ETSubGoal.setText(mainGoals.getGoal());
         holder.ETSubGoal.setInputType(InputType.TYPE_NULL);
         holder.ETSubGoal.setTextIsSelectable(false);
         holder.ETSubGoal.setOnKeyListener(new View.OnKeyListener() {
@@ -54,8 +52,8 @@ public class SubGoalsAdapter extends RecyclerView.Adapter<SubGoalsAdapter.ViewHo
         });
         holder.ETSubGoal.setClickable(false);
         holder.ETSubGoal.setBackground(null);
-        Boolean subGoalsCompletion = subData.get(position);
-        holder.CBSubGoal.setChecked(subGoalsCompletion);
+        //Boolean subGoalsCompletion = subData.get(position);
+        //holder.CBSubGoal.setChecked(subGoalsCompletion);
         holder.btnDeleteSubGoal.setVisibility(View.GONE);
         /*holder.btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,10 +70,6 @@ public class SubGoalsAdapter extends RecyclerView.Adapter<SubGoalsAdapter.ViewHo
         });*/
     }
 
-    @Override
-    public int getItemCount() {
-        return data.size();
-    }
     public class ViewHolder extends RecyclerView.ViewHolder{
         EditText ETSubGoal;
         Button btnDeleteSubGoal;

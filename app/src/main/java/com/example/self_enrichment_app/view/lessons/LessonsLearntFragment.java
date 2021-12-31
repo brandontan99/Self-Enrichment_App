@@ -66,7 +66,7 @@ public class LessonsLearntFragment extends Fragment {
                 rvPosts.scrollToPosition(0);
             }
         });
-        rvPosts.setAdapter(lessonPostsAdapter);
+
         Button btnSendPost = view.findViewById(R.id.btnSendPost);
         etLesson = view.findViewById(R.id.etLesson);
         etLesson.addTextChangedListener(new TextWatcher() {

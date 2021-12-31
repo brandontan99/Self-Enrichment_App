@@ -4,7 +4,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,6 +25,7 @@ import com.example.self_enrichment_app.R;
 import com.example.self_enrichment_app.data.model.Comment;
 import com.example.self_enrichment_app.data.model.LessonPost;
 import com.example.self_enrichment_app.data.model.MainGoals;
+import com.example.self_enrichment_app.view.lessons.CommentsBottomSheetFragment;
 import com.example.self_enrichment_app.view.lessons.LessonPostsAdapter;
 import com.example.self_enrichment_app.viewmodel.GoalsTrackerViewModel;
 import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
@@ -32,7 +36,7 @@ import com.google.firebase.firestore.Query;
 import java.util.List;
 
 public class GoalsFragment extends Fragment {
-
+    private static boolean edit=false;
     private GoalsTrackerViewModel goalsTrackerViewModel;
     private RecyclerView rvGoals;
     private MainGoalsAdapter mainGoalsAdapter;
@@ -41,9 +45,21 @@ public class GoalsFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static GoalsFragment newInstance(boolean edit) {
+        GoalsFragment fragment = new GoalsFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("edit", edit);
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle=getArguments();
+        if (bundle!=null) {
+            this.edit = bundle.getBoolean("edit", false);
+        }
+        Log.d("Edit",Boolean.toString(edit));
     }
 
     @Override
@@ -61,23 +77,31 @@ public class GoalsFragment extends Fragment {
         rvGoals = view.findViewById(R.id.rvGoals);
         rvGoals.setLayoutManager(layoutManager);
         rvGoals.setItemAnimator(new DefaultItemAnimator());
-        goalsTrackerViewModel = new ViewModelProvider(this).get(GoalsTrackerViewModel.class);
+        //goalsTrackerViewModel = new ViewModelProvider(this).get(GoalsTrackerViewModel.class);
         Query query = FirebaseFirestore.getInstance()
-                .collection("MainGoals").orderBy("goal", Query.Direction.DESCENDING);
+                .collection("MainGoals");
         FirestoreRecyclerOptions<MainGoals> options = new FirestoreRecyclerOptions.Builder<MainGoals>().setQuery(query, MainGoals.class).build();
-        Log.d("test",options.toString());
-        mainGoalsAdapter = new MainGoalsAdapter(options);
+        mainGoalsAdapter = new MainGoalsAdapter(options,edit);
         mainGoalsAdapter.registerAdapterDataObserver( new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 rvGoals.scrollToPosition(0);
             }
         });
+        rvGoals.setAdapter(mainGoalsAdapter);
         Button btnEditGoals = view.findViewById(R.id.btnEditGoals);
         btnEditGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View btnView) {
-
+                /*FragmentManager fragmentManager = (getActivity()).getSupportFragmentManager();
+                GoalsFragment goalsFragment = new GoalsFragment();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("edit",true);
+                goalsFragment.setArguments(bundle);*/
+                FragmentTransaction ft = (getActivity()).getSupportFragmentManager().beginTransaction();
+                GoalsFragment fragmentDemo = GoalsFragment.newInstance(true);
+                ft.replace(R.id.nhfMain, fragmentDemo);
+                ft.commit();
             }
         });
         Button btnActiveGoals = view.findViewById(R.id.btnActiveGoals);
