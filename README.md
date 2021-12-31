@@ -1,7 +1,9 @@
 # Self-Enrichment_App
 
 Remember to connect to Firebase before run the app<br />
-
+<br />
+Using package com.example.selfenrichmentapp_general 
+<br />
 Go to Authentication and Firestore to look for account for login or edit, or you can just make one if you want<br />
 <br />
 Done:<br />
