@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <soup.neumorphism.NeumorphCardView
-        android:id="@+id/neumorphCardView2"
+        android:id="@+id/neumorphCardViewMainGoals"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="24dp"
@@ -53,5 +53,5 @@
         android:layout_height="match_parent"
         android:layout_marginTop="96dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/neumorphCardView2" />
+        app:layout_constraintTop_toBottomOf="@+id/neumorphCardViewMainGoals" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.self_enrichment_app.R;
 import com.example.self_enrichment_app.data.model.LessonPost;
 import com.example.self_enrichment_app.data.model.MainGoals;
+import com.example.self_enrichment_app.data.model.SubGoals;
 import com.example.self_enrichment_app.view.lessons.CommentsBottomSheetFragment;
 import com.example.self_enrichment_app.view.lessons.LessonPostsAdapter;
 import com.example.self_enrichment_app.viewmodel.GoalsTrackerViewModel;
@@ -70,6 +71,10 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
             }
         });
         holder.ETMainGoal.setClickable(edit);
+        Log.d("Test",mainGoals.getGoal());
+        Log.d("Test",Integer.toString(position));
+        Log.d("Test",Boolean.toString(mainGoals.getCompleted()));
+        holder.CBMainGoal.setChecked(mainGoals.getCompleted());
         if (edit){
             //holder.ETMainGoal.setBackground(android.R.drawable.edit_text);
             holder.btnDeleteMainGoal.setVisibility(View.VISIBLE);
@@ -78,44 +83,17 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
             holder.ETMainGoal.setBackground(null);
             holder.btnDeleteMainGoal.setVisibility(View.GONE);
         }
-        /*holder.btnComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
-                CommentsBottomSheetFragment commentsFragment = new CommentsBottomSheetFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("lessonPostId",lessonPost.getLessonPostId());
-                bundle.putInt("likeCount",lessonPost.getLikeCount());
-                commentsFragment.setArguments(bundle);
-//                fragmentManager.beginTransaction().replace(R.id.content, commentsFragment).commit();
-                commentsFragment.show(fragmentManager,commentsFragment.getTag());
-            }
-        });
         List<String> subGoals = mainGoals.getSubGoals();
         List<Boolean> subGoalsCompletion = mainGoals.getSubGoalsCompletion();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         holder.rvSubGoals.setLayoutManager(layoutManager);
+        ArrayList<SubGoals> subGoalsArrayList=new ArrayList<>();
         for (int i=0;i<subGoals.size();i++) {
-            Log.d("Test",subGoals.get(i));
-            SubGoalsAdapter subGoalsAdapter = new SubGoalsAdapter(subGoals, subGoalsCompletion);
-            holder.rvSubGoals.setAdapter(subGoalsAdapter);
-            subGoalsAdapter.notifyDataSetChanged();
+            subGoalsArrayList.add(new SubGoals(subGoals.get(i),subGoalsCompletion.get(i)));
         }
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
-        holder.rvSubGoals.setLayoutManager(layoutManager);
-        holder.rvSubGoals.setItemAnimator(new DefaultItemAnimator());
-        //goalsTrackerViewModel = new ViewModelProvider(this).get(GoalsTrackerViewModel.class);
-        Query query = FirebaseFirestore.getInstance()
-                .collection("MainGoals").orderBy("goal", Query.Direction.DESCENDING);
-        FirestoreRecyclerOptions<MainGoals> options = new FirestoreRecyclerOptions.Builder<MainGoals>().setQuery(query, MainGoals.class).build();
-        SubGoalsAdapter subGoalsAdapter = new SubGoalsAdapter(options);
-        subGoalsAdapter.registerAdapterDataObserver( new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                holder.rvSubGoals.scrollToPosition(0);
-            }
-        });
-        holder.rvSubGoals.setAdapter(subGoalsAdapter);*/
+        SubGoalsAdapter subGoalsAdapter=new SubGoalsAdapter(context,subGoalsArrayList,edit);
+        holder.rvSubGoals.setAdapter(subGoalsAdapter);
+        subGoalsAdapter.notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

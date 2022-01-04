@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.self_enrichment_app.view.MainActivity;
@@ -90,17 +91,28 @@ public class GoalsFragment extends Fragment {
         });
         rvGoals.setAdapter(mainGoalsAdapter);
         Button btnEditGoals = view.findViewById(R.id.btnEditGoals);
+        Button btnCancelEditGoals = view.findViewById(R.id.btnCancelEditGoals);
+        if (edit){
+            btnCancelEditGoals.setVisibility(View.VISIBLE);
+        }
+        else{
+            btnCancelEditGoals.setVisibility(View.GONE);
+        }
+        btnCancelEditGoals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View btnView) {
+                FragmentTransaction ft = (getActivity()).getSupportFragmentManager().beginTransaction();
+                GoalsFragment fragmentDemo = GoalsFragment.newInstance(false);
+                ft.replace(R.id.nhfMain, fragmentDemo);
+                ft.commit();
+            }
+        });
         btnEditGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View btnView) {
-                /*FragmentManager fragmentManager = (getActivity()).getSupportFragmentManager();
-                GoalsFragment goalsFragment = new GoalsFragment();
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("edit",true);
-                goalsFragment.setArguments(bundle);*/
                 FragmentTransaction ft = (getActivity()).getSupportFragmentManager().beginTransaction();
                 GoalsFragment fragmentDemo = GoalsFragment.newInstance(true);
-                ft.replace(R.id.nhfMain, fragmentDemo);
+                ft.add(R.id.nhfMain, fragmentDemo);
                 ft.commit();
             }
         });
@@ -109,18 +121,19 @@ public class GoalsFragment extends Fragment {
         btnActiveGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View btnView) {
-                btnActiveGoals.setBackgroundColor(getResources().getColor(R.color.light_orange));
+                btnActiveGoals.setBackgroundColor(getResources().getColor(R.color.yellow));
                 btnCompletedGoals.setBackgroundColor(getResources().getColor(R.color.white));
             }
         });
         btnCompletedGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View btnView) {
-                btnCompletedGoals.setBackgroundColor(getResources().getColor(R.color.light_orange));
+                btnCompletedGoals.setBackgroundColor(getResources().getColor(R.color.yellow));
                 btnActiveGoals.setBackgroundColor(getResources().getColor(R.color.white));
             }
         });
-
+        Button btnAddMainGoal=view.findViewById(R.id.btnAddMainGoal);
+        EditText ETNewMainGoal=view.findViewById(R.id.ETNewMainGoal);
     }
 
     @Override
