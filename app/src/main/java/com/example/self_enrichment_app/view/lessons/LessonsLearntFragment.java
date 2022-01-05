@@ -25,14 +25,23 @@ import com.example.self_enrichment_app.R;
 import com.example.self_enrichment_app.data.model.LessonPost;
 import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+import java.util.List;
 
 public class LessonsLearntFragment extends Fragment {
     private RecyclerView rvPosts;
     private LessonPostsAdapter lessonPostsAdapter;
     private EditText etLesson;
     private LessonsLearntViewModel lessonsLearntViewModel;
+    private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth;
+    private String userId;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -50,15 +59,17 @@ public class LessonsLearntFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getUid();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         rvPosts = view.findViewById(R.id.rvPosts);
         rvPosts.setLayoutManager(layoutManager);
         rvPosts.setItemAnimator(new DefaultItemAnimator());
         lessonsLearntViewModel = new ViewModelProvider(this).get(LessonsLearntViewModel.class);
-        Query query = FirebaseFirestore.getInstance()
-                .collection("LessonPost").orderBy("createdAt", Query.Direction.DESCENDING);
+        Query query = mFirestore
+                .collection("LessonPosts").orderBy("createdAt", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<LessonPost> options = new FirestoreRecyclerOptions.Builder<LessonPost>().setQuery(query, LessonPost.class).build();
-        lessonPostsAdapter = new LessonPostsAdapter(options);
+        lessonPostsAdapter = new LessonPostsAdapter(options, userId);
         lessonPostsAdapter.registerAdapterDataObserver(    new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {

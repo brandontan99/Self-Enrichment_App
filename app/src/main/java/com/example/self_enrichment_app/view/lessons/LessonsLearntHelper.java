@@ -11,13 +11,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class LessonsLearntHelper {
     private static FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     public static void deleteLessonPost(String documentId){
-        firestore.collection("LessonPost").document(documentId).delete();
+        firestore.collection("LessonPosts").document(documentId).delete();
     }
-
-    public static void updateLikeCount(String documentId, int updateCount){
-        DocumentReference docRef = firestore.collection("LessonPost").document(documentId);
-        docRef.update("likeCount", FieldValue.increment(updateCount));
+    public static void addUserLiked(String lessonPostId, String userId){
+        DocumentReference docRef = firestore.collection("LessonPosts").document(lessonPostId);
+        docRef.update("usersLiked", FieldValue.arrayUnion(userId));
     }
-
+    public static void removeUserLiked(String lessonPostId, String userId){
+        DocumentReference docRef = firestore.collection("LessonPosts").document(lessonPostId);
+        docRef.update("usersLiked", FieldValue.arrayRemove(userId));
+    }
 }
 

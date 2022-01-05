@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.self_enrichment_app.data.model.Comment;
 import com.example.self_enrichment_app.data.model.LessonPost;
+import com.example.self_enrichment_app.data.model.User;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -32,34 +33,46 @@ public class LessonsLearntRepository {
         lessonPostListMutableLiveData = new MutableLiveData<>();
         firestore = FirebaseFirestore.getInstance();
         lessonLearntMutableLiveData = new MutableLiveData<>();
-
     }
 
-
-    public MutableLiveData<Integer> getLikeCountMutableLiveData(String documentId) {
-        MutableLiveData<Integer> likeCount = new MutableLiveData<>();
-        firestore.collection("LessonPost").document(documentId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+    public MutableLiveData<User> getUserMutableLiveData(String userId){
+        MutableLiveData<User> user = new MutableLiveData<>();
+        firestore.collection("Users").document(userId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot doc, @Nullable FirebaseFirestoreException error) {
-                likeCount.postValue(doc.toObject(LessonPost.class).getLikeCount());
+                user.postValue(doc.toObject(User.class));
             }
         });
-        return likeCount;
+        return user;
+    }
+    public MutableLiveData<List<String>> getUsersLikedMutableLiveData(String documentId) {
+        MutableLiveData<List<String>> usersLiked = new MutableLiveData<>();
+        firestore.collection("LessonPosts").document(documentId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot doc, @Nullable FirebaseFirestoreException error) {
+                usersLiked.postValue(doc.toObject(LessonPost.class).getUsersLiked());
+            }
+        });
+        return usersLiked;
     }
 
-    public void updateLessonPost(String documentId, String field, int updateCount){
-        // Update an existing document
-        DocumentReference docRef = firestore.collection("LessonPost").document(documentId);
-        docRef.update(field, FieldValue.increment(updateCount));
+    public void addUserLiked(String lessonPostId, String userId){
+        DocumentReference docRef = firestore.collection("LessonPosts").document(lessonPostId);
+        docRef.update("usersLiked", FieldValue.arrayUnion(userId));
     }
+    public void removeUserLiked(String lessonPostId, String userId){
+        DocumentReference docRef = firestore.collection("LessonPosts").document(lessonPostId);
+        docRef.update("usersLiked", FieldValue.arrayRemove(userId));
+    }
+
     public void addLessonPost(LessonPost newLessonPost){
-        firestore.collection("LessonPost").add(newLessonPost);
+        firestore.collection("LessonPosts").add(newLessonPost);
     }
     public void addComment(String documentId, Comment newComment){
-        CollectionReference colRef = firestore.collection("LessonPost").document(documentId).collection("Comment");
+        CollectionReference colRef = firestore.collection("LessonPosts").document(documentId).collection("Comments");
         colRef.add(newComment);
         // Update commentCount
-        DocumentReference docRef = firestore.collection("LessonPost").document(documentId);
+        DocumentReference docRef = firestore.collection("LessonPosts").document(documentId);
         docRef.update("commentCount", FieldValue.increment(1));
     }
 }

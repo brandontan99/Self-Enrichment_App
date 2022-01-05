@@ -17,25 +17,19 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.self_enrichment_app.data.model.Comment;
-import com.example.self_enrichment_app.data.model.LessonPost;
 import com.example.self_enrichment_app.R;
-import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
-
+import com.example.self_enrichment_app.data.model.LessonPost;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LessonPostsAdapter extends FirestoreRecyclerAdapter<LessonPost, LessonPostsAdapter.ViewHolder> {
     private LayoutInflater layoutInflater;
     private Context context;
+    private String userId;
 
-    public LessonPostsAdapter(@NonNull FirestoreRecyclerOptions<LessonPost> options) {
+    public LessonPostsAdapter(@NonNull FirestoreRecyclerOptions<LessonPost> options, String userId) {
         super(options);
+        this.userId = userId;
     }
 
     @NonNull
@@ -50,13 +44,14 @@ public class LessonPostsAdapter extends FirestoreRecyclerAdapter<LessonPost, Les
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull LessonPost lessonPost) {
         holder.tvLesson.setText(lessonPost.getLesson());
-        if(lessonPost.getLikeCount()==0){
+        int likeCount = lessonPost.getUsersLiked().size();
+        if(likeCount==0){
             holder.tvLikeCount.setVisibility(View.GONE);
             holder.ivLikeCount.setVisibility(View.GONE);
         }else{
             holder.tvLikeCount.setVisibility(View.VISIBLE);
             holder.ivLikeCount.setVisibility(View.VISIBLE);
-            holder.tvLikeCount.setText(String.valueOf(lessonPost.getLikeCount()));
+            holder.tvLikeCount.setText(String.valueOf(likeCount));
         }
         int commentCount = lessonPost.getCommentCount();
         if(commentCount==0){
@@ -71,15 +66,17 @@ public class LessonPostsAdapter extends FirestoreRecyclerAdapter<LessonPost, Les
                 LessonsLearntHelper.deleteLessonPost(lessonPost.getLessonPostId());
             }
         });
+        holder.cbLike.setChecked(lessonPost.getUsersLiked().contains(userId));
         holder.cbLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(holder.cbLike.isChecked()){
-                    LessonsLearntHelper.updateLikeCount(lessonPost.getLessonPostId(),1);
+                    LessonsLearntHelper.addUserLiked(lessonPost.getLessonPostId(),userId);
                     holder.cbLike.setTextColor(context.getResources().getColor(R.color.orange));
                     holder.cbLike.setTypeface(ResourcesCompat.getFont(context, R.font.montserrat_bold));
+
                 }else{
-                    LessonsLearntHelper.updateLikeCount(lessonPost.getLessonPostId(),-1);
+                    LessonsLearntHelper.removeUserLiked(lessonPost.getLessonPostId(),userId);
                     holder.cbLike.setTextColor(context.getResources().getColor(R.color.black));
                     holder.cbLike.setTypeface(ResourcesCompat.getFont(context, R.font.montserrat_light));
                 }
@@ -93,7 +90,7 @@ public class LessonPostsAdapter extends FirestoreRecyclerAdapter<LessonPost, Les
                 CommentsBottomSheetFragment commentsFragment = new CommentsBottomSheetFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("lessonPostId",lessonPost.getLessonPostId());
-                bundle.putInt("likeCount",lessonPost.getLikeCount());
+                bundle.putInt("likeCount",likeCount);
                 commentsFragment.setArguments(bundle);
                 commentsFragment.show(fragmentManager,commentsFragment.getTag());
             }

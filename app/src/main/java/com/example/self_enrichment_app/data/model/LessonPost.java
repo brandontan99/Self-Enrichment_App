@@ -7,9 +7,9 @@ import java.util.List;
 
 public class LessonPost {
     private String lesson;
-    private int likeCount;
     private int commentCount;
     private Long createdAt;
+    private List<String> usersLiked;
     @DocumentId
     private String lessonPostId;
 
@@ -18,9 +18,17 @@ public class LessonPost {
 
     public LessonPost(String lesson) {
         this.lesson = lesson;
-        this.likeCount = 0;
         this.commentCount = 0;
         this.createdAt = System.currentTimeMillis();
+        this.usersLiked = new ArrayList<>();
+    }
+
+    public List<String> getUsersLiked() {
+        return usersLiked;
+    }
+
+    public void setUsersLiked(List<String> usersLiked) {
+        this.usersLiked = usersLiked;
     }
 
     public Long getCreatedAt() {
@@ -47,16 +55,8 @@ public class LessonPost {
         this.lesson = lesson;
     }
 
-    public int getLikeCount() {
-        return likeCount;
-    }
-
     public int getCommentCount() {
         return commentCount;
-    }
-
-    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
     }
 
     public void setCommentCount(int commentCount) {
