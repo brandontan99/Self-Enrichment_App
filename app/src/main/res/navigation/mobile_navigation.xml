@@ -19,7 +19,16 @@
         android:id="@+id/destGoals"
         android:name="com.example.self_enrichment_app.view.goals.GoalsFragment"
         android:label="@string/title_goals"
-        tools:layout="@layout/fragment_goals" />
+        tools:layout="@layout/fragment_goals">
+        <argument
+        android:name="edit"
+        app:argType="boolean"
+        android:defaultValue="false"/>
+        <action
+            android:id="@+id/action_destGoals_self"
+            app:destination="@id/destGoals"
+            app:popUpTo="@id/destGoals" />
+    </fragment>
     <fragment
         android:id="@+id/destHealth"
         android:name="com.example.self_enrichment_app.view.health.HealthFragment"
