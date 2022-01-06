@@ -31,11 +31,13 @@ import android.widget.Toast;
 import com.example.self_enrichment_app.data.model.Comment;
 import com.example.self_enrichment_app.R;
 import com.example.self_enrichment_app.data.model.LessonPost;
+import com.example.self_enrichment_app.data.model.User;
 import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -54,15 +56,8 @@ public class CommentsBottomSheetFragment extends BottomSheetDialogFragment {
     private LessonsLearntViewModel lessonsLearntViewModel;
     private String lessonPostId;
     private int likeCount;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FirebaseAuth mAuth;
+    private String userId;
 
     public CommentsBottomSheetFragment() {
         // Required empty public constructor
@@ -79,10 +74,6 @@ public class CommentsBottomSheetFragment extends BottomSheetDialogFragment {
     // TODO: Rename and change types and number of parameters
     public static CommentsBottomSheetFragment newInstance(String param1, String param2) {
         CommentsBottomSheetFragment fragment = new CommentsBottomSheetFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -141,25 +132,29 @@ public class CommentsBottomSheetFragment extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getUid();
         TextView tvLikeCount = view.findViewById(R.id.tvLikeCountComment);
+        CheckBox cbLike = view.findViewById(R.id.cbLikeComment);
         rvComments = view.findViewById(R.id.rvComments);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         rvComments.setLayoutManager(layoutManager);
         rvComments.setItemAnimator(new DefaultItemAnimator());
+        lessonsLearntViewModel = new ViewModelProvider(this).get(LessonsLearntViewModel.class);
+        lessonsLearntViewModel.getLiveUsersLikedData(lessonPostId).observe(getViewLifecycleOwner(), usersLiked -> {
+            tvLikeCount.setText(String.valueOf(usersLiked.size()));
+            cbLike.setChecked(usersLiked.contains(userId));
+        });
         Query query = FirebaseFirestore.getInstance()
-                .collection("LessonPost").document(lessonPostId).collection("Comment").orderBy("createdAt", Query.Direction.ASCENDING);
+                .collection("LessonPosts").document(lessonPostId).collection("Comments").orderBy("createdAt", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Comment> options = new FirestoreRecyclerOptions.Builder<Comment>().setQuery(query, Comment.class).build();
-        commentsAdapter = new CommentsAdapter(options);
+        commentsAdapter = new CommentsAdapter(options, lessonsLearntViewModel, getViewLifecycleOwner());
         rvComments.setAdapter(commentsAdapter);
         commentsAdapter.registerAdapterDataObserver(    new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 rvComments.scrollToPosition(commentsAdapter.getItemCount() - 1);
             }
-        });
-        lessonsLearntViewModel = new ViewModelProvider(this).get(LessonsLearntViewModel.class);
-        lessonsLearntViewModel.getLiveLikeCountData(lessonPostId).observe(getViewLifecycleOwner(), likeCount -> {
-            tvLikeCount.setText(String.valueOf(likeCount));
         });
         ImageButton ibSendComment = view.findViewById(R.id.ibSendComment);
         EditText etComment = view.findViewById(R.id.etComment);
@@ -188,18 +183,17 @@ public class CommentsBottomSheetFragment extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "You have sent a comment successfully.",
                         Toast.LENGTH_SHORT).show();
-                lessonsLearntViewModel.addComment(lessonPostId, new Comment(etComment.getText().toString()));
+                lessonsLearntViewModel.addComment(lessonPostId, new Comment(userId, etComment.getText().toString()));
                 etComment.getText().clear();
             }
         });
-        CheckBox cbLike = view.findViewById(R.id.cbLikeComment);
         cbLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (cbLike.isChecked()){
-                    lessonsLearntViewModel.updateLikeCount(lessonPostId,1);
+                    lessonsLearntViewModel.addUserLiked(lessonPostId,userId);
                 }else{
-                    lessonsLearntViewModel.updateLikeCount(lessonPostId,-1);
+                    lessonsLearntViewModel.removeUserLiked(lessonPostId,userId);
                 }
             }
         });
