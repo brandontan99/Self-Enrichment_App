@@ -49,24 +49,29 @@ public class GoalsTrackerRepository {
         return mainGoal;
     }
 
+    public DocumentReference getMainGoals(String documentId){
+        DocumentReference docRef = firestore.collection("MainGoals").document(documentId);
+        return docRef;
+    }
+
     public void updateMainGoals(String documentId, String newMainGoal){
         DocumentReference docRef = firestore.collection("MainGoals").document(documentId);
         docRef.update("goal", newMainGoal);
     }
 
-    public void updateMainGoalsCompletion(String documentId, boolean isCompleted){
+    public void updateMainGoalsCompletion(String documentId, boolean completed){
         DocumentReference docRef = firestore.collection("MainGoals").document(documentId);
-        docRef.update("isCompleted", isCompleted);
+        docRef.update("completed", completed);
     }
 
     public void updateSubGoals(String documentId, List<String> subGoal){
         DocumentReference docRef = firestore.collection("MainGoals").document(documentId);
-        docRef.update("subGoal", subGoal);
+        docRef.update("subGoals", subGoal);
     }
 
     public void updateSubGoalsCompletion(String documentId, List<Boolean> subGoalCompletion){
         DocumentReference docRef = firestore.collection("MainGoals").document(documentId);
-        docRef.update("subGoalCompletion", subGoalCompletion);
+        docRef.update("subGoalsCompletion", subGoalCompletion);
     }
 
     public void addMainGoals(MainGoals newMainGoal){

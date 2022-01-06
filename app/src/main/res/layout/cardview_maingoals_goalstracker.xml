@@ -29,12 +29,12 @@
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
             <Button
-                android:id="@+id/btnDeleteMainGoal"
+                android:id="@+id/btnUpdateMainGoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
-                android:text="DELETE"
-                android:textColor="@color/red"
+                android:text="UPDATE"
+                android:textColor="@color/yellow"
                 app:layout_constraintEnd_toStartOf="@+id/CBMainGoal"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,11 +47,48 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </soup.neumorphism.NeumorphCardView>
 
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/neumorphCardView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:padding="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/neumorphCardViewMainGoals"
+        app:neumorph_backgroundColor="@color/light_grey">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="321dp"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/ETNewSubGoals"
+                android:layout_width="174dp"
+                android:layout_height="45dp"
+                android:ems="10"
+                android:hint="New SubGoal"
+                android:inputType="text"
+                app:layout_constraintStart_toEndOf="@+id/btnAddSubGoal"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <Button
+                android:id="@+id/btnAddSubGoal"
+                android:layout_width="52dp"
+                android:layout_height="49dp"
+                android:backgroundTint="@color/yellow"
+                android:text="+"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </soup.neumorphism.NeumorphCardView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSubGoals"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="96dp"
+        android:layout_width="408dp"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/neumorphCardViewMainGoals" />
+        app:layout_constraintTop_toBottomOf="@+id/neumorphCardView2">
+
+    </androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>

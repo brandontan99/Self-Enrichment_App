@@ -1,49 +1,38 @@
 package com.example.self_enrichment_app.view.goals;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.self_enrichment_app.R;
-import com.example.self_enrichment_app.data.model.LessonPost;
 import com.example.self_enrichment_app.data.model.MainGoals;
 import com.example.self_enrichment_app.data.model.SubGoals;
-import com.example.self_enrichment_app.view.lessons.CommentsBottomSheetFragment;
-import com.example.self_enrichment_app.view.lessons.LessonPostsAdapter;
 import com.example.self_enrichment_app.viewmodel.GoalsTrackerViewModel;
-import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoalsAdapter.ViewHolder> {
     private LayoutInflater layoutInflater;
     private Context context;
     private boolean edit;
+    private SubGoalsAdapter subGoalsAdapter;
+    private GoalsTrackerViewModel goalsTrackerViewModel;
 
     public MainGoalsAdapter(@NonNull FirestoreRecyclerOptions<MainGoals> options,boolean edit) {
         super(options);
@@ -61,53 +50,89 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
 
     @Override
     public void onBindViewHolder(@NonNull MainGoalsAdapter.ViewHolder holder, int position, @NonNull MainGoals mainGoals) {
+        goalsTrackerViewModel = new ViewModelProvider((AppCompatActivity)context).get(GoalsTrackerViewModel.class);
         holder.ETMainGoal.setText(mainGoals.getGoal());
-        holder.ETMainGoal.setInputType(InputType.TYPE_NULL);
+        if (edit){
+            holder.ETMainGoal.setInputType(InputType.TYPE_CLASS_TEXT);
+        }
+        else{
+            holder.ETMainGoal.setInputType(InputType.TYPE_NULL);
+        }
         holder.ETMainGoal.setTextIsSelectable(edit);
-        holder.ETMainGoal.setOnKeyListener(new View.OnKeyListener() {
+        holder.btnUpdateMainGoal.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                return true;  // Blocks input from hardware keyboards.
+            public void onClick(View v) {
+                goalsTrackerViewModel.updateMainGoals(mainGoals.getMainPostId(),holder.ETMainGoal.getText().toString());
             }
         });
         holder.ETMainGoal.setClickable(edit);
-        Log.d("Test",mainGoals.getGoal());
-        Log.d("Test",Integer.toString(position));
-        Log.d("Test",Boolean.toString(mainGoals.getCompleted()));
-        holder.CBMainGoal.setChecked(mainGoals.getCompleted());
+        holder.CBMainGoal.setChecked(mainGoals.isCompleted());
+        holder.CBMainGoal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                goalsTrackerViewModel.updateMainGoalsCompletion(mainGoals.getMainPostId(),holder.CBMainGoal.isChecked());
+            }
+        });
         if (edit){
             //holder.ETMainGoal.setBackground(android.R.drawable.edit_text);
-            holder.btnDeleteMainGoal.setVisibility(View.VISIBLE);
+            holder.btnUpdateMainGoal.setVisibility(View.VISIBLE);
         }
         else{
             holder.ETMainGoal.setBackground(null);
-            holder.btnDeleteMainGoal.setVisibility(View.GONE);
+            holder.btnUpdateMainGoal.setVisibility(View.GONE);
         }
         List<String> subGoals = mainGoals.getSubGoals();
         List<Boolean> subGoalsCompletion = mainGoals.getSubGoalsCompletion();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         holder.rvSubGoals.setLayoutManager(layoutManager);
         ArrayList<SubGoals> subGoalsArrayList=new ArrayList<>();
-        for (int i=0;i<subGoals.size();i++) {
-            subGoalsArrayList.add(new SubGoals(subGoals.get(i),subGoalsCompletion.get(i)));
+        if (subGoals!=null) {
+            for (int i = 0; i < subGoals.size(); i++) {
+                subGoalsArrayList.add(new SubGoals(subGoals.get(i), subGoalsCompletion.get(i)));
+            }
+            subGoalsAdapter = new SubGoalsAdapter(context, subGoalsArrayList, edit, mainGoals.getMainPostId());
+            subGoalsAdapter.registerAdapterDataObserver( new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    holder.rvSubGoals.scrollToPosition(0);
+                }
+            });
+            holder.rvSubGoals.setAdapter(subGoalsAdapter);
+            //subGoalsAdapter.startListening();
+
         }
-        SubGoalsAdapter subGoalsAdapter=new SubGoalsAdapter(context,subGoalsArrayList,edit);
-        holder.rvSubGoals.setAdapter(subGoalsAdapter);
-        subGoalsAdapter.notifyDataSetChanged();
+        holder.btnAddSubGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.ETNewSubGoals.getText().toString().isEmpty()){
+                    holder.ETNewSubGoals.setError("The subgoal must have a description!");
+                }
+                else{
+                    SubGoals newSubGoal=new SubGoals(holder.ETNewSubGoals.getText().toString(),false);
+                    subGoalsArrayList.add(newSubGoal);
+                    goalsTrackerViewModel.addSubGoals(mainGoals.getMainPostId(),subGoalsArrayList);
+                    holder.ETNewSubGoals.getText().clear();
+                    subGoalsAdapter.notifyItemInserted(subGoalsArrayList.size()-1);
+                }
+            }
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        EditText ETMainGoal;
-        Button btnDeleteMainGoal;
+        EditText ETMainGoal, ETNewSubGoals;
+        Button btnUpdateMainGoal, btnAddSubGoal;
         CheckBox CBMainGoal;
         RecyclerView rvSubGoals;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ETMainGoal = itemView.findViewById(R.id.ETMainGoal);
-            btnDeleteMainGoal = itemView.findViewById(R.id.btnDeleteMainGoal);
+            ETNewSubGoals=itemView.findViewById(R.id.ETNewSubGoals);
+            btnUpdateMainGoal = itemView.findViewById(R.id.btnUpdateMainGoal);
+            btnAddSubGoal=itemView.findViewById(R.id.btnAddSubGoal);
             CBMainGoal = itemView.findViewById(R.id.CBMainGoal);
             rvSubGoals = itemView.findViewById(R.id.rvSubGoals);
         }
     }
+
 }

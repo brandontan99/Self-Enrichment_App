@@ -4,14 +4,14 @@ import java.util.List;
 
 public class SubGoals {
     private String goal;
-    private boolean isCompleted;
+    private boolean completed;
     private Long createdAt;
     public SubGoals() {
     }
 
-    public SubGoals(String goal,boolean isCompleted){
+    public SubGoals(String goal,boolean completed){
         this.goal=goal;
-        this.isCompleted=isCompleted;
+        this.completed=completed;
         this.createdAt = System.currentTimeMillis();
     }
 
@@ -27,8 +27,8 @@ public class SubGoals {
 
     public void setGoal(String goal){this.goal=goal;}
 
-    public boolean getCompleted(){return this.isCompleted;}
+    public boolean getCompleted(){return this.completed;}
 
-    public void setCompleted(boolean isCompleted){this.isCompleted=isCompleted;}
+    public void setCompleted(boolean completed){this.completed=completed;}
 
 }

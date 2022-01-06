@@ -9,10 +9,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,17 +44,10 @@ public class GoalsFragment extends Fragment {
     private GoalsTrackerViewModel goalsTrackerViewModel;
     private RecyclerView rvGoals;
     private MainGoalsAdapter mainGoalsAdapter;
+    private NavController navController;
 
     public GoalsFragment() {
         // Required empty public constructor
-    }
-
-    public static GoalsFragment newInstance(boolean edit) {
-        GoalsFragment fragment = new GoalsFragment();
-        Bundle args = new Bundle();
-        args.putBoolean("edit", edit);
-        fragment.setArguments(args);
-        return fragment;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +56,6 @@ public class GoalsFragment extends Fragment {
         if (bundle!=null) {
             this.edit = bundle.getBoolean("edit", false);
         }
-        Log.d("Edit",Boolean.toString(edit));
     }
 
     @Override
@@ -74,13 +69,14 @@ public class GoalsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         rvGoals = view.findViewById(R.id.rvGoals);
         rvGoals.setLayoutManager(layoutManager);
         rvGoals.setItemAnimator(new DefaultItemAnimator());
         //goalsTrackerViewModel = new ViewModelProvider(this).get(GoalsTrackerViewModel.class);
         Query query = FirebaseFirestore.getInstance()
-                .collection("MainGoals");
+                .collection("MainGoals").orderBy("createdAt",Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<MainGoals> options = new FirestoreRecyclerOptions.Builder<MainGoals>().setQuery(query, MainGoals.class).build();
         mainGoalsAdapter = new MainGoalsAdapter(options,edit);
         mainGoalsAdapter.registerAdapterDataObserver( new RecyclerView.AdapterDataObserver() {
@@ -101,19 +97,17 @@ public class GoalsFragment extends Fragment {
         btnCancelEditGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View btnView) {
-                FragmentTransaction ft = (getActivity()).getSupportFragmentManager().beginTransaction();
-                GoalsFragment fragmentDemo = GoalsFragment.newInstance(false);
-                ft.replace(R.id.nhfMain, fragmentDemo);
-                ft.commit();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("edit", false);
+                navController.navigate(R.id.action_destGoals_self,bundle);
             }
         });
         btnEditGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View btnView) {
-                FragmentTransaction ft = (getActivity()).getSupportFragmentManager().beginTransaction();
-                GoalsFragment fragmentDemo = GoalsFragment.newInstance(true);
-                ft.add(R.id.nhfMain, fragmentDemo);
-                ft.commit();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("edit", true);
+                navController.navigate(R.id.action_destGoals_self,bundle);
             }
         });
         Button btnActiveGoals = view.findViewById(R.id.btnActiveGoals);
@@ -134,6 +128,19 @@ public class GoalsFragment extends Fragment {
         });
         Button btnAddMainGoal=view.findViewById(R.id.btnAddMainGoal);
         EditText ETNewMainGoal=view.findViewById(R.id.ETNewMainGoal);
+        goalsTrackerViewModel = new ViewModelProvider(this).get(GoalsTrackerViewModel.class);
+        btnAddMainGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View btnView) {
+                if (ETNewMainGoal.getText().toString().isEmpty()){
+                    ETNewMainGoal.setError("The goal must have a description!");
+                }
+                else{
+                    goalsTrackerViewModel.addMainGoals(ETNewMainGoal.getText().toString());
+                    ETNewMainGoal.getText().clear();
+                }
+            }
+        });
     }
 
     @Override
