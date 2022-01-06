@@ -104,7 +104,7 @@ public class LessonsLearntFragment extends Fragment {
             public void onClick(View btnView) {
                 Toast.makeText(getActivity(), "You have posted a lesson successfully.",
                         Toast.LENGTH_SHORT).show();
-                lessonsLearntViewModel.addLessonPost(new LessonPost(etLesson.getText().toString()));
+                lessonsLearntViewModel.addLessonPost(new LessonPost(etLesson.getText().toString(), userId));
                 etLesson.getText().clear();
             }
         });

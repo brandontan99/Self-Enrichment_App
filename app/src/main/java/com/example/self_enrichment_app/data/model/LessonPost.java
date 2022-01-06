@@ -10,17 +10,19 @@ public class LessonPost {
     private int commentCount;
     private Long createdAt;
     private List<String> usersLiked;
+    private String createdBy;
     @DocumentId
     private String lessonPostId;
 
     public LessonPost() {
     }
 
-    public LessonPost(String lesson) {
+    public LessonPost(String lesson, String userId) {
         this.lesson = lesson;
         this.commentCount = 0;
         this.createdAt = System.currentTimeMillis();
         this.usersLiked = new ArrayList<>();
+        this.createdBy = userId;
     }
 
     public List<String> getUsersLiked() {
@@ -61,5 +63,13 @@ public class LessonPost {
 
     public void setCommentCount(int commentCount) {
         this.commentCount = commentCount;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 }
