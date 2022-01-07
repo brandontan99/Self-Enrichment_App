@@ -1,8 +1,10 @@
 package com.example.self_enrichment_app.view.goals;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +12,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,16 +31,21 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import soup.neumorphism.NeumorphCardView;
+
 public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoalsAdapter.ViewHolder> {
     private LayoutInflater layoutInflater;
     private Context context;
-    private boolean edit;
+    private boolean edit,completed;
     private SubGoalsAdapter subGoalsAdapter;
     private GoalsTrackerViewModel goalsTrackerViewModel;
+    private NavController navController;
 
-    public MainGoalsAdapter(@NonNull FirestoreRecyclerOptions<MainGoals> options,boolean edit) {
+    public MainGoalsAdapter(@NonNull FirestoreRecyclerOptions<MainGoals> options,boolean edit,boolean completed,NavController navController) {
         super(options);
         this.edit=edit;
+        this.completed=completed;
+        this.navController=navController;
     }
 
     @NonNull
@@ -63,6 +72,7 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
             @Override
             public void onClick(View v) {
                 goalsTrackerViewModel.updateMainGoals(mainGoals.getMainPostId(),holder.ETMainGoal.getText().toString());
+                Toast.makeText(context,"Main goal edited.",Toast.LENGTH_SHORT);
             }
         });
         holder.ETMainGoal.setClickable(edit);
@@ -76,10 +86,12 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
         if (edit){
             //holder.ETMainGoal.setBackground(android.R.drawable.edit_text);
             holder.btnUpdateMainGoal.setVisibility(View.VISIBLE);
+            holder.btnDeleteMainGoal.setVisibility(View.VISIBLE);
         }
         else{
             holder.ETMainGoal.setBackground(null);
             holder.btnUpdateMainGoal.setVisibility(View.GONE);
+            holder.btnDeleteMainGoal.setVisibility(View.GONE);
         }
         List<String> subGoals = mainGoals.getSubGoals();
         List<Boolean> subGoalsCompletion = mainGoals.getSubGoalsCompletion();
@@ -90,7 +102,7 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
             for (int i = 0; i < subGoals.size(); i++) {
                 subGoalsArrayList.add(new SubGoals(subGoals.get(i), subGoalsCompletion.get(i)));
             }
-            subGoalsAdapter = new SubGoalsAdapter(context, subGoalsArrayList, edit, mainGoals.getMainPostId());
+            subGoalsAdapter = new SubGoalsAdapter(context, subGoalsArrayList, edit, mainGoals.getMainPostId(), navController);
             subGoalsAdapter.registerAdapterDataObserver( new RecyclerView.AdapterDataObserver() {
                 @Override
                 public void onItemRangeInserted(int positionStart, int itemCount) {
@@ -100,6 +112,12 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
             holder.rvSubGoals.setAdapter(subGoalsAdapter);
             //subGoalsAdapter.startListening();
 
+        }
+        if (completed){
+            holder.addSubGoalsCardView.setVisibility(View.GONE);
+        }
+        else{
+            holder.addSubGoalsCardView.setVisibility(View.VISIBLE);
         }
         holder.btnAddSubGoal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,20 +134,47 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
                 }
             }
         });
+        holder.btnDeleteMainGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder((AppCompatActivity)context);
+                builder.setCancelable(true);
+                builder.setTitle("Confirm Deletion");
+                builder.setMessage("Are you sure you want to delete this goal?");
+                builder.setPositiveButton("Confirm",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                goalsTrackerViewModel.deleteMainGoals(mainGoals.getMainPostId());
+                                Bundle bundle = new Bundle();
+                                bundle.putBoolean("edit", true);
+                                navController.navigate(R.id.action_destGoals_self,bundle);
+                            }
+                        });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+        }});
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         EditText ETMainGoal, ETNewSubGoals;
-        Button btnUpdateMainGoal, btnAddSubGoal;
+        Button btnUpdateMainGoal, btnAddSubGoal, btnDeleteMainGoal;
         CheckBox CBMainGoal;
         RecyclerView rvSubGoals;
-
+        NeumorphCardView addSubGoalsCardView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            addSubGoalsCardView=itemView.findViewById(R.id.neumorphCardViewAddSubGoal);
             ETMainGoal = itemView.findViewById(R.id.ETMainGoal);
             ETNewSubGoals=itemView.findViewById(R.id.ETNewSubGoals);
             btnUpdateMainGoal = itemView.findViewById(R.id.btnUpdateMainGoal);
             btnAddSubGoal=itemView.findViewById(R.id.btnAddSubGoal);
+            btnDeleteMainGoal=itemView.findViewById(R.id.btnDeleteMainGoal);
             CBMainGoal = itemView.findViewById(R.id.CBMainGoal);
             rvSubGoals = itemView.findViewById(R.id.rvSubGoals);
         }

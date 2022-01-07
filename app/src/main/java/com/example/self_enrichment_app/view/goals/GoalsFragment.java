@@ -39,8 +39,10 @@ import com.google.firebase.firestore.Query;
 
 import java.util.List;
 
+import soup.neumorphism.NeumorphCardView;
+
 public class GoalsFragment extends Fragment {
-    private static boolean edit=false;
+    private static boolean edit=false, completed=false;
     private GoalsTrackerViewModel goalsTrackerViewModel;
     private RecyclerView rvGoals;
     private MainGoalsAdapter mainGoalsAdapter;
@@ -55,6 +57,7 @@ public class GoalsFragment extends Fragment {
         Bundle bundle=getArguments();
         if (bundle!=null) {
             this.edit = bundle.getBoolean("edit", false);
+            this.completed= bundle.getBoolean("completed", false);
         }
     }
 
@@ -76,9 +79,9 @@ public class GoalsFragment extends Fragment {
         rvGoals.setItemAnimator(new DefaultItemAnimator());
         //goalsTrackerViewModel = new ViewModelProvider(this).get(GoalsTrackerViewModel.class);
         Query query = FirebaseFirestore.getInstance()
-                .collection("MainGoals").orderBy("createdAt",Query.Direction.ASCENDING);
+                .collection("MainGoals").whereEqualTo("completed",completed).orderBy("createdAt",Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<MainGoals> options = new FirestoreRecyclerOptions.Builder<MainGoals>().setQuery(query, MainGoals.class).build();
-        mainGoalsAdapter = new MainGoalsAdapter(options,edit);
+        mainGoalsAdapter = new MainGoalsAdapter(options,edit,completed,navController);
         mainGoalsAdapter.registerAdapterDataObserver( new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
@@ -112,18 +115,33 @@ public class GoalsFragment extends Fragment {
         });
         Button btnActiveGoals = view.findViewById(R.id.btnActiveGoals);
         Button btnCompletedGoals = view.findViewById(R.id.btnCompletedGoals);
+        NeumorphCardView addGoalsCardView=view.findViewById(R.id.neumorphCardViewAddMainGoals);
+        if (completed){
+            btnCompletedGoals.setBackgroundColor(getResources().getColor(R.color.yellow));
+            btnActiveGoals.setBackgroundColor(getResources().getColor(R.color.white));
+            addGoalsCardView.setVisibility(View.GONE);
+        }
+        else{
+            btnActiveGoals.setBackgroundColor(getResources().getColor(R.color.yellow));
+            btnCompletedGoals.setBackgroundColor(getResources().getColor(R.color.white));
+            addGoalsCardView.setVisibility(View.VISIBLE);
+        }
         btnActiveGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View btnView) {
-                btnActiveGoals.setBackgroundColor(getResources().getColor(R.color.yellow));
-                btnCompletedGoals.setBackgroundColor(getResources().getColor(R.color.white));
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("edit", false);
+                bundle.putBoolean("completed", false);
+                navController.navigate(R.id.action_destGoals_self,bundle);
             }
         });
         btnCompletedGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View btnView) {
-                btnCompletedGoals.setBackgroundColor(getResources().getColor(R.color.yellow));
-                btnActiveGoals.setBackgroundColor(getResources().getColor(R.color.white));
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("edit", false);
+                bundle.putBoolean("completed", true);
+                navController.navigate(R.id.action_destGoals_self,bundle);
             }
         });
         Button btnAddMainGoal=view.findViewById(R.id.btnAddMainGoal);
