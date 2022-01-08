@@ -3,8 +3,10 @@ package com.example.self_enrichment_app.view.goals;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +26,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.self_enrichment_app.R;
 import com.example.self_enrichment_app.data.model.MainGoals;
 import com.example.self_enrichment_app.data.model.SubGoals;
+import com.example.self_enrichment_app.view.general.GlobalVariable;
 import com.example.self_enrichment_app.viewmodel.GoalsTrackerViewModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +49,9 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
     private SubGoalsAdapter subGoalsAdapter;
     private GoalsTrackerViewModel goalsTrackerViewModel;
     private NavController navController;
+    private FirebaseAuth mAuth;
+    private String userId;
+    private int numGoals;
 
     public MainGoalsAdapter(@NonNull FirestoreRecyclerOptions<MainGoals> options,boolean edit,boolean completed,NavController navController) {
         super(options);
@@ -59,6 +71,10 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
 
     @Override
     public void onBindViewHolder(@NonNull MainGoalsAdapter.ViewHolder holder, int position, @NonNull MainGoals mainGoals) {
+        mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getUid();
+        mAuth =FirebaseAuth.getInstance();
+        userId =mAuth.getUid();
         goalsTrackerViewModel = new ViewModelProvider((AppCompatActivity)context).get(GoalsTrackerViewModel.class);
         holder.ETMainGoal.setText(mainGoals.getGoal());
         if (edit){
@@ -80,10 +96,34 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
         holder.CBMainGoal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                goalsTrackerViewModel.updateMainGoalsCompletion(mainGoals.getMainPostId(),holder.CBMainGoal.isChecked());
-                Bundle bundle = new Bundle();
-                bundle.putString("numGoals", "1");
-                navController.navigate(R.id.action_destGoals_to_destGoalsMilestoneFragment,bundle);
+                DocumentReference docRef = FirebaseFirestore.getInstance()
+                        .collection("Users").document(userId);
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                            public void onComplete (@NonNull Task < DocumentSnapshot > task) {
+                                String TAG="Debug";
+                                if (task.isSuccessful()) {
+                                    if (task.getResult().get("numGoals")!=null) {
+                                        numGoals = Integer.valueOf(task.getResult().get("numGoals").toString());
+                                        if (!completed) {
+                                            numGoals+=1;
+                                            goalsTrackerViewModel.updateMainGoalsCompletion(mainGoals.getMainPostId(),holder.CBMainGoal.isChecked(), userId, numGoals);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("numGoals", Integer.toString(numGoals));
+                                            if (numGoals==1 || numGoals==3 || numGoals%5==0) {
+                                                navController.navigate(R.id.action_destGoals_to_destGoalsMilestoneFragment, bundle);
+                                            }
+                                        }
+                                        else{
+                                            numGoals-=1;
+                                            goalsTrackerViewModel.updateMainGoalsCompletion(mainGoals.getMainPostId(),holder.CBMainGoal.isChecked(), userId, numGoals);
+                                        }
+                                    }
+                                } else {
+                                    Log.d(TAG, "get failed with ", task.getException());
+                                }
+                            }
+                        });
             }
         });
         if (edit){

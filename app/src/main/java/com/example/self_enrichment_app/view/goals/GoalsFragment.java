@@ -119,12 +119,10 @@ public class GoalsFragment extends Fragment {
         if (completed){
             btnCompletedGoals.setBackgroundColor(getResources().getColor(R.color.yellow));
             btnActiveGoals.setBackgroundColor(getResources().getColor(R.color.white));
-            rvGoals.setPadding(0,0,0, (int) (150*scale));
         }
         else{
             btnActiveGoals.setBackgroundColor(getResources().getColor(R.color.yellow));
             btnCompletedGoals.setBackgroundColor(getResources().getColor(R.color.white));
-            rvGoals.setPadding(0,0,0,(int)(200*scale));
         }
         if (edit){
             btnCancelEditGoals.setVisibility(View.VISIBLE);
@@ -134,9 +132,11 @@ public class GoalsFragment extends Fragment {
         }
         if (edit || completed){
             addGoalsCardView.setVisibility(View.GONE);
+            rvGoals.setPadding(0,0,0,(int)(150*scale));
         }
         else{
             addGoalsCardView.setVisibility(View.VISIBLE);
+            rvGoals.setPadding(0,0,0, (int) (200*scale));
         }
         btnActiveGoals.setOnClickListener(new View.OnClickListener() {
             @Override

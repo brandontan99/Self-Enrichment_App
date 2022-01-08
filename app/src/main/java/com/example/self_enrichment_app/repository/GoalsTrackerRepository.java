@@ -59,9 +59,11 @@ public class GoalsTrackerRepository {
         docRef.update("goal", newMainGoal);
     }
 
-    public void updateMainGoalsCompletion(String documentId, boolean completed){
+    public void updateMainGoalsCompletion(String documentId, boolean completed, String userId, int numGoals){
         DocumentReference docRef = firestore.collection("MainGoals").document(documentId);
         docRef.update("completed", completed);
+        docRef = firestore.collection("Users").document(userId);
+        docRef.update("numGoals", numGoals);
     }
 
     public void updateSubGoals(String documentId, List<String> subGoal){

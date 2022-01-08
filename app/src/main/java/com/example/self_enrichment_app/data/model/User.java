@@ -10,7 +10,7 @@ public class User {
     }
 
     public User(String fullName, String userName, String birthdayYear, String birthdayMonth, String birthdayDay,
-                String emailAddress, String password, int numGoals) {
+                String emailAddress, String password) {
         this.fullName = fullName;
         this.userName = userName;
         this.birthdayYear = birthdayYear;
@@ -18,7 +18,7 @@ public class User {
         this.birthdayDay = birthdayDay;
         this.emailAddress = emailAddress;
         this.password = password;
-        this.numGoals=numGoals;
+        this.numGoals=0;
 
     }
 
