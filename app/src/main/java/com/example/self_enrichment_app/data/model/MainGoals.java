@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainGoals {
-    private String goal;
+    private String goal, userId;
     private boolean completed;
     private List<String> subGoals;
     private List<Boolean> subGoalsCompletion;
@@ -21,12 +21,21 @@ public class MainGoals {
     public MainGoals() {
     }
 
-    public MainGoals(String goal){
+    public MainGoals(String userId, String goal){
+        this.userId=userId;
         this.goal=goal;
         this.completed=false;
         this.subGoals=null;
         this.subGoalsCompletion=null;
         this.createdAt = System.currentTimeMillis();
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Long getCreatedAt() {

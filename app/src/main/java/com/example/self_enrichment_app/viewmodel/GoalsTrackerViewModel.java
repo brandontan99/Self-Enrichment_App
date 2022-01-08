@@ -35,8 +35,8 @@ public class GoalsTrackerViewModel extends ViewModel {
         goalsTrackerRepository.updateMainGoals(documentId, newMainGoal);
     }
 
-    public void updateMainGoalsCompletion(String documentId, boolean isCompleted){
-        goalsTrackerRepository.updateMainGoalsCompletion(documentId, isCompleted);
+    public void updateMainGoalsCompletion(String documentId, boolean isCompleted, String userId, int numGoals){
+        goalsTrackerRepository.updateMainGoalsCompletion(documentId, isCompleted, userId, numGoals);
     }
 
     public void updateSubGoals(String documentId, List<SubGoals> subGoalsArrayList){
@@ -55,8 +55,8 @@ public class GoalsTrackerViewModel extends ViewModel {
         goalsTrackerRepository.updateSubGoalsCompletion(documentId, subGoalsCompletion);
     }
 
-    public void addMainGoals(String newGoal){
-        MainGoals newMainGoal=new MainGoals(newGoal);
+    public void addMainGoals(String userId, String newGoal){
+        MainGoals newMainGoal=new MainGoals(userId,newGoal);
         goalsTrackerRepository.addMainGoals(newMainGoal);
     }
 

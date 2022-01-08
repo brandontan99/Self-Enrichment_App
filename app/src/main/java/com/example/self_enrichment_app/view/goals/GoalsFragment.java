@@ -34,17 +34,22 @@ import com.example.self_enrichment_app.view.lessons.LessonPostsAdapter;
 import com.example.self_enrichment_app.viewmodel.GoalsTrackerViewModel;
 import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.List;
 
+import soup.neumorphism.NeumorphCardView;
+
 public class GoalsFragment extends Fragment {
-    private static boolean edit=false;
+    private static boolean edit=false, completed=false;
     private GoalsTrackerViewModel goalsTrackerViewModel;
     private RecyclerView rvGoals;
     private MainGoalsAdapter mainGoalsAdapter;
     private NavController navController;
+    private FirebaseAuth mAuth;
+    private String userId;
 
     public GoalsFragment() {
         // Required empty public constructor
@@ -55,6 +60,7 @@ public class GoalsFragment extends Fragment {
         Bundle bundle=getArguments();
         if (bundle!=null) {
             this.edit = bundle.getBoolean("edit", false);
+            this.completed= bundle.getBoolean("completed", false);
         }
     }
 
@@ -69,6 +75,8 @@ public class GoalsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getUid();
         navController = Navigation.findNavController(view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         rvGoals = view.findViewById(R.id.rvGoals);
@@ -76,9 +84,9 @@ public class GoalsFragment extends Fragment {
         rvGoals.setItemAnimator(new DefaultItemAnimator());
         //goalsTrackerViewModel = new ViewModelProvider(this).get(GoalsTrackerViewModel.class);
         Query query = FirebaseFirestore.getInstance()
-                .collection("MainGoals").orderBy("createdAt",Query.Direction.ASCENDING);
+                .collection("MainGoals").whereEqualTo("userId",userId).whereEqualTo("completed",completed).orderBy("createdAt",Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<MainGoals> options = new FirestoreRecyclerOptions.Builder<MainGoals>().setQuery(query, MainGoals.class).build();
-        mainGoalsAdapter = new MainGoalsAdapter(options,edit);
+        mainGoalsAdapter = new MainGoalsAdapter(options,edit,completed,navController);
         mainGoalsAdapter.registerAdapterDataObserver( new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
@@ -88,12 +96,6 @@ public class GoalsFragment extends Fragment {
         rvGoals.setAdapter(mainGoalsAdapter);
         Button btnEditGoals = view.findViewById(R.id.btnEditGoals);
         Button btnCancelEditGoals = view.findViewById(R.id.btnCancelEditGoals);
-        if (edit){
-            btnCancelEditGoals.setVisibility(View.VISIBLE);
-        }
-        else{
-            btnCancelEditGoals.setVisibility(View.GONE);
-        }
         btnCancelEditGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View btnView) {
@@ -112,18 +114,46 @@ public class GoalsFragment extends Fragment {
         });
         Button btnActiveGoals = view.findViewById(R.id.btnActiveGoals);
         Button btnCompletedGoals = view.findViewById(R.id.btnCompletedGoals);
+        NeumorphCardView addGoalsCardView=view.findViewById(R.id.neumorphCardViewAddMainGoals);
+        float scale = getResources().getDisplayMetrics().density;
+        if (completed){
+            btnCompletedGoals.setBackgroundColor(getResources().getColor(R.color.yellow));
+            btnActiveGoals.setBackgroundColor(getResources().getColor(R.color.white));
+        }
+        else{
+            btnActiveGoals.setBackgroundColor(getResources().getColor(R.color.yellow));
+            btnCompletedGoals.setBackgroundColor(getResources().getColor(R.color.white));
+        }
+        if (edit){
+            btnCancelEditGoals.setVisibility(View.VISIBLE);
+        }
+        else{
+            btnCancelEditGoals.setVisibility(View.GONE);
+        }
+        if (edit || completed){
+            addGoalsCardView.setVisibility(View.GONE);
+            rvGoals.setPadding(0,0,0,(int)(150*scale));
+        }
+        else{
+            addGoalsCardView.setVisibility(View.VISIBLE);
+            rvGoals.setPadding(0,0,0, (int) (200*scale));
+        }
         btnActiveGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View btnView) {
-                btnActiveGoals.setBackgroundColor(getResources().getColor(R.color.yellow));
-                btnCompletedGoals.setBackgroundColor(getResources().getColor(R.color.white));
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("edit", false);
+                bundle.putBoolean("completed", false);
+                navController.navigate(R.id.action_destGoals_self,bundle);
             }
         });
         btnCompletedGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View btnView) {
-                btnCompletedGoals.setBackgroundColor(getResources().getColor(R.color.yellow));
-                btnActiveGoals.setBackgroundColor(getResources().getColor(R.color.white));
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("edit", false);
+                bundle.putBoolean("completed", true);
+                navController.navigate(R.id.action_destGoals_self,bundle);
             }
         });
         Button btnAddMainGoal=view.findViewById(R.id.btnAddMainGoal);
@@ -136,7 +166,7 @@ public class GoalsFragment extends Fragment {
                     ETNewMainGoal.setError("The goal must have a description!");
                 }
                 else{
-                    goalsTrackerViewModel.addMainGoals(ETNewMainGoal.getText().toString());
+                    goalsTrackerViewModel.addMainGoals(userId,ETNewMainGoal.getText().toString());
                     ETNewMainGoal.getText().clear();
                 }
             }

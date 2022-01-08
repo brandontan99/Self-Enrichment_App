@@ -3,7 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingBottom="30dp">
+
+    <Button
+        android:id="@+id/btnDeleteMainGoal"
+        android:layout_width="37dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/white"
+        android:text="X"
+        android:textColor="@color/red"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/neumorphCardViewMainGoals"
@@ -16,7 +29,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp">
 
             <EditText
                 android:id="@+id/ETMainGoal"
@@ -48,13 +62,13 @@
     </soup.neumorphism.NeumorphCardView>
 
     <soup.neumorphism.NeumorphCardView
-        android:id="@+id/neumorphCardView2"
+        android:id="@+id/neumorphCardViewAddSubGoal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:padding="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/neumorphCardViewMainGoals"
+        app:layout_constraintTop_toBottomOf="@+id/rvSubGoals"
         app:neumorph_backgroundColor="@color/light_grey">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,7 +102,7 @@
         android:layout_width="408dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/neumorphCardView2">
+        app:layout_constraintTop_toBottomOf="@+id/neumorphCardViewMainGoals">
 
     </androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>

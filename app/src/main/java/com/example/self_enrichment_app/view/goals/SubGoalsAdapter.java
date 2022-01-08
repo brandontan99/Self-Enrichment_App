@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -13,10 +14,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.self_enrichment_app.R;
@@ -33,12 +36,14 @@ public class SubGoalsAdapter extends RecyclerView.Adapter<SubGoalsAdapter.ViewHo
     private boolean edit;
     private String mainPostId;
     private GoalsTrackerViewModel goalsTrackerViewModel;
+    private NavController navController;
 
-    public SubGoalsAdapter(Context context, ArrayList<SubGoals> subGoalsArrayList, boolean edit, String mainPostId) {
+    public SubGoalsAdapter(Context context, ArrayList<SubGoals> subGoalsArrayList, boolean edit, String mainPostId, NavController navController) {
         this.context = context;
         this.subGoalsArrayList = subGoalsArrayList;
         this.edit=edit;
         this.mainPostId=mainPostId;
+        this.navController=navController;
     }
     @NonNull
     @Override
@@ -76,6 +81,7 @@ public class SubGoalsAdapter extends RecyclerView.Adapter<SubGoalsAdapter.ViewHo
                 SubGoals updatedSubGoal=new SubGoals(holder.ETSubGoal.getText().toString(),subGoal.getCompleted());
                 subGoalsArrayList.set(position,updatedSubGoal);
                 goalsTrackerViewModel.updateSubGoals(mainPostId,subGoalsArrayList);
+                Toast.makeText(context,"Sub goal edited.",Toast.LENGTH_SHORT);
             }
         });
         holder.CBSubGoal.setChecked(subGoal.getCompleted());
@@ -100,6 +106,9 @@ public class SubGoalsAdapter extends RecyclerView.Adapter<SubGoalsAdapter.ViewHo
                             public void onClick(DialogInterface dialog, int which) {
                                 subGoalsArrayList.remove(position);
                                 goalsTrackerViewModel.deleteSubGoals(mainPostId,subGoalsArrayList);
+                                Bundle bundle = new Bundle();
+                                bundle.putBoolean("edit", true);
+                                navController.navigate(R.id.action_destGoals_self,bundle);
                             }
                         });
                 builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
