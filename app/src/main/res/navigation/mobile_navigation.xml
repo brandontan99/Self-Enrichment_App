@@ -29,9 +29,8 @@
             app:destination="@id/destGoals"
             app:popUpTo="@id/destGoals" />
         <action
-            android:id="@+id/action_destGoals_to_goalsMilestoneFragment2"
-            app:destination="@id/destGoalsMilestoneFragment"
-            app:popUpTo="@id/destGoalsMilestoneFragment" />
+            android:id="@+id/action_destGoals_to_destGoalsMilestoneFragment"
+            app:destination="@id/destGoalsMilestoneFragment" />
     </fragment>
     <fragment
         android:id="@+id/destHealth"
@@ -47,6 +46,10 @@
         android:id="@+id/destGoalsMilestoneFragment"
         android:name="com.example.self_enrichment_app.view.goals.GoalsMilestoneFragment"
         android:label="fragment_goals_milestone"
-        tools:layout="@layout/fragment_goals_milestone" />
+        tools:layout="@layout/fragment_goals_milestone" >
+        <action
+            android:id="@+id/action_destGoalsMilestoneFragment_to_destGoals"
+            app:destination="@id/destGoals" />
+    </fragment>
 
 </navigation>

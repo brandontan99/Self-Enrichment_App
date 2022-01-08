@@ -10,7 +10,7 @@
         android:id="@+id/TVAwesome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="64dp"
         android:text="Awesome!"
         android:textAlignment="textStart"
         android:textColor="@color/orange"
@@ -20,25 +20,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/TVGoalsAchieved"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="488dp"
-        android:text="You have achieved x goals!\nKeep up the great work!"
-        android:textAlignment="center"
-        android:textColor="@color/yellow"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/IVTrophy"
         android:layout_width="259dp"
         android:layout_height="243dp"
-        android:layout_marginTop="204dp"
+        android:layout_marginTop="140dp"
         android:src="@drawable/ic_trophy_svgrepo_com"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,10 +34,25 @@
         android:id="@+id/btnGoalsAchieved"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="596dp"
+        android:layout_marginTop="532dp"
         android:backgroundTint="@color/orange"
         android:text="Continue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/TVGoalsAchieved"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="424dp"
+        android:text="You have achieved x goals!\nKeep up the great work!"
+        android:textAlignment="center"
+        android:textColor="@color/yellow"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

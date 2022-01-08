@@ -83,7 +83,7 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
                 goalsTrackerViewModel.updateMainGoalsCompletion(mainGoals.getMainPostId(),holder.CBMainGoal.isChecked());
                 Bundle bundle = new Bundle();
                 bundle.putString("numGoals", "1");
-                navController.navigate(R.id.action_destGoals_to_goalsMilestoneFragment2,bundle);
+                navController.navigate(R.id.action_destGoals_to_destGoalsMilestoneFragment,bundle);
             }
         });
         if (edit){
@@ -95,6 +95,12 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
             holder.ETMainGoal.setBackground(null);
             holder.btnUpdateMainGoal.setVisibility(View.GONE);
             holder.btnDeleteMainGoal.setVisibility(View.GONE);
+        }
+        if (edit || completed){
+            holder.addSubGoalsCardView.setVisibility(View.GONE);
+        }
+        else{
+            holder.addSubGoalsCardView.setVisibility(View.VISIBLE);
         }
         List<String> subGoals = mainGoals.getSubGoals();
         List<Boolean> subGoalsCompletion = mainGoals.getSubGoalsCompletion();
@@ -116,12 +122,6 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
             //subGoalsAdapter.startListening();
 
         }
-        if (completed){
-            holder.addSubGoalsCardView.setVisibility(View.GONE);
-        }
-        else{
-            holder.addSubGoalsCardView.setVisibility(View.VISIBLE);
-        }
         holder.btnAddSubGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,6 +134,7 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
                     goalsTrackerViewModel.addSubGoals(mainGoals.getMainPostId(),subGoalsArrayList);
                     holder.ETNewSubGoals.getText().clear();
                     subGoalsAdapter.notifyItemInserted(subGoalsArrayList.size()-1);
+                    holder.rvSubGoals.setAdapter(subGoalsAdapter);
                 }
             }
         });

@@ -96,12 +96,6 @@ public class GoalsFragment extends Fragment {
         rvGoals.setAdapter(mainGoalsAdapter);
         Button btnEditGoals = view.findViewById(R.id.btnEditGoals);
         Button btnCancelEditGoals = view.findViewById(R.id.btnCancelEditGoals);
-        if (edit){
-            btnCancelEditGoals.setVisibility(View.VISIBLE);
-        }
-        else{
-            btnCancelEditGoals.setVisibility(View.GONE);
-        }
         btnCancelEditGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View btnView) {
@@ -121,14 +115,27 @@ public class GoalsFragment extends Fragment {
         Button btnActiveGoals = view.findViewById(R.id.btnActiveGoals);
         Button btnCompletedGoals = view.findViewById(R.id.btnCompletedGoals);
         NeumorphCardView addGoalsCardView=view.findViewById(R.id.neumorphCardViewAddMainGoals);
+        float scale = getResources().getDisplayMetrics().density;
         if (completed){
             btnCompletedGoals.setBackgroundColor(getResources().getColor(R.color.yellow));
             btnActiveGoals.setBackgroundColor(getResources().getColor(R.color.white));
-            addGoalsCardView.setVisibility(View.GONE);
+            rvGoals.setPadding(0,0,0, (int) (150*scale));
         }
         else{
             btnActiveGoals.setBackgroundColor(getResources().getColor(R.color.yellow));
             btnCompletedGoals.setBackgroundColor(getResources().getColor(R.color.white));
+            rvGoals.setPadding(0,0,0,(int)(200*scale));
+        }
+        if (edit){
+            btnCancelEditGoals.setVisibility(View.VISIBLE);
+        }
+        else{
+            btnCancelEditGoals.setVisibility(View.GONE);
+        }
+        if (edit || completed){
+            addGoalsCardView.setVisibility(View.GONE);
+        }
+        else{
             addGoalsCardView.setVisibility(View.VISIBLE);
         }
         btnActiveGoals.setOnClickListener(new View.OnClickListener() {

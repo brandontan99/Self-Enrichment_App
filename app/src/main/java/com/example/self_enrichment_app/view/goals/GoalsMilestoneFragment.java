@@ -39,21 +39,21 @@ public class GoalsMilestoneFragment extends Fragment {
                              Bundle savedInstanceState) {
         ((MainActivity)getActivity()).setToolbarTitle(R.string.title_goals);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_goals, container, false);
+        return inflater.inflate(R.layout.fragment_goals_milestone, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Log.d("Test","test");
-        /*navController = Navigation.findNavController(view);
+
+        navController = Navigation.findNavController(view);
         Button btnGoalsAchieved=view.findViewById(R.id.btnGoalsAchieved);
         TextView TVGoalsAchieved=view.findViewById(R.id.TVGoalsAchieved);
-        //TVGoalsAchieved.setText(TVGoalsAchieved.getText().toString().replace("x",numGoals));
+        TVGoalsAchieved.setText(TVGoalsAchieved.getText().toString().replace("x",numGoals));
         btnGoalsAchieved.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //navController.navigate(R.id.action_destGoals_self);
+                navController.navigate(R.id.action_destGoalsMilestoneFragment_to_destGoals);
             }
-        });*/
+        });
     }
 }
