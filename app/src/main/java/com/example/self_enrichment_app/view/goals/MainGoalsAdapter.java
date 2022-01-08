@@ -81,6 +81,9 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 goalsTrackerViewModel.updateMainGoalsCompletion(mainGoals.getMainPostId(),holder.CBMainGoal.isChecked());
+                Bundle bundle = new Bundle();
+                bundle.putString("numGoals", "1");
+                navController.navigate(R.id.action_destGoals_to_goalsMilestoneFragment2,bundle);
             }
         });
         if (edit){

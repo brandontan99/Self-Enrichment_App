@@ -34,6 +34,7 @@ import com.example.self_enrichment_app.view.lessons.LessonPostsAdapter;
 import com.example.self_enrichment_app.viewmodel.GoalsTrackerViewModel;
 import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -47,6 +48,8 @@ public class GoalsFragment extends Fragment {
     private RecyclerView rvGoals;
     private MainGoalsAdapter mainGoalsAdapter;
     private NavController navController;
+    private FirebaseAuth mAuth;
+    private String userId;
 
     public GoalsFragment() {
         // Required empty public constructor
@@ -72,6 +75,8 @@ public class GoalsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getUid();
         navController = Navigation.findNavController(view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         rvGoals = view.findViewById(R.id.rvGoals);
@@ -79,7 +84,7 @@ public class GoalsFragment extends Fragment {
         rvGoals.setItemAnimator(new DefaultItemAnimator());
         //goalsTrackerViewModel = new ViewModelProvider(this).get(GoalsTrackerViewModel.class);
         Query query = FirebaseFirestore.getInstance()
-                .collection("MainGoals").whereEqualTo("completed",completed).orderBy("createdAt",Query.Direction.ASCENDING);
+                .collection("MainGoals").whereEqualTo("userId",userId).whereEqualTo("completed",completed).orderBy("createdAt",Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<MainGoals> options = new FirestoreRecyclerOptions.Builder<MainGoals>().setQuery(query, MainGoals.class).build();
         mainGoalsAdapter = new MainGoalsAdapter(options,edit,completed,navController);
         mainGoalsAdapter.registerAdapterDataObserver( new RecyclerView.AdapterDataObserver() {
@@ -154,7 +159,7 @@ public class GoalsFragment extends Fragment {
                     ETNewMainGoal.setError("The goal must have a description!");
                 }
                 else{
-                    goalsTrackerViewModel.addMainGoals(ETNewMainGoal.getText().toString());
+                    goalsTrackerViewModel.addMainGoals(userId,ETNewMainGoal.getText().toString());
                     ETNewMainGoal.getText().clear();
                 }
             }

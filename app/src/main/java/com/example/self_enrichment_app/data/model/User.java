@@ -3,13 +3,14 @@ package com.example.self_enrichment_app.data.model;
 public class User {
 
     private String fullName, userName, birthdayYear, birthdayMonth, birthdayDay, emailAddress, password;
+    private int numGoals;
 
     public User(){
 
     }
 
     public User(String fullName, String userName, String birthdayYear, String birthdayMonth, String birthdayDay,
-                String emailAddress, String password) {
+                String emailAddress, String password, int numGoals) {
         this.fullName = fullName;
         this.userName = userName;
         this.birthdayYear = birthdayYear;
@@ -17,6 +18,7 @@ public class User {
         this.birthdayDay = birthdayDay;
         this.emailAddress = emailAddress;
         this.password = password;
+        this.numGoals=numGoals;
 
     }
 
@@ -74,5 +76,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getNumGoals() {
+        return numGoals;
+    }
+
+    public void setNumGoals(int numGoals) {
+        this.numGoals = numGoals;
     }
 }

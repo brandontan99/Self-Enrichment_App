@@ -117,6 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 userMap.put("Email Address", emailAddress);
                                 userMap.put("Password", password);
                                 userMap.put("User ID", userID);
+                                userMap.put("numGoals",0);
 
                                 documentReference.set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
