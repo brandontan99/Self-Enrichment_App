@@ -126,9 +126,11 @@ public class GoalsFragment extends Fragment {
         }
         if (edit){
             btnCancelEditGoals.setVisibility(View.VISIBLE);
+            btnEditGoals.setVisibility(View.GONE);
         }
         else{
             btnCancelEditGoals.setVisibility(View.GONE);
+            btnEditGoals.setVisibility(View.VISIBLE);
         }
         if (edit || completed){
             addGoalsCardView.setVisibility(View.GONE);
