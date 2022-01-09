@@ -11,7 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:padding="24dp"
+        android:paddingLeft="24dp"
+        android:paddingTop="24dp"
+        android:paddingRight="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -42,17 +44,19 @@
 
             <EditText
                 android:id="@+id/ETSubGoal"
-                android:layout_width="183dp"
-                android:layout_height="48dp"
+                android:layout_width="168dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
                 android:ems="10"
                 android:inputType="text"
+                android:scrollHorizontally="true"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
             <Button
                 android:id="@+id/btnDeleteSubGoal"
-                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:backgroundTint="@color/white"
