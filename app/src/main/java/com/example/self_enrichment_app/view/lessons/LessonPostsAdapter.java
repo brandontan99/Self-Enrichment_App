@@ -2,6 +2,7 @@ package com.example.self_enrichment_app.view.lessons;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,7 @@ public class LessonPostsAdapter extends FirestoreRecyclerAdapter<LessonPost, Les
             holder.tvCommentCount.setVisibility(View.VISIBLE);
             holder.tvCommentCount.setText(commentCount + " Comments");
         }
+        holder.ibDeletePost.setVisibility(lessonPost.getCreatedBy().equals(userId)? View.VISIBLE:View.GONE);
         holder.ibDeletePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,6 +69,14 @@ public class LessonPostsAdapter extends FirestoreRecyclerAdapter<LessonPost, Les
             }
         });
         holder.cbLike.setChecked(lessonPost.getUsersLiked().contains(userId));
+        if(holder.cbLike.isChecked()){
+            holder.cbLike.setTextColor(context.getResources().getColor(R.color.orange));
+            holder.cbLike.setTypeface(ResourcesCompat.getFont(context, R.font.montserrat_bold));
+
+        }else{
+            holder.cbLike.setTextColor(context.getResources().getColor(R.color.black));
+            holder.cbLike.setTypeface(ResourcesCompat.getFont(context, R.font.montserrat_light));
+        }
         holder.cbLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +105,7 @@ public class LessonPostsAdapter extends FirestoreRecyclerAdapter<LessonPost, Les
                 commentsFragment.show(fragmentManager,commentsFragment.getTag());
             }
         });
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
