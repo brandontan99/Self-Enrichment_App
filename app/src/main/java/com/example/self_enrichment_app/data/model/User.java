@@ -1,8 +1,10 @@
 package com.example.self_enrichment_app.data.model;
 
+import com.google.firebase.firestore.DocumentId;
+
 public class User {
 
-    private String fullName, userName, birthdayYear, birthdayMonth, birthdayDay, emailAddress, password;
+    private String fullName, userName, birthdayYear, birthdayMonth, birthdayDay, emailAddress, imageURL;
     private int numGoals;
 
     public User(){
@@ -10,14 +12,14 @@ public class User {
     }
 
     public User(String fullName, String userName, String birthdayYear, String birthdayMonth, String birthdayDay,
-                String emailAddress, String password) {
+                String emailAddress) {
         this.fullName = fullName;
         this.userName = userName;
         this.birthdayYear = birthdayYear;
         this.birthdayMonth = birthdayMonth;
         this.birthdayDay = birthdayDay;
         this.emailAddress = emailAddress;
-        this.password = password;
+        this.imageURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScSc2b1SgH7LH8wFw_vrAX85vVftQ0c8Pc3SxrU71e0Fa2SwXikvhS_LekmWu-pj26CVE&usqp=CAU";
         this.numGoals=0;
 
     }
@@ -70,19 +72,20 @@ public class User {
         this.emailAddress = emailAddress;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public int getNumGoals() {
         return numGoals;
     }
 
     public void setNumGoals(int numGoals) {
         this.numGoals = numGoals;
+    }
+
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }

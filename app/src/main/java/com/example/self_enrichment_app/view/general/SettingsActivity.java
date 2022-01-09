@@ -11,8 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.self_enrichment_app.R;
+import com.example.self_enrichment_app.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -89,24 +91,12 @@ public class SettingsActivity extends AppCompatActivity {
 
     //Get user Id and email address
     private void getUserInfo() {
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.getResult().exists()){
-                    String id = task.getResult().getString("User ID");
-                    String name = task.getResult().getString("Email Address");
-
-                    accountId.setText(id);
-                    accountName.setText(name);
-
-                }else{
-                    Toast.makeText(SettingsActivity.this, "No information exists", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+                accountId.setText(userID);
+                accountName.setText(user.getEmailAddress());
             }
         });
     }

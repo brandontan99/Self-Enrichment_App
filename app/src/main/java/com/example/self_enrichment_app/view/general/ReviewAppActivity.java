@@ -99,13 +99,8 @@ public class ReviewAppActivity extends AppCompatActivity {
                     Toast.makeText(ReviewAppActivity.this, "Your rating is empty.", Toast.LENGTH_SHORT).show();
 
                 } else{
-                    //Add rating and review field and field value
-                    HashMap<String, Object> userMap = new HashMap<>();
-                    userMap.put("Rating", rateValue);
-                    userMap.put("Review", reviewApp);
-
                     //Update the current document in firestore
-                    documentReference.update(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    documentReference.update("rating", rateValue,"review", reviewApp).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(ReviewAppActivity.this, "Your review is completed.", Toast.LENGTH_SHORT).show();
