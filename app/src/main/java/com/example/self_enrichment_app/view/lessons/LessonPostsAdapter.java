@@ -69,6 +69,14 @@ public class LessonPostsAdapter extends FirestoreRecyclerAdapter<LessonPost, Les
             }
         });
         holder.cbLike.setChecked(lessonPost.getUsersLiked().contains(userId));
+        if(holder.cbLike.isChecked()){
+            holder.cbLike.setTextColor(context.getResources().getColor(R.color.orange));
+            holder.cbLike.setTypeface(ResourcesCompat.getFont(context, R.font.montserrat_bold));
+
+        }else{
+            holder.cbLike.setTextColor(context.getResources().getColor(R.color.black));
+            holder.cbLike.setTypeface(ResourcesCompat.getFont(context, R.font.montserrat_light));
+        }
         holder.cbLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
