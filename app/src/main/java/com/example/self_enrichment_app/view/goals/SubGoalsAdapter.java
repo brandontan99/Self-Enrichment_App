@@ -66,6 +66,7 @@ public class SubGoalsAdapter extends RecyclerView.Adapter<SubGoalsAdapter.ViewHo
             //holder.ETSubGoal.setBackground(null);
             holder.btnUpdateSubGoal.setVisibility(View.VISIBLE);
             holder.btnDeleteSubGoal.setVisibility(View.VISIBLE);
+            holder.CBSubGoal.setVisibility(View.GONE);
         }
         else{
             holder.ETSubGoal.setInputType(InputType.TYPE_NULL);
@@ -74,6 +75,7 @@ public class SubGoalsAdapter extends RecyclerView.Adapter<SubGoalsAdapter.ViewHo
             holder.ETSubGoal.setBackground(null);
             holder.btnUpdateSubGoal.setVisibility(View.GONE);
             holder.btnDeleteSubGoal.setVisibility(View.GONE);
+            holder.CBSubGoal.setVisibility(View.VISIBLE);
         }
         holder.btnUpdateSubGoal.setOnClickListener(new View.OnClickListener() {
             @Override

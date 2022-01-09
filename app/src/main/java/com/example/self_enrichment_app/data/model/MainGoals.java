@@ -25,8 +25,8 @@ public class MainGoals {
         this.userId=userId;
         this.goal=goal;
         this.completed=false;
-        this.subGoals=null;
-        this.subGoalsCompletion=null;
+        this.subGoals=new ArrayList();
+        this.subGoalsCompletion=new ArrayList();
         this.createdAt = System.currentTimeMillis();
     }
 

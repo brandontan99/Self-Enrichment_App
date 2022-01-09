@@ -130,11 +130,13 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
             //holder.ETMainGoal.setBackground(android.R.drawable.edit_text);
             holder.btnUpdateMainGoal.setVisibility(View.VISIBLE);
             holder.btnDeleteMainGoal.setVisibility(View.VISIBLE);
+            holder.CBMainGoal.setVisibility(View.GONE);
         }
         else{
             holder.ETMainGoal.setBackground(null);
             holder.btnUpdateMainGoal.setVisibility(View.GONE);
             holder.btnDeleteMainGoal.setVisibility(View.GONE);
+            holder.CBMainGoal.setVisibility(View.VISIBLE);
         }
         if (edit || completed){
             holder.addSubGoalsCardView.setVisibility(View.GONE);
@@ -159,8 +161,6 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
                 }
             });
             holder.rvSubGoals.setAdapter(subGoalsAdapter);
-            //subGoalsAdapter.startListening();
-
         }
         holder.btnAddSubGoal.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -12,21 +12,24 @@
         android:id="@+id/neumorphCardViewAddMainGoals"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp"
+        android:paddingLeft="24dp"
+        android:paddingTop="24dp"
+        android:paddingRight="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cvGoalsTrackerMenu"
         app:neumorph_backgroundColor="@color/light_grey">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="315dp"
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/btnAddMainGoal"
-                android:layout_width="52dp"
-                android:layout_height="49dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:backgroundTint="@color/yellow"
                 android:text="+"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,6 +40,7 @@
                 android:ems="10"
                 android:hint="New Goal"
                 android:inputType="text"
+                android:scrollHorizontally="true"
                 app:layout_constraintStart_toEndOf="@+id/btnAddMainGoal"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
@@ -60,13 +64,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:layout_marginRight="10dp"
         android:backgroundTint="@color/yellow"
         android:fontFamily="@font/montserrat_bold"
         android:text="Finish"
         android:textAllCaps="false"
         android:textColor="@color/black"
         app:cornerRadius="36.5dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnEditGoals"
         app:layout_constraintTop_toTopOf="parent" />
 
     <soup.neumorphism.NeumorphCardView
@@ -94,6 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
+                android:layout_marginStart="52dp"
                 android:backgroundTint="@color/yellow"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="Active"
@@ -115,6 +121,7 @@
                 android:textColor="@color/black"
                 app:cornerRadius="36.5dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnActiveGoals"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -123,11 +130,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvGoals"
-        android:layout_width="415dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingBottom="200dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/neumorphCardViewAddMainGoals">
 

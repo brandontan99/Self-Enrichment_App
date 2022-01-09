@@ -3,34 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="30dp">
-
-    <Button
-        android:id="@+id/btnDeleteMainGoal"
-        android:layout_width="37dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="@color/white"
-        android:text="X"
-        android:textColor="@color/red"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="wrap_content">
 
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/neumorphCardViewMainGoals"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp"
+        android:paddingLeft="24dp"
+        android:paddingTop="24dp"
+        android:paddingRight="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:neumorph_backgroundColor="@color/light_grey">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp">
+
+            <Button
+                android:id="@+id/btnUpdateMainGoal"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:text="UPDATE"
+                android:textColor="@color/yellow"
+                app:layout_constraintEnd_toStartOf="@+id/btnDeleteMainGoal"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/ETMainGoal"
@@ -38,24 +38,29 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text"
+                android:scrollHorizontally="true"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-            <Button
-                android:id="@+id/btnUpdateMainGoal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
-                android:text="UPDATE"
-                android:textColor="@color/yellow"
-                app:layout_constraintEnd_toStartOf="@+id/CBMainGoal"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <CheckBox
                 android:id="@+id/CBMainGoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/orange"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btnDeleteMainGoal"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/white"
+                android:text="X"
+                android:textColor="@color/red"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -66,7 +71,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
-        android:padding="24dp"
+        android:paddingLeft="24dp"
+        android:paddingTop="24dp"
+        android:paddingRight="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvSubGoals"
         app:neumorph_backgroundColor="@color/light_grey">
@@ -77,30 +84,35 @@
 
             <EditText
                 android:id="@+id/ETNewSubGoals"
-                android:layout_width="174dp"
-                android:layout_height="45dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="New SubGoal"
                 android:inputType="text"
+                android:scrollHorizontally="true"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btnAddSubGoal"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
             <Button
                 android:id="@+id/btnAddSubGoal"
-                android:layout_width="52dp"
-                android:layout_height="49dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:backgroundTint="@color/yellow"
                 android:text="+"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </soup.neumorphism.NeumorphCardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSubGoals"
-        android:layout_width="408dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/neumorphCardViewMainGoals">
 
