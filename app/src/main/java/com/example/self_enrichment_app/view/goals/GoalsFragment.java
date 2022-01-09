@@ -170,6 +170,8 @@ public class GoalsFragment extends Fragment {
                 else{
                     goalsTrackerViewModel.addMainGoals(userId,ETNewMainGoal.getText().toString());
                     ETNewMainGoal.getText().clear();
+                    mainGoalsAdapter.notifyDataSetChanged();
+                    rvGoals.setAdapter(mainGoalsAdapter);
                 }
             }
         });

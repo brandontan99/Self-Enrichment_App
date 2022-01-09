@@ -161,8 +161,6 @@ public class MainGoalsAdapter extends FirestoreRecyclerAdapter<MainGoals,MainGoa
                 }
             });
             holder.rvSubGoals.setAdapter(subGoalsAdapter);
-            //subGoalsAdapter.startListening();
-
         }
         holder.btnAddSubGoal.setOnClickListener(new View.OnClickListener() {
             @Override
