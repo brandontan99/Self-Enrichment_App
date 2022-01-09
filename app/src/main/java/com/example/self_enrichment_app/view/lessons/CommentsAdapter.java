@@ -43,10 +43,10 @@ public class CommentsAdapter extends FirestoreRecyclerAdapter<Comment,CommentsAd
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Comment comment) {
         lessonsLearntViewModel.getLiveUserData(comment.getUserId()).observe(lifecycleOwner, commentUser -> {
-//            holder.tvName.setText(commentUser.getUserName());
-//            Picasso.get().load(commentUser.getImageURL()).resize(45, 45).into(holder.ivProfilePic);
-            holder.tvName.setText("Brandon");
-            Picasso.get().load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScSc2b1SgH7LH8wFw_vrAX85vVftQ0c8Pc3SxrU71e0Fa2SwXikvhS_LekmWu-pj26CVE&usqp=CAU").resize(45, 45).into(holder.ivProfilePic);
+            holder.tvName.setText(commentUser.getUserName());
+            Picasso.get().load(commentUser.getImageURL()).resize(45, 45).into(holder.ivProfilePic);
+//            holder.tvName.setText("Brandon");
+//            Picasso.get().load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScSc2b1SgH7LH8wFw_vrAX85vVftQ0c8Pc3SxrU71e0Fa2SwXikvhS_LekmWu-pj26CVE&usqp=CAU").resize(45, 45).into(holder.ivProfilePic);
                 });
         holder.tvComment.setText(String.valueOf(comment.getCommentMsg()));
     }

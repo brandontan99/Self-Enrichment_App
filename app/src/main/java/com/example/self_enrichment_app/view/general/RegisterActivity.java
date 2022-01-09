@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.self_enrichment_app.R;
+import com.example.self_enrichment_app.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -106,20 +107,10 @@ public class RegisterActivity extends AppCompatActivity {
                                 firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                                 userID = firebaseUser.getUid();
                                 documentReference = db.collection("Users").document(userID);
-
                                 //Add fields and fields value
-                                HashMap<String, Object> userMap = new HashMap<>();
-                                userMap.put("Full Name", fullName );
-                                userMap.put("User Name", userName);
-                                userMap.put("Birthday (year)", birthdayYear );
-                                userMap.put("Birthday (month)", birthdayMonth);
-                                userMap.put("Birthday (day)", birthdayDay);
-                                userMap.put("Email Address", emailAddress);
-                                userMap.put("Password", password);
-                                userMap.put("User ID", userID);
-                                userMap.put("numGoals",0);
+                                User user = new User(fullName,userName,birthdayYear,birthdayMonth,birthdayDay,emailAddress);
 
-                                documentReference.set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
                                         Toast.makeText(RegisterActivity.this, "User Register Sucessfully", Toast.LENGTH_SHORT).show();
