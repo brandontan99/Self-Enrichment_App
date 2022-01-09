@@ -11,8 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.self_enrichment_app.R;
+import com.example.self_enrichment_app.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -74,7 +76,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ProfileActivity.this, SettingsActivity.class));
-                finish();
             }
         };
 
@@ -85,7 +86,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ProfileActivity.this, ReviewAppActivity.class));
-                finish();
             }
         };
 
@@ -96,7 +96,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ProfileActivity.this, ContactUsActivity.class));
-                finish();
             }
         };
 
@@ -107,7 +106,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ProfileActivity.this, AboutUsActivity.class));
-                finish();
             }
         };
 
@@ -136,25 +134,16 @@ public class ProfileActivity extends AppCompatActivity {
 
     //Get user name and profile picture from database
     private void getUserInfo() {
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.getResult().exists()){
-                    String name = task.getResult().getString("User Name");
-                    String imageUri = task.getResult().getString("Url");
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+                String name = user.getUserName();
+                String imageURL = user.getImageURL();
 
-                    Picasso.get().load(imageUri).into(ProfilePicture);
+                Picasso.get().load(imageURL).into(ProfilePicture);
 
-                    userName.setText(name);
-
-                }else{
-                    Toast.makeText(ProfileActivity.this, "No Profile exist", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
+                userName.setText(name);
             }
         });
     }

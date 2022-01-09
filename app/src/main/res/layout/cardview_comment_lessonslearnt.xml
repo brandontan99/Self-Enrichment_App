@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     tools:context="com.example.self_enrichment_app.view.lessons.LessonsLearntFragment">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivProfilePic"
         android:layout_width="45dp"
         android:layout_height="45dp"

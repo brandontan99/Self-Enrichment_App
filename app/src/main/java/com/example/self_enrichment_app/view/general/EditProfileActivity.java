@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageButton;
@@ -15,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.self_enrichment_app.R;
+import com.example.self_enrichment_app.data.model.User;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -100,6 +102,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 validateAndSave();
 
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                finish();
             }
         };
 
@@ -144,18 +147,12 @@ public class EditProfileActivity extends AppCompatActivity {
         }else{
 
             //update new field value to each field
-            HashMap<String, Object> userMap = new HashMap<>();
-            userMap.put("Full Name", fullName);
-            userMap.put("User Name", userName);
-            userMap.put("Birthday (year)", birthdayYear);
-            userMap.put("Birthday (month)", birthdayMonth);
-            userMap.put("Birthday (day)", birthdayDay);
-            userMap.put("Email Address", emailAddress);
+            User user = new User(fullName,userName,birthdayYear,birthdayMonth,birthdayDay,emailAddress);
 
             uploadProfileImage();
 
             //Update the new user information to database
-            documentReference.update(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     //Update the email address at auth
@@ -182,34 +179,17 @@ public class EditProfileActivity extends AppCompatActivity {
 
     //Method to get user information from database to app
     private void getUserInfo() {
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.getResult().exists()){
-                    String userName = task.getResult().getString("User Name");
-                    String fullName = task.getResult().getString("Full Name");
-                    String birthdayYear = task.getResult().getString("Birthday (year)");
-                    String birthdayMonth = task.getResult().getString("Birthday (month)");
-                    String birthdayDay = task.getResult().getString("Birthday (day)");
-                    String emailAddress = task.getResult().getString("Email Address");
-                    String Uri = task.getResult().getString("Url");
-
-                    Picasso.get().load(Uri).into(editProfilePicture);
-                    editUserName.setText(userName);
-                    editFullName.setText(fullName);
-                    editBirthdayYear.setText(birthdayYear);
-                    editBirthdayMonth.setText(birthdayMonth);
-                    editBirthdayDay.setText(birthdayDay);
-                    editEmailAddress.setText(emailAddress);
-
-                }else{
-                    Toast.makeText(EditProfileActivity.this, "No Profile exist", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+                Picasso.get().load(user.getImageURL()).into(editProfilePicture);
+                editUserName.setText(user.getUserName());
+                editFullName.setText(user.getFullName());
+                editBirthdayYear.setText(user.getBirthdayYear());
+                editBirthdayMonth.setText(user.getBirthdayMonth());
+                editBirthdayDay.setText(user.getBirthdayDay());
+                editEmailAddress.setText(user.getEmailAddress());
             }
         });
     };
@@ -252,7 +232,7 @@ public class EditProfileActivity extends AppCompatActivity {
             Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if(task.isSuccessful()){
+                    if(!task.isSuccessful()){
                         throw task.getException();
                     }
                     return fileRef.getDownloadUrl();
@@ -264,10 +244,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         Uri downloadUri = task.getResult();
                         myUri = downloadUri.toString().trim();
 
-                        HashMap<String, Object> userMap = new HashMap<>();
-                        userMap.put("Url", myUri);
-
-                        documentReference.update(userMap);
+                        documentReference.update("imageURL", myUri);
                     }
                 }
             }).addOnCanceledListener(new OnCanceledListener() {

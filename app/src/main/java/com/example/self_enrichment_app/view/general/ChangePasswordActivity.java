@@ -32,14 +32,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     String userID;
 
-    TextView oldPassword, newPassword, confirmNewPassword;
+    TextView newPassword, confirmNewPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
 
-        oldPassword = (TextView) findViewById(R.id.changePasswordOldPassword);
         newPassword = (TextView) findViewById(R.id.changePassowordEditNewPassword);
         confirmNewPassword = (TextView) findViewById(R.id.changePasswordEditConfirmNewPassword);
 
@@ -50,7 +49,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
         userID = firebaseUser.getUid();
         documentReference = db.collection("Users").document(userID);
 
-        getUserInfo();
 
         //Cancel and close
         ImageButton closeBtn = (ImageButton) findViewById(R.id.changePasswordCloseButton);
@@ -81,34 +79,17 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     Toast.makeText(ChangePasswordActivity.this, "Please enter again your new password.", Toast.LENGTH_SHORT).show();
 
                 }else if(changeNewPassword.equals(confirmChangeNewPassword)){
-
-                    HashMap<String, Object> userMap = new HashMap<>();
-                    userMap.put("Password", changeNewPassword );
-
-                    //Update password value in password field
-                    documentReference.update(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    firebaseUser.updatePassword(changeNewPassword).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            //update the password at auth
-                            firebaseUser.updatePassword(changeNewPassword).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(ChangePasswordActivity.this, "Password updated successfully.", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-                                    finish();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(ChangePasswordActivity.this, "Password failed to update.", Toast.LENGTH_SHORT).show();
-
-                                }
-                            });
+                            Toast.makeText(ChangePasswordActivity.this, "Password updated successfully.", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                            finish();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(ChangePasswordActivity.this, "Error occurs. Please try again.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ChangePasswordActivity.this, "Password failed to update.", Toast.LENGTH_SHORT).show();
 
                         }
                     });
@@ -118,25 +99,4 @@ public class ChangePasswordActivity extends AppCompatActivity {
         doneBtn.setOnClickListener(OCLDoneBtn);
     }
 
-    //Get the password value for current user
-    private void getUserInfo() {
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.getResult().exists()){
-                    String password = task.getResult().getString("Password");
-
-                    oldPassword.setText(password);
-
-                }else{
-                    Toast.makeText(ChangePasswordActivity.this, "No password exists", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
-    }
 }
