@@ -24,7 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.self_enrichment_app.view.MainActivity;
+import com.example.self_enrichment_app.MainActivity;
 import com.example.self_enrichment_app.R;
 import com.example.self_enrichment_app.data.model.Comment;
 import com.example.self_enrichment_app.data.model.LessonPost;
