@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/drawable/button_shape.xml" value="0.10520833333333333" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/drawable/circle.xml" value="0.2125" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/drawable/round_curve_button.xml" value="0.2125" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/activity_change_password.xml" value="0.19635416666666666" />
