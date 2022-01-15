@@ -89,9 +89,9 @@ public class HealthFragment extends Fragment {
         BtnAddEntry = view.findViewById(R.id.BtnAddEntry);
         BtnCalandar = view.findViewById(R.id.BtnCalendar);
 
-        private TextView TVStepsCountNum, TVGoalValue;
-        private TextView TVWeightValue, TVHeightValue, TVBMIValue, TVSysValue, TVDiaValue, TVPulseValue;
-        private NeumorphCardView NCVBMI, NCVSys, NCVDia, NCVPulse;
+        //private TextView TVStepsCountNum, TVGoalValue;
+        //private TextView TVWeightValue, TVHeightValue, TVBMIValue, TVSysValue, TVDiaValue, TVPulseValue;
+        //private NeumorphCardView NCVBMI, NCVSys, NCVDia, NCVPulse;
 
     }
 
