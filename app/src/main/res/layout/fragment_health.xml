@@ -7,42 +7,17 @@
     android:layout_height="match_parent"
     tools:context="com.example.self_enrichment_app.view.health.HealthFragment">
 
-    <ImageButton
-        android:id="@+id/btnProfile"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="16dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_launcher_foreground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars"></ImageButton>
-
-    <TextView
-        android:id="@+id/TVHealthTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="29dp"
-        android:fontFamily="@font/rubik_medium"
-        android:text="Health &amp; Fitness"
-        android:textColor="@color/orange"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/TVStepsCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/rubik_medium"
         android:text="Steps Count"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TVHealthTitle" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/TVHealthCheck"
@@ -71,11 +46,10 @@
         android:id="@+id/NCVStepsCountNum"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:layout_marginEnd="52dp"
         android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TVHealthTitle"
+        app:layout_constraintTop_toTopOf="parent"
         app:neumorph_backgroundColor="@color/light_grey"
         app:neumorph_shapeType="pressed">
 
@@ -121,6 +95,7 @@
     <Button
         android:id="@+id/BtnCalendar"
         style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="42dp"
@@ -137,7 +112,7 @@
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="110dp"
         android:padding="20dp"
         app:layout_constraintEnd_toStartOf="@+id/NCVHeight"
         app:layout_constraintStart_toStartOf="parent"
@@ -178,7 +153,7 @@
         android:id="@+id/NCVHeight"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="110dp"
         android:padding="20dp"
         app:layout_constraintEnd_toStartOf="@+id/NCVBMI"
         app:layout_constraintStart_toEndOf="@+id/NCVWeight"
@@ -219,7 +194,7 @@
         android:id="@+id/NCVBMI"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="110dp"
         android:layout_marginEnd="16dp"
         android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"

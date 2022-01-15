@@ -2,11 +2,16 @@ package com.example.self_enrichment_app.view.health;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.appcompat.widget.AppCompatImageButton;
+import android.widget.EditText;
 
 import com.example.self_enrichment_app.R;
 
@@ -16,6 +21,9 @@ import com.example.self_enrichment_app.R;
  * create an instance of this fragment.
  */
 public class HealthEntryFragment extends Fragment {
+
+    private EditText ETEnterWeight, ETEnterHeight, ETEnterSysP, ETEnterDiaP, ETEnterPulse, ETEnterStepsCount;
+    private AppCompatImageButton BtnCancelHealthEntry, BtnSubmitHealthEntry;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +70,27 @@ public class HealthEntryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_health_entry, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        //super.onViewCreated(view, savedInstanceState);
+        BtnCancelHealthEntry = view.findViewById(R.id.BtnCancelHealthEntry);
+        View.OnClickListener OCLCancelHealthEntry = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.destHealth);
+            }
+        };
+        BtnCancelHealthEntry.setOnClickListener(OCLCancelHealthEntry);
+
+        BtnSubmitHealthEntry = view.findViewById(R.id.BtnSubmitHealthEntry);
+        View.OnClickListener OCLSubmitHealthEntry = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.destHealth);
+            }
+        };
+        BtnSubmitHealthEntry.setOnClickListener(OCLSubmitHealthEntry);
     }
 }

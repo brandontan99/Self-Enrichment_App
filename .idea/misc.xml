@@ -6,19 +6,29 @@
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/drawable/button_shape.xml" value="0.10520833333333333" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/drawable/circle.xml" value="0.2125" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/drawable/round_curve_button.xml" value="0.2125" />
+        <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/activity_about_us.xml" value="0.19635416666666666" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/activity_change_password.xml" value="0.19635416666666666" />
+        <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/activity_contact_us.xml" value="0.18072916666666666" />
+        <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/activity_edit_profile.xml" value="0.14947916666666666" />
+        <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/activity_forget_password.xml" value="0.18072916666666666" />
+        <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/activity_login.xml" value="0.18072916666666666" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/activity_profile.xml" value="0.19635416666666666" />
+        <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/activity_register.xml" value="0.18072916666666666" />
+        <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/activity_review_app.xml" value="0.18072916666666666" />
+        <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/activity_settings.xml" value="0.18072916666666666" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/btmsheetfragment_comments_lessonslearnt.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/calendar.xml" value="0.19635416666666666" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/cardview_comment_lessonslearnt.xml" value="0.19583333333333333" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/cardview_maingoals_goalstracker.xml" value="0.19635416666666666" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/cardview_post_lessonslearnt.xml" value="0.19583333333333333" />
+        <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/cardview_subgoals_goalstracker.xml" value="0.18072916666666666" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/fragment_dashboard.xml" value="0.19635416666666666" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/fragment_enter_health_entry.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/fragment_goals.xml" value="0.19583333333333333" />
+        <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/fragment_goals_milestone.xml" value="0.18072916666666666" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/fragment_health.xml" value="0.33" />
-        <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/fragment_health_entry.xml" value="0.19635416666666666" />
+        <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/fragment_health_entry.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/fragment_health_entry_fragment.xml" value="0.19635416666666666" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/fragment_lessonslearnt.xml" value="0.19583333333333333" />
         <entry key="..\:/AndroidStudioProjects/Self-Enrichment_App/app/src/main/res/layout/fragment_mood.xml" value="0.19583333333333333" />

@@ -8,40 +8,28 @@
     tools:context=".view.health.HealthEntryFragment" >
 
     <TextView
-        android:id="@+id/TVEnterHealthTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/rubik_medium"
-        android:text="Health &amp; Fitness"
-        android:textColor="@color/orange"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/TVAddEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="21dp"
         android:fontFamily="@font/rubik_medium"
         android:text="Add Entry"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/imageButton"
-        app:layout_constraintTop_toBottomOf="@+id/TVEnterHealthTitle" />
+        app:layout_constraintStart_toEndOf="@+id/BtnCancelHealthEntry"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/BtnCancelHealthEntry"
         style="@android:style/Widget.Material.ImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:backgroundTint="#00FFFFFF"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#FFFFFF"
         android:src="@drawable/ic_delete"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TVEnterHealthTitle" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/NCVEnterWeight"
@@ -49,10 +37,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:padding="20dp"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton"
+        app:layout_constraintTop_toBottomOf="@+id/BtnCancelHealthEntry"
         app:neumorph_backgroundColor="@color/light_grey"
         app:neumorph_shapeType="pressed">
 
@@ -65,6 +53,8 @@
                 android:id="@+id/TVEnterWeight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/rubik_medium"
                 android:text="Weight (kg)"
                 android:textColor="#000000"
@@ -92,9 +82,8 @@
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="6dp"
         android:layout_marginEnd="16dp"
-        android:padding="20dp"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NCVEnterWeight"
@@ -110,6 +99,8 @@
                 android:id="@+id/TVEnterHeight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/rubik_medium"
                 android:text="Height (cm)"
                 android:textColor="#000000"
@@ -136,9 +127,8 @@
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="6dp"
         android:layout_marginEnd="16dp"
-        android:padding="20dp"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NCVEnterHeight"
@@ -154,6 +144,8 @@
                 android:id="@+id/TVEnterSysP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/rubik_medium"
                 android:text="Sys P. (mmHg)"
                 android:textColor="#000000"
@@ -180,9 +172,8 @@
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="6dp"
         android:layout_marginEnd="16dp"
-        android:padding="20dp"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NCVEnterSysP"
@@ -198,6 +189,8 @@
                 android:id="@+id/TVEnterDiaP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/rubik_medium"
                 android:text="Dia P. (mmHg)"
                 android:textColor="#000000"
@@ -224,9 +217,8 @@
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="6dp"
         android:layout_marginEnd="16dp"
-        android:padding="20dp"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NCVEnterDiaP"
@@ -242,6 +234,8 @@
                 android:id="@+id/TVEnterPulse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/rubik_medium"
                 android:text="Pulse R. (/min)"
                 android:textColor="#000000"
@@ -268,9 +262,8 @@
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="6dp"
         android:layout_marginEnd="16dp"
-        android:padding="20dp"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NCVEnterPulse"
@@ -286,6 +279,8 @@
                 android:id="@+id/TVEnterStepsCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/rubik_medium"
                 android:text="Steps Count Goal"
                 android:textColor="#000000"
@@ -308,13 +303,14 @@
     </soup.neumorphism.NeumorphCardView>
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/BtnSubmitHealthEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
-        android:backgroundTint="#00FFFFFF"
+        android:backgroundTint="#FFFFFF"
         android:src="@drawable/ic_check"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TVEnterHealthTitle" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

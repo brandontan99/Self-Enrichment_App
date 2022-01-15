@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.self_enrichment_app.MainActivity;
+import com.example.self_enrichment_app.view.MainActivity;
 import com.example.self_enrichment_app.R;
 
 import soup.neumorphism.NeumorphCardView;
@@ -28,6 +29,7 @@ public class HealthFragment extends Fragment {
     private TextView TVStepsCountNum, TVGoalValue;
     private TextView TVWeightValue, TVHeightValue, TVBMIValue, TVSysValue, TVDiaValue, TVPulseValue;
     private NeumorphCardView NCVBMI, NCVSys, NCVDia, NCVPulse;
+
     //private FirebaseAuth mAuth;
     private String userId;
 
@@ -87,12 +89,20 @@ public class HealthFragment extends Fragment {
         //mAuth = FirebaseAuth.getInstance();
         //userId = mAuth.getUid();
         BtnAddEntry = view.findViewById(R.id.BtnAddEntry);
-        BtnCalandar = view.findViewById(R.id.BtnCalendar);
+
 
         //private TextView TVStepsCountNum, TVGoalValue;
         //private TextView TVWeightValue, TVHeightValue, TVBMIValue, TVSysValue, TVDiaValue, TVPulseValue;
         //private NeumorphCardView NCVBMI, NCVSys, NCVDia, NCVPulse;
 
+        View.OnClickListener OCLAddEntry = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.destHealthEntryFragment);
+            }
+        };
+        BtnAddEntry.setOnClickListener(OCLAddEntry);
+        //BtnCalandar = view.findViewById(R.id.BtnCalendar);
     }
 
 }
