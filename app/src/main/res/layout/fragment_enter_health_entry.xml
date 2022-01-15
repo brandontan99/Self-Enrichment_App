@@ -11,43 +11,50 @@
         android:id="@+id/TVEnterHealthTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/rubik_medium"
         android:text="Health & Fitness"
         android:textColor="@color/orange"
         android:textSize="30sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/TVAddEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="11dp"
         android:fontFamily="@font/rubik_medium"
         android:text="Add Entry"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="79dp"
-        tools:layout_editor_absoluteY="64dp" />
+        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:layout_constraintTop_toBottomOf="@+id/TVEnterHealthTitle" />
 
     <ImageButton
         android:id="@+id/imageButton"
         style="@android:style/Widget.Material.ImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:backgroundTint="#00FFFFFF"
         android:src="@drawable/ic_delete"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="54dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TVEnterHealthTitle" />
 
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/NCVEnterWeight"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:padding="20dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton"
         app:neumorph_backgroundColor="@color/light_grey"
-        app:neumorph_shapeType="pressed"
-        tools:layout_editor_absoluteX="16dp">
+        app:neumorph_shapeType="pressed">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,12 +91,15 @@
         android:id="@+id/NCVEnterHeight"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="16dp"
         android:padding="20dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NCVEnterWeight"
         app:neumorph_backgroundColor="@color/light_grey"
-        app:neumorph_shapeType="pressed"
-        tools:layout_editor_absoluteX="16dp">
+        app:neumorph_shapeType="pressed">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -125,12 +135,15 @@
         android:id="@+id/NCVEnterSysP"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="304dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="16dp"
         android:padding="20dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NCVEnterHeight"
         app:neumorph_backgroundColor="@color/light_grey"
-        app:neumorph_shapeType="pressed"
-        tools:layout_editor_absoluteX="16dp">
+        app:neumorph_shapeType="pressed">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -166,12 +179,15 @@
         android:id="@+id/NCVEnterDiaP"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="408dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="16dp"
         android:padding="20dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NCVEnterSysP"
         app:neumorph_backgroundColor="@color/light_grey"
-        app:neumorph_shapeType="pressed"
-        tools:layout_editor_absoluteX="16dp">
+        app:neumorph_shapeType="pressed">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -207,12 +223,15 @@
         android:id="@+id/NCVEnterPulse"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="512dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="16dp"
         android:padding="20dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NCVEnterDiaP"
         app:neumorph_backgroundColor="@color/light_grey"
-        app:neumorph_shapeType="pressed"
-        tools:layout_editor_absoluteX="16dp">
+        app:neumorph_shapeType="pressed">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -248,12 +267,15 @@
         android:id="@+id/NCVEnterStepsCount"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="616dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="16dp"
         android:padding="20dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NCVEnterPulse"
         app:neumorph_backgroundColor="@color/light_grey"
-        app:neumorph_shapeType="pressed"
-        tools:layout_editor_absoluteX="16dp">
+        app:neumorph_shapeType="pressed">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -284,5 +306,15 @@
                 android:textSize="14sp" />
         </LinearLayout>
     </soup.neumorphism.NeumorphCardView>
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#00FFFFFF"
+        android:src="@drawable/ic_check"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TVEnterHealthTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

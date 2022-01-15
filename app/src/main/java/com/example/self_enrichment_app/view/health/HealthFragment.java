@@ -2,14 +2,20 @@ package com.example.self_enrichment_app.view.health;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.self_enrichment_app.MainActivity;
 import com.example.self_enrichment_app.R;
+
+import soup.neumorphism.NeumorphCardView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,14 +24,22 @@ import com.example.self_enrichment_app.R;
  */
 public class HealthFragment extends Fragment {
 
+    private Button BtnAddEntry, BtnCalandar;
+    private TextView TVStepsCountNum, TVGoalValue;
+    private TextView TVWeightValue, TVHeightValue, TVBMIValue, TVSysValue, TVDiaValue, TVPulseValue;
+    private NeumorphCardView NCVBMI, NCVSys, NCVDia, NCVPulse;
+    //private FirebaseAuth mAuth;
+    private String userId;
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    //private static final String ARG_PARAM1 = "param1";
+    //private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //private String mParam1;
+    //private String mParam2;
 
     public HealthFragment() {
         // Required empty public constructor
@@ -43,8 +57,8 @@ public class HealthFragment extends Fragment {
     public static HealthFragment newInstance(String param1, String param2) {
         HealthFragment fragment = new HealthFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putString(ARG_PARAM1, param1);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,8 +67,8 @@ public class HealthFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            //mParam1 = getArguments().getString(ARG_PARAM1);
+            //mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -64,6 +78,21 @@ public class HealthFragment extends Fragment {
         ((MainActivity)getActivity()).setToolbarTitle(R.string.title_health);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_health, container, false);
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //mAuth = FirebaseAuth.getInstance();
+        //userId = mAuth.getUid();
+        BtnAddEntry = view.findViewById(R.id.BtnAddEntry);
+        BtnCalandar = view.findViewById(R.id.BtnCalendar);
+
+        private TextView TVStepsCountNum, TVGoalValue;
+        private TextView TVWeightValue, TVHeightValue, TVBMIValue, TVSysValue, TVDiaValue, TVPulseValue;
+        private NeumorphCardView NCVBMI, NCVSys, NCVDia, NCVPulse;
+
     }
 
 }
