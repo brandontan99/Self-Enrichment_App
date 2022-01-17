@@ -13,4 +13,11 @@
     <color name="red">#E74C3C</color>
     <color name="black_50_alpha">#80000000</color>
     <color name="light_red">#E74C3C</color>
+    <color name="work">#336699</color>
+    <color name="friend">#F5C767</color>
+    <color name="family">#7A61BA</color>
+    <color name="health">#39A767</color>
+    <color name="love">#EA67FF</color>
+    <color name="finance">#4991FF</color>
+
 </resources>

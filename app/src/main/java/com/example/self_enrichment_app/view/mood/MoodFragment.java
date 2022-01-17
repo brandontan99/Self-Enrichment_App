@@ -1,50 +1,46 @@
 package com.example.self_enrichment_app.view.mood;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.self_enrichment_app.view.MainActivity;
 import com.example.self_enrichment_app.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MoodFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class MoodFragment extends Fragment {
+    private Calendar myCalendar = Calendar.getInstance();
+    private String dateFormat ="dd MMM yyyy";
+    private TextView TVDate;
+    private Button BTNAddDiaryEntry;
+    private ImageButton BTNEditDiaryEntry;
+    private NavController navController;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public MoodFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MoodFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MoodFragment newInstance(String param1, String param2) {
         MoodFragment fragment = new MoodFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,10 +48,7 @@ public class MoodFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -66,4 +59,58 @@ public class MoodFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_mood, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
+
+
+        // Adding a new entry
+        BTNAddDiaryEntry = view.findViewById(R.id.BTNAddDiaryEntry);
+        BTNAddDiaryEntry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_destMood_to_destMoodNewEntry);
+            }
+        });
+
+        // Editing a new entry
+        BTNEditDiaryEntry = view.findViewById(R.id.BTNEditDiaryEntry);
+        BTNEditDiaryEntry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_destMood_to_destMoodEditEntry);
+            }
+        });
+
+        // Getting and Setting the initial date
+        TVDate= view.findViewById(R.id.TVDate);
+        Date currentDate = Calendar.getInstance().getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat(this.dateFormat, Locale.getDefault());
+        TVDate.setText(dateFormat.format(currentDate));
+
+        // Creating the calendar picker
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH,month);
+                myCalendar.set(Calendar.DAY_OF_MONTH,day);
+                updateLabel();
+            }
+        };
+
+        // Setting the calendar picker into the TVDate
+        TVDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(getContext(), date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+    }
+
+    public void updateLabel(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat(this.dateFormat, Locale.getDefault());
+        TVDate.setText(dateFormat.format(myCalendar.getTime()));
+    }
 }
