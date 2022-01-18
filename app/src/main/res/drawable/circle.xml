@@ -10,15 +10,15 @@
     </item>
     <item>
         <rotate
-            android:fromDegrees="120"
-            android:toDegrees="120">
+            android:fromDegrees="270"
+            android:toDegrees="270">
             <shape
                 android:shape="ring"
                 android:thicknessRatio="16"
                 android:useLevel="true">
                 <gradient
                     android:endColor="@color/orange"
-                    android:startColor="@color/orange"
+                    android:startColor="@color/yellow"
                     android:type="sweep" />
             </shape>
         </rotate>

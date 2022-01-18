@@ -12,8 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.appcompat.widget.AppCompatImageButton;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.self_enrichment_app.R;
+import com.example.self_enrichment_app.view.MainActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +27,9 @@ public class HealthEntryFragment extends Fragment {
 
     private EditText ETEnterWeight, ETEnterHeight, ETEnterSysP, ETEnterDiaP, ETEnterPulse, ETEnterStepsCount;
     private AppCompatImageButton BtnCancelHealthEntry, BtnSubmitHealthEntry;
+    private String date;
+    private FirebaseAuth mAuth;
+    private String userId;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,10 +65,7 @@ public class HealthEntryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -74,12 +77,18 @@ public class HealthEntryFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        //super.onViewCreated(view, savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getUid();
+        Bundle bundle = getArguments();
+        if (bundle!=null) {
+            date = bundle.getString("date");
+        }
+
         BtnCancelHealthEntry = view.findViewById(R.id.BtnCancelHealthEntry);
         View.OnClickListener OCLCancelHealthEntry = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.destHealth);
+                Navigation.findNavController(view).navigate(R.id.destHealth, bundle);
             }
         };
         BtnCancelHealthEntry.setOnClickListener(OCLCancelHealthEntry);
@@ -88,7 +97,7 @@ public class HealthEntryFragment extends Fragment {
         View.OnClickListener OCLSubmitHealthEntry = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.destHealth);
+                Navigation.findNavController(view).navigate(R.id.destHealth, bundle);
             }
         };
         BtnSubmitHealthEntry.setOnClickListener(OCLSubmitHealthEntry);

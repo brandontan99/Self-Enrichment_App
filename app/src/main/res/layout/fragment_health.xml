@@ -53,16 +53,35 @@
         app:neumorph_backgroundColor="@color/light_grey"
         app:neumorph_shapeType="pressed">
 
-        <TextView
-            android:id="@+id/TVStepsCountNum"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/rubik_medium"
-            android:text="10000 steps"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/TVStepsCountNum"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:text="10000"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TVStepsName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/rubik_medium"
+                android:text="steps"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
     </soup.neumorphism.NeumorphCardView>
 
     <TextView
@@ -80,7 +99,7 @@
     <Button
         android:id="@+id/BtnAddEntry"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="wrap_content"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="42dp"
         android:backgroundTint="#FFC107"
@@ -95,7 +114,7 @@
     <Button
         android:id="@+id/BtnCalendar"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="wrap_content"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="42dp"
@@ -225,7 +244,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:text="20.8"
                 android:textAlignment="center"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -361,6 +379,7 @@
         android:id="@+id/CVGoals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/PBStepsCount"
         app:layout_constraintEnd_toEndOf="@+id/PBStepsCount"
         app:layout_constraintStart_toStartOf="@+id/PBStepsCount"
@@ -377,9 +396,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:text="Goals"
+                android:text="Goal:"
                 android:textAlignment="center"
-                android:textColor="@color/orange" />
+                android:textColor="@color/black_50_alpha"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/TVGoalValue"
@@ -387,7 +407,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
                 android:text="10000"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/yellow"
+                android:textStyle="bold" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
