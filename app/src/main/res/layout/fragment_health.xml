@@ -46,7 +46,7 @@
         android:id="@+id/NCVStepsCountNum"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="52dp"
+        android:layout_marginEnd="16dp"
         android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -63,7 +63,6 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:text="10000"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -101,7 +100,7 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="42dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="#FFC107"
         android:fontFamily="@font/rubik_medium"
         android:text="Add Entry"
@@ -117,7 +116,7 @@
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:layout_marginEnd="42dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="#FFC107"
         android:fontFamily="@font/rubik_medium"
         android:textAllCaps="false"
@@ -161,7 +160,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:text="60"
                 android:textAlignment="center"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -202,7 +200,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:text="170"
                 android:textAlignment="center"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -285,7 +282,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:text="120"
                 android:textAlignment="center"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -326,7 +322,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:text="85"
                 android:textAlignment="center"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -368,7 +363,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:text="120"
                 android:textAlignment="center"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -406,7 +400,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:text="10000"
                 android:textAlignment="center"
                 android:textColor="@color/yellow"
                 android:textStyle="bold" />

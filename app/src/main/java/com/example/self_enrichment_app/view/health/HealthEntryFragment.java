@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -15,7 +16,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.self_enrichment_app.R;
+import com.example.self_enrichment_app.data.model.HealthEntry;
 import com.example.self_enrichment_app.view.MainActivity;
+import com.example.self_enrichment_app.viewmodel.HealthEntriesViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -30,6 +33,7 @@ public class HealthEntryFragment extends Fragment {
     private String date;
     private FirebaseAuth mAuth;
     private String userId;
+    private HealthEntriesViewModel healthEntriesViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,6 +83,14 @@ public class HealthEntryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getUid();
+        ETEnterWeight = view.findViewById(R.id.ETEnterWeight);
+        ETEnterHeight = view.findViewById(R.id.ETEnterHeight);
+        ETEnterSysP = view.findViewById(R.id.ETEnterSysP);
+        ETEnterDiaP = view.findViewById(R.id.ETEnterDiaP);
+        ETEnterPulse = view.findViewById(R.id.ETEnterPulse);
+        ETEnterStepsCount = view.findViewById(R.id.ETEnterStepsCount);
+        healthEntriesViewModel = new ViewModelProvider(this).get(HealthEntriesViewModel.class);
+
         Bundle bundle = getArguments();
         if (bundle!=null) {
             date = bundle.getString("date");
@@ -98,6 +110,15 @@ public class HealthEntryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(view).navigate(R.id.destHealth, bundle);
+                int newWeight = Integer.parseInt(ETEnterWeight.getText().toString());
+                int newHeight = Integer.parseInt(ETEnterHeight.getText().toString());
+                int newSys = Integer.parseInt(ETEnterSysP.getText().toString());
+                int newDia = Integer.parseInt(ETEnterDiaP.getText().toString());
+                int newPulse = Integer.parseInt(ETEnterPulse.getText().toString());
+                int newStepsGoal = Integer.parseInt(ETEnterStepsCount.getText().toString());
+                HealthEntry healthEntry = new HealthEntry(date, userId, newWeight, newHeight,
+                newSys, newDia, newPulse, newStepsGoal);
+                healthEntriesViewModel.addHealthEntry(healthEntry);
             }
         };
         BtnSubmitHealthEntry.setOnClickListener(OCLSubmitHealthEntry);
