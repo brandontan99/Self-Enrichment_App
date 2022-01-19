@@ -50,8 +50,8 @@
             android:id="@+id/EditProfileBtn"
             android:layout_width="150dp"
             android:layout_height="130dp"
-            android:background="@drawable/ic_comment"
-            android:drawableTop="@drawable/ic_comment"
+            android:background="@drawable/profile_button"
+            android:drawableTop="@drawable/ic_edit_profile"
             android:text="@string/edit_profile">
 
         </androidx.appcompat.widget.AppCompatButton>
@@ -71,7 +71,7 @@
             android:id="@+id/SettingsBtn"
             android:layout_width="150dp"
             android:layout_height="130dp"
-            android:background="@drawable/ic_setting"
+            android:background="@drawable/profile_button"
             android:drawableTop="@drawable/ic_setting"
             android:text="@string/settings">
 
@@ -92,8 +92,8 @@
             android:id="@+id/ReviewAppBtn"
             android:layout_width="150dp"
             android:layout_height="130dp"
-            android:background="@drawable/ic_comment"
-            android:drawableTop="@drawable/ic_comment"
+            android:background="@drawable/profile_button"
+            android:drawableTop="@drawable/ic_review_app"
             android:text="@string/review_app">
 
         </androidx.appcompat.widget.AppCompatButton>
@@ -113,8 +113,8 @@
             android:id="@+id/ContactUsBtn"
             android:layout_width="150dp"
             android:layout_height="130dp"
-            android:background="@drawable/ic_comment"
-            android:drawableTop="@drawable/ic_comment"
+            android:background="@drawable/profile_button"
+            android:drawableTop="@drawable/ic_contact_us"
             android:text="@string/contact_us">
 
         </androidx.appcompat.widget.AppCompatButton>
