@@ -11,7 +11,7 @@
         android:layout_height="123dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/ic_baseline_account_circle_96"
+        android:src="@mipmap/profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,8 +71,8 @@
             android:id="@+id/SettingsBtn"
             android:layout_width="150dp"
             android:layout_height="130dp"
-            android:background="@drawable/ic_comment"
-            android:drawableTop="@drawable/ic_comment"
+            android:background="@drawable/ic_setting"
+            android:drawableTop="@drawable/ic_setting"
             android:text="@string/settings">
 
         </androidx.appcompat.widget.AppCompatButton>

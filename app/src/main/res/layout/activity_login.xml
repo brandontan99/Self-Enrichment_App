@@ -17,9 +17,9 @@
 
         <ImageView
             android:id="@+id/IKIGAILogoView"
-            android:layout_width="wrap_content"
-            android:layout_height="146dp"
-            app:srcCompat="@drawable/ic_comment" />
+            android:layout_width="362dp"
+            android:layout_height="119dp"
+            app:srcCompat="@mipmap/ic_ikigai" />
 
     </soup.neumorphism.NeumorphCardView>
 
@@ -59,7 +59,7 @@
             android:id="@+id/editTextEmailAddress"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_comment"
+            android:drawableLeft="@drawable/ic_face"
             android:drawablePadding="8dp"
             android:ems="10"
             android:inputType="textEmailAddress"
@@ -99,7 +99,7 @@
             android:id="@+id/editTextLoginPassword"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_comment"
+            android:drawableLeft="@drawable/ic_lock"
             android:drawablePadding="8dp"
             android:ems="10"
             android:inputType="textPassword"
@@ -126,49 +126,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardViewPassword" />
 
-    <TextView
-        android:id="@+id/orContinueWith"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="121dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/or"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonlogin" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/googleSignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orContinueWith" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/facebookSignIn"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="64dp"
-        android:background="@drawable/button_shape"
-        android:text="@string/facebook"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orContinueWith" />
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerUsingEmail"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="78dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/button_shape"
         android:backgroundTint="@color/yellow"
         android:text="@string/register_using_email"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orContinueWith" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonlogin" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

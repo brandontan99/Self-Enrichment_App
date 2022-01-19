@@ -35,7 +35,7 @@
         android:layout_height="47dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="72dp"
-        android:src="@drawable/ic_comment"
+        android:src="@drawable/ic_phone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contactUsCloseButton" />
 
@@ -45,7 +45,7 @@
         android:layout_height="57dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="26dp"
-        android:src="@drawable/ic_comment"
+        android:src="@drawable/ic_mail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contactUsPhoneIconView" />
 
