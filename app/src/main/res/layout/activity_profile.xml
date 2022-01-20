@@ -50,6 +50,7 @@
             android:id="@+id/EditProfileBtn"
             android:layout_width="150dp"
             android:layout_height="130dp"
+            android:textColor="#000000"
             android:background="@drawable/profile_button"
             android:drawableTop="@drawable/ic_edit_profile"
             android:text="@string/edit_profile">
@@ -71,6 +72,7 @@
             android:id="@+id/SettingsBtn"
             android:layout_width="150dp"
             android:layout_height="130dp"
+            android:textColor="#000000"
             android:background="@drawable/profile_button"
             android:drawableTop="@drawable/ic_setting"
             android:text="@string/settings">
@@ -92,6 +94,7 @@
             android:id="@+id/ReviewAppBtn"
             android:layout_width="150dp"
             android:layout_height="130dp"
+            android:textColor="#000000"
             android:background="@drawable/profile_button"
             android:drawableTop="@drawable/ic_review_app"
             android:text="@string/review_app">
@@ -113,6 +116,7 @@
             android:id="@+id/ContactUsBtn"
             android:layout_width="150dp"
             android:layout_height="130dp"
+            android:textColor="#000000"
             android:background="@drawable/profile_button"
             android:drawableTop="@drawable/ic_contact_us"
             android:scrollHorizontally="false"

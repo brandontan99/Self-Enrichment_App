@@ -44,6 +44,7 @@
             android:exported="false" />
         <activity
             android:name=".view.general.LoginActivity"
+
             android:exported="true">
 
             <intent-filter>
