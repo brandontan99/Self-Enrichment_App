@@ -49,15 +49,15 @@ public class HealthEntriesRepository {
         DocumentReference docRef = firestore.collection("HealthEntries").document(documentId);
         docRef.update("weight", weight);
         docRef.update("height", height);
-        docRef.update("sysbp", sys);
-        docRef.update("diabp", dia);
+        docRef.update("sys", sys);
+        docRef.update("dia", dia);
         docRef.update("pulse", pulse);
-        docRef.update("stepsgoal", steps_goal);
+        docRef.update("steps_goal", steps_goal);
     }
 
     public void updateStepsCount(String documentId, int steps_count){
         DocumentReference docRef = firestore.collection("HealthEntries").document(documentId);
-        docRef.update("stepscount", steps_count);
+        docRef.update("steps_count", steps_count);
     }
 
 

@@ -8,9 +8,8 @@ public class HealthEntry {
     private String date, userId;
     private int weight, height, sys, dia, pulse, steps_count, steps_goal;
 
-    public HealthEntry(String date, String userId, @Nullable int weight, @Nullable int height,
-                       @Nullable int sys, @Nullable int dia, @Nullable int pulse, @Nullable int steps_goal) {
-        int steps_count = 0;
+    public HealthEntry(String date, String userId, int weight, int height,
+                       int sys, int dia, int pulse, int steps_count, int steps_goal) {
         this.date = date;
         this.userId = userId;
         this.weight = weight;

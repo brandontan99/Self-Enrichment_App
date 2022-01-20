@@ -14,7 +14,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="21dp"
         android:fontFamily="@font/rubik_medium"
-        android:text="Add Entry"
+        android:text="Add / Edit Entry"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/BtnCancelHealthEntry"
         app:layout_constraintTop_toTopOf="parent" />
