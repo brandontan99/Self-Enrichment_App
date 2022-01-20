@@ -40,7 +40,7 @@
                 android:textSize="30sp"></TextView>
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profilePictureView"
+                android:id="@+id/ibtnProfile"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_marginStart="24dp"

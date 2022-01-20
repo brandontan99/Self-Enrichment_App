@@ -110,7 +110,6 @@
         android:textStyle="bold"
         android:thumb="@drawable/thumb"
         app:track="@drawable/track"
-        android:checked="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingsCloseButton" />
 

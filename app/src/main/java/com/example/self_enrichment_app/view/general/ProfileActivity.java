@@ -9,13 +9,19 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.example.self_enrichment_app.R;
 import com.example.self_enrichment_app.data.model.User;
+import com.example.self_enrichment_app.view.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -33,6 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     CircleImageView ProfilePicture;
     TextView userName;
+    BottomNavigationView bnvProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +57,28 @@ public class ProfileActivity extends AppCompatActivity {
 
         userName = (TextView) findViewById(R.id.profileNameView);
 
-
-
         //Initialize firebase auth and firestore
         mauth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         userID = mauth.getCurrentUser().getUid();
         documentReference = db.collection("Users").document(userID);
 
+        //NavHostFragment host = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nhfProfile);
+        //NavController navController = host.getNavController();
+        //AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.destGoals,R.id.destLessons,R.id.destDashboard,R.id.destHealth,R.id.destMood).build();
+        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        //NavigationUI.setupWithNavController(bnvProfile, navController);
+
         //get username from current user dataset (not used)
         //userName.setText(GlobalVariable.currentUser.getUserName());
+
+        View.OnClickListener OCLMainActivity = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+            }
+        };
+        ProfilePicture.setOnClickListener(OCLMainActivity);
 
         //navigate to edit profile
         View.OnClickListener OCLeditProfile = new View.OnClickListener() {

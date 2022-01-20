@@ -19,7 +19,7 @@
             android:id="@+id/IKIGAILogoView"
             android:layout_width="362dp"
             android:layout_height="119dp"
-            app:srcCompat="@mipmap/ic_ikigai" />
+            />
 
     </soup.neumorphism.NeumorphCardView>
 
@@ -65,6 +65,7 @@
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:paddingLeft="12dp"
+            tools:ignore="SpeakableTextPresentCheck"
             tools:layout_editor_absoluteX="12dp"
             tools:layout_editor_absoluteY="12dp" />
 

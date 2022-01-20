@@ -22,6 +22,10 @@
         <item name="android:textSize">10sp</item>
     </style>
 
-    <attr name="DoneButton" format="reference"></attr>
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#333333</item>
+        <item name="colorControlActivated">@color/orange</item>
+    </style>
+
 
 </resources>
