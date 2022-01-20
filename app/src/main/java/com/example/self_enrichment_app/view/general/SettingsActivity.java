@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
@@ -104,6 +105,84 @@ public class SettingsActivity extends AppCompatActivity {
         };
         changePasswordBtn.setOnClickListener(OCLChangePasswordBtn);
 
+        //Notification switch
+        SharedPreferences sharedPreferences = getSharedPreferences("notification", MODE_PRIVATE);
+        SwitchCompat goalsSwitch = (SwitchCompat) findViewById(R.id.settingsGoalsSwitch);
+        goalsSwitch.setChecked(sharedPreferences.getBoolean("goals value", false));
+        goalsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    SharedPreferences.Editor editor = getSharedPreferences("notification", MODE_PRIVATE).edit();
+                    editor.putBoolean("goals value",true);
+                    editor.apply();
+                    goalsSwitch.setChecked(true);
+                }else{
+                    SharedPreferences.Editor editor = getSharedPreferences("notification", MODE_PRIVATE).edit();
+                    editor.putBoolean("goals value",false);
+                    editor.apply();
+                    goalsSwitch.setChecked(false);
+                }
+            }
+        });
+
+        SwitchCompat lessonLearntSwitch = (SwitchCompat) findViewById(R.id.settingsLessonLearntSwitch);
+        lessonLearntSwitch.setChecked(sharedPreferences.getBoolean("lesson learnt value", false));
+        lessonLearntSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    SharedPreferences.Editor editor = getSharedPreferences("notification", MODE_PRIVATE).edit();
+                    editor.putBoolean("lesson learnt value",true);
+                    editor.apply();
+                    lessonLearntSwitch.setChecked(true);
+                }else{
+                    SharedPreferences.Editor editor = getSharedPreferences("notification", MODE_PRIVATE).edit();
+                    editor.putBoolean("lesson learnt value",false);
+                    editor.apply();
+                    lessonLearntSwitch.setChecked(false);
+                }
+            }
+        });
+
+        SwitchCompat healthSwitch = (SwitchCompat) findViewById(R.id.settingsHealthSwitch);
+        healthSwitch.setChecked(sharedPreferences.getBoolean("health value", false));
+        healthSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    SharedPreferences.Editor editor = getSharedPreferences("notification", MODE_PRIVATE).edit();
+                    editor.putBoolean("health value",true);
+                    editor.apply();
+                    healthSwitch.setChecked(true);
+                }else{
+                    SharedPreferences.Editor editor = getSharedPreferences("notification", MODE_PRIVATE).edit();
+                    editor.putBoolean("health value",false);
+                    editor.apply();
+                    healthSwitch.setChecked(false);
+                }
+            }
+        });
+
+        SwitchCompat moodSwitch = (SwitchCompat) findViewById(R.id.settingsMoodSwitch);
+        moodSwitch.setChecked(sharedPreferences.getBoolean("mood value", false));
+        moodSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    SharedPreferences.Editor editor = getSharedPreferences("notification", MODE_PRIVATE).edit();
+                    editor.putBoolean("mood value",true);
+                    editor.apply();
+                    moodSwitch.setChecked(true);
+                }else{
+                    SharedPreferences.Editor editor = getSharedPreferences("notification", MODE_PRIVATE).edit();
+                    editor.putBoolean("mood value",false);
+                    editor.apply();
+                    moodSwitch.setChecked(false);
+                }
+            }
+        });
+
 
     }
 
@@ -118,4 +197,5 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
+
 }

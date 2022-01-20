@@ -121,6 +121,8 @@
         android:layout_marginTop="16dp"
         android:text="@string/goals"
         android:textSize="20sp"
+        android:thumb="@drawable/thumb"
+        app:track="@drawable/track"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingsPushNotificationView" />
 
@@ -132,6 +134,8 @@
         android:layout_marginTop="16dp"
         android:text="@string/mood"
         android:textSize="20sp"
+        android:thumb="@drawable/thumb"
+        app:track="@drawable/track"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingsHealthSwitch" />
 
@@ -143,6 +147,8 @@
         android:layout_marginTop="16dp"
         android:text="@string/health"
         android:textSize="20sp"
+        android:thumb="@drawable/thumb"
+        app:track="@drawable/track"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingsLessonLearntSwitch" />
 
@@ -154,6 +160,8 @@
         android:layout_marginTop="16dp"
         android:text="@string/lesson_learnt"
         android:textSize="20sp"
+        android:thumb="@drawable/thumb"
+        app:track="@drawable/track"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingsGoalsSwitch" />
 
