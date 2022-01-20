@@ -115,6 +115,7 @@
             android:layout_height="130dp"
             android:background="@drawable/profile_button"
             android:drawableTop="@drawable/ic_contact_us"
+            android:scrollHorizontally="false"
             android:text="@string/contact_us">
 
         </androidx.appcompat.widget.AppCompatButton>
@@ -126,19 +127,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        app:neumorph_backgroundColor="#F8F8F8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewProfileReviewAppButton">
+        app:layout_constraintTop_toBottomOf="@+id/cardViewProfileReviewAppButton"
+        app:neumorph_backgroundColor="#F8F8F8">
 
         <Button
             android:id="@+id/AboutUsBtn"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_us"
             android:textColor="#000000"
             tools:layout_editor_absoluteX="76dp"
-            tools:layout_editor_absoluteY="36dp"
-            style="?android:attr/buttonBarButtonStyle">
+            tools:layout_editor_absoluteY="36dp">
 
         </Button>
 
@@ -149,19 +150,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        app:neumorph_backgroundColor="#F8F8F8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewProfileAboutUsButton" >
+        app:layout_constraintTop_toBottomOf="@+id/cardViewProfileAboutUsButton"
+        app:neumorph_backgroundColor="#F8F8F8">
 
         <Button
             android:id="@+id/LogoutBtn"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/logout"
             android:textColor="#000000"
             tools:layout_editor_absoluteX="76dp"
-            tools:layout_editor_absoluteY="36dp"
-            style="?android:attr/buttonBarButtonStyle">
+            tools:layout_editor_absoluteY="36dp">
 
         </Button>
 
@@ -173,9 +174,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="156dp"
         android:layout_marginTop="0dp"
+        android:gravity="center"
         android:text="@string/app_version"
         android:textSize="12sp"
-        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardViewProfileLogOutButton" />
 

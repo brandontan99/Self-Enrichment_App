@@ -2,10 +2,14 @@ package com.example.self_enrichment_app.view.general;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,6 +77,20 @@ public class SettingsActivity extends AppCompatActivity {
         };
         doneBtn.setOnClickListener(OCLDoneBtn);
 
+        SwitchCompat darkThemeSwitch = (SwitchCompat) findViewById(R.id.settingsDarkThemeSwitch);
+
+        darkThemeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    darkThemeSwitch.setChecked(true);
+                }else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    darkThemeSwitch.setChecked(false);
+                }
+            }
+        });
 
         //Change password
         ImageButton changePasswordBtn = (ImageButton) findViewById(R.id.settingsChangePasswordButton);
