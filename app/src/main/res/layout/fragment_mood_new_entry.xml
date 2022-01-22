@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/TVMood"
+        android:id="@+id/TVAddMood"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/TVAddEntry" />
 
     <TextView
-        android:id="@+id/TVReason"
+        android:id="@+id/TVAddReason"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -64,20 +64,20 @@
         android:text="Reason"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/RGAddMood" />
 
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroup"
+        android:id="@+id/CGAddMoodDiary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TVReason">
+        app:layout_constraintTop_toBottomOf="@+id/TVAddReason">
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/CHIPWork"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:id="@+id/CHIPAddWork"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
@@ -89,8 +89,8 @@
             app:chipBackgroundColor="@color/work" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/CHIPFriends"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:id="@+id/CHIPAddFriends"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Friends"
@@ -102,8 +102,8 @@
             tools:ignore="TextContrastCheck" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/CHIPFamily"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:id="@+id/CHIPAddFamily"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Family"
@@ -114,8 +114,8 @@
             app:chipBackgroundColor="@color/family" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/CHIPHealth"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:id="@+id/CHIPAddHealth"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Health"
@@ -126,8 +126,8 @@
             app:chipBackgroundColor="@color/health" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/CHIPFinance"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:id="@+id/CHIPAddFinance"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Finance"
@@ -138,8 +138,8 @@
             app:chipBackgroundColor="@color/finance" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/CHIPLove"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:id="@+id/CHIPAddLove"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Love"
@@ -155,7 +155,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="12dp"
         android:paddingStart="30dp"
         android:paddingTop="0dp"
         android:paddingEnd="20dp"
@@ -163,7 +162,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroup"
+        app:layout_constraintTop_toBottomOf="@+id/CGAddMoodDiary"
         app:neumorph_shapeType="pressed">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -171,63 +170,69 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/ETDiaryEntry"
+                android:id="@+id/ETAddDiaryEntry"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
                 android:ems="10"
                 android:hint="What's on your mind?"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="TextContrastCheck"
-                android:importantForAutofill="no" />
+                tools:ignore="TextContrastCheck" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </soup.neumorphism.NeumorphCardView>
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/RGAddMood"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TVMood">
+        app:layout_constraintTop_toBottomOf="@+id/TVAddMood">
 
         <RadioButton
-            android:id="@+id/RBHappy"
+            android:id="@+id/RBAddHappy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:contentDescription="I feel happy today"
-            android:drawableStart="@drawable/ic_mood_happy" />
+            android:drawableTop="@drawable/ic_mood_happy"
+            android:text="happy"
+            android:textSize="0sp" />
 
         <RadioButton
-            android:id="@+id/RBSad"
+            android:id="@+id/RBAddSad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:contentDescription="I feel sad today"
-            android:drawableStart="@drawable/ic_mood_sad" />
+            android:drawableTop="@drawable/ic_mood_sad"
+            android:text="sad"
+            android:textSize="0sp" />
 
         <RadioButton
-            android:id="@+id/RBAngry"
+            android:id="@+id/RBAddAngry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:contentDescription="I feel angry today"
-            android:drawableStart="@drawable/ic_mood_angry" />
+            android:drawableTop="@drawable/ic_mood_angry"
+            android:text="angry"
+            android:textSize="0sp" />
 
         <RadioButton
-            android:id="@+id/RBTired"
+            android:id="@+id/RBAddTired"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:contentDescription="I feel tired today"
-            android:drawableStart="@drawable/ic_mood_tired" />
+            android:drawableTop="@drawable/ic_mood_tired"
+            android:text="tired"
+            android:textSize="0sp" />
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

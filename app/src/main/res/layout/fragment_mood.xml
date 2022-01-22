@@ -122,115 +122,107 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="SpeakableTextPresentCheck" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/CLTags"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/CGMoodDiary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="10dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/IVMood">
 
-                <TextView
-                    android:id="@+id/TVWorkTag"
-                    android:layout_width="100dp"
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/CHIPWork"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/rounded_corner_work"
-                    android:gravity="center"
+                    android:clickable="false"
+                    android:fontFamily="sans-serif"
                     android:text="Work"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:checkedIconTint="#FFFFFF"
+                    app:chipBackgroundColor="@color/work" />
 
-                <TextView
-                    android:id="@+id/TVFinanceTag"
-                    android:layout_width="110dp"
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/CHIPFriends"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="56dp"
-                    android:background="@drawable/rounded_corner_finance"
-                    android:gravity="center"
-                    android:text="Finance"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/TVHealthTag"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/TVFriendsTag"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/rounded_corner_friend"
-                    android:gravity="center"
+                    android:clickable="false"
                     android:text="Friends"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/TVWorkTag"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:checkedIconTint="#FFFFFF"
+                    app:chipBackgroundColor="@color/friend"
                     tools:ignore="TextContrastCheck" />
 
-                <TextView
-                    android:id="@+id/TVFamilyTag"
-                    android:layout_width="100dp"
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/CHIPFamily"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/rounded_corner_family"
-                    android:gravity="center"
+                    android:clickable="false"
                     android:text="Family"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/TVFriendsTag"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:checkedIconTint="#FFFFFF"
+                    app:chipBackgroundColor="@color/family" />
 
-                <TextView
-                    android:id="@+id/TVLoveTag"
-                    android:layout_width="100dp"
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/CHIPHealth"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="56dp"
-                    android:background="@drawable/rounded_corner_love"
-                    android:gravity="center"
-                    android:text="Love"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/TVFinanceTag"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="TextContrastCheck" />
-
-                <TextView
-                    android:id="@+id/TVHealthTag"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="56dp"
-                    android:background="@drawable/rounded_corner_health"
-                    android:gravity="center"
+                    android:clickable="false"
                     android:text="Health"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:checkedIconTint="#FFFFFF"
+                    app:chipBackgroundColor="@color/health" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/CHIPFinance"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:text="Finance"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:checkedIconTint="#FFFFFF"
+                    app:chipBackgroundColor="@color/finance" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/CHIPLove"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:text="Love"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:checkedIconTint="#FFFFFF"
+                    app:chipBackgroundColor="@color/love"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.chip.ChipGroup>
 
             <TextView
                 android:id="@+id/TVDiaryEntry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:fontFamily="@font/rubik_medium"
                 android:paddingStart="5dp"
                 android:paddingTop="5dp"
@@ -240,7 +232,7 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/CLTags" />
+                app:layout_constraintTop_toBottomOf="@+id/CGMoodDiary" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </soup.neumorphism.NeumorphCardView>
@@ -260,6 +252,7 @@
         app:layout_constraintTop_toBottomOf="@+id/neumorphCardViewDiaryEntry" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
