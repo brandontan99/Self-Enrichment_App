@@ -54,6 +54,8 @@ import java.util.Calendar;
 import soup.neumorphism.NeumorphCardView;
 
 public class HealthFragment extends Fragment implements SensorEventListener {
+    public static boolean[][] healthStatus = {{false,false,false},{false,false,false},{false,false,false}};
+    public static boolean[] testing = {false,false,false};
     public static boolean[] dailyStatus = {false,false,false};
     private Button BtnAddEntry, BtnCalendar;
     private TextView TVStepsCountNum, TVGoalValue, TVStepsAlertExMark, TVStepsAlertMsg;
@@ -68,24 +70,11 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     private int previousTotalStepsCount = 0;
     private int totalStepsCount = 0;
     private String todayDate;
-    private int tempoldcount = 0;
-    private boolean todayBMIAlert = false;
     // notification
 
-    public static boolean yesterdayBMIAlert = false;
-    private boolean todayBloodPressureAlert = false;
-    private boolean yesterdayBloodPressureAlert = false;
-    private boolean dayBeforeYesterdayBloodPressureAlert = false;
-
-    private boolean todayBloodPulseAlert = false;
-    private boolean yesterdayBloodPulseAlert = false;
-    private boolean dayBeforeYesterdayBloodPulseAlert = false;
 
     private boolean yesterdayStepsCountAlert = false;
 
-    private boolean BMIAlert = false;
-    private boolean isTodayBloodPressureAlert = false;
-    private boolean bloodPulseAlert = false;
 
     public HealthFragment() {
         // Required empty public constructor
@@ -183,6 +172,9 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         int currentMonth = currentDate.get(Calendar.MONTH);
         int currentYear = currentDate.get(Calendar.YEAR);
         todayDate = currentDayMonth + "/" + (currentMonth + 1) + "/" + currentYear;
+        Log.d("TEXT","Today:" + todayDate);
+        todayDate = todayDate();
+        Log.d("TEXTNEW","Today:" + todayDate);
         BtnCalendar.setText(currentDayMonth + "/" + (currentMonth + 1) + "/" + currentYear);
         searchEntry(BtnCalendar.getText().toString());
         BtnCalendar.setOnClickListener(new View.OnClickListener() {
@@ -199,14 +191,18 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                 HealthDatePicker.show();
             }
         });
-        checkDailyHealthStatus(todayDate, new MyCallback() {
+        checkHealthNotification(new HealthNotification() {
             @Override
-            public void onCallback(boolean[] dailyStatus) {
-
+            public void callHealthNotification(boolean[][] healthStatus) {
+                Log.d("TEXT","Today:" + healthStatus[0][0] + healthStatus[0][1] + healthStatus[0][2]);
+                Log.d("TEXT","Yesterday:" + healthStatus[1][0] + healthStatus[1][1] + healthStatus[1][2]);
+                Log.d("TEXT","Dayb4yesterday:" + healthStatus[2][0] + healthStatus[2][1] + healthStatus[2][2]);
+                sendHealthNotification(healthStatus);
             }
         });
-        Log.d("TEXT","Today:" + dailyStatus[0] + dailyStatus[1] + dailyStatus[2]);
-        //checkHealthStatus(todayDate, yesterdayDate(), dayBeforeYesterdayDate());
+
+        checkYesterdayStepsCount();
+
     }
 
     private double roundBMI (double BMIValue) {
@@ -421,13 +417,16 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                         healthEntriesViewModel.addHealthEntry(newHealthEntry);
                         //previousTotalStepsCount = totalStepsCount;
                         //saveStepsCount();
-                        setEmptyText(0);
                         Toast.makeText(getActivity(),"Now steps " + currentStepsCount,Toast.LENGTH_SHORT).show();
                         Toast.makeText(getActivity(),"Totalsss " + totalStepsCount + "Previous " + previousTotalStepsCount,Toast.LENGTH_SHORT).show();
                         Toast.makeText(getActivity(),"New data",Toast.LENGTH_SHORT).show();
                         //TVStepsCountNum.setText(currentStepsCount);
                         // 100% by default
-                        PBStepsCount.setProgress(100);
+                        String date = BtnCalendar.getText().toString();
+                        if (date.equals(todayDate())){
+                            setEmptyText(0);
+                            PBStepsCount.setProgress(100);
+                        }
                     }
                     else {
                         for (QueryDocumentSnapshot document : task.getResult()) {
@@ -440,28 +439,31 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                             Toast.makeText(getActivity(),"Totalsss " + totalStepsCount + "Previous " + previousTotalStepsCount,Toast.LENGTH_SHORT).show();
                             healthEntriesViewModel.updateStepsCount(document.getId(), currentCount);
                             //int newStepsCount = stepsCount;
-                            TVStepsCountNum.setText(Integer.toString(currentCount));
-                            double stepscountnum = currentCount;
-                            double goalvalue = Integer.parseInt(document.get("steps_goal").toString());
-                            if (goalvalue > 0) {
-                                int countprogress = (int) ((stepscountnum / goalvalue) * 100);
-                                if (countprogress >= 100) {
-                                    countprogress = 100;
+                            String date = BtnCalendar.getText().toString();
+                            if (date.equals(todayDate())){
+                                TVStepsCountNum.setText(Integer.toString(currentCount));
+                                double stepscountnum = currentCount;
+                                double goalvalue = Integer.parseInt(document.get("steps_goal").toString());
+                                if (goalvalue > 0) {
+                                    int countprogress = (int) ((stepscountnum / goalvalue) * 100);
+                                    if (countprogress >= 100) {
+                                        countprogress = 100;
+                                        TVStepsAlertMsg.setVisibility(View.INVISIBLE);
+                                        TVStepsAlertExMark.setVisibility(View.INVISIBLE);
+                                        //PBStepsCount.setDrawingCacheBackgroundColor(Color.GREEN);
+                                    }
+                                    else{
+                                        TVStepsAlertMsg.setVisibility(View.VISIBLE);
+                                        TVStepsAlertExMark.setVisibility(View.VISIBLE);
+                                    }
+                                    Log.d("PROGRESS", "PERCENTAGE" + countprogress);
+                                    PBStepsCount.setProgress(countprogress);
+                                }
+                                else {
                                     TVStepsAlertMsg.setVisibility(View.INVISIBLE);
                                     TVStepsAlertExMark.setVisibility(View.INVISIBLE);
-                                    //PBStepsCount.setDrawingCacheBackgroundColor(Color.GREEN);
+                                    PBStepsCount.setProgress(100);
                                 }
-                                else{
-                                    TVStepsAlertMsg.setVisibility(View.VISIBLE);
-                                    TVStepsAlertExMark.setVisibility(View.VISIBLE);
-                                }
-                                Log.d("PROGRESS", "PERCENTAGE" + countprogress);
-                                PBStepsCount.setProgress(countprogress);
-                            }
-                            else {
-                                TVStepsAlertMsg.setVisibility(View.INVISIBLE);
-                                TVStepsAlertExMark.setVisibility(View.INVISIBLE);
-                                PBStepsCount.setProgress(100);
                             }
                         }
                     }
@@ -494,13 +496,9 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         previousTotalStepsCount = prevTotalSteps;
     }
 
-    private void checkHealthStatus(String todayDate, String yesterdayDate, String dayBeforeYesterdayDate) {
-
-
-        boolean dayBeforeYesterdayBMIAlert = false;
-
-        // todayQuery
-        Query todayQuery = FirebaseFirestore.getInstance().collection("HealthEntries").whereEqualTo("userId",userId).whereEqualTo("date",todayDate);
+    private void checkHealthNotification(HealthNotification callHealthNotification) {
+        Query todayQuery = FirebaseFirestore.getInstance().collection("HealthEntries")
+                .whereEqualTo("userId",userId).whereEqualTo("date",todayDate());
         todayQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> todayTask) {
@@ -508,62 +506,101 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                     if (!todayTask.getResult().getDocuments().isEmpty()){
                         for (QueryDocumentSnapshot todayDocument : todayTask.getResult()) {
                             if (Integer.parseInt(todayDocument.get("weight").toString()) > -1){
-                                //int todayStepsCount = Integer.parseInt(todayDocument.get("steps_count").toString());
-                                double todayWeight = Integer.parseInt(todayDocument.get("weight").toString());
-                                double todayHeight = Integer.parseInt(todayDocument.get("height").toString());
-                                double todayBMI = roundBMI(todayWeight/((todayHeight/100)*(todayHeight/100)));
-                                int todaySys = Integer.parseInt(todayDocument.get("sys").toString());
-                                int todayDia = Integer.parseInt(todayDocument.get("dia").toString());
-                                int todayPulse = Integer.parseInt(todayDocument.get("pulse").toString());
-                                // put alert for very critical value (RED INDICATOR)
-                                if (todayBMI > 29.9 || todayBMI < 16.0) {
-                                    Log.d("Ey", "omo");
-                                }
-                                if (todaySys > 130 || todaySys < 90) {
-                                    todayBloodPressureAlert = true;
-                                }
-                                if (todayDia > 90 || todayDia < 60) {
-                                    todayBloodPressureAlert = true;
-                                }
-                                if (todayPulse > 100 || todayPulse < 60){ // too high and too low
-                                    todayBloodPulseAlert = true;
-                                }
+                                Log.d("TEXT","Dayb4yesterday:" + healthStatus[0][0] + healthStatus[0][1] + healthStatus[0][2]);
+                                Toast.makeText(getActivity(),"Dayb4yesterday:" + healthStatus[0][0] + healthStatus[0][1] + healthStatus[0][2],Toast.LENGTH_SHORT).show();
+                                healthStatus(todayDocument, healthStatus, 0);
                             }
+                            Query yesterdayQuery = FirebaseFirestore.getInstance().collection("HealthEntries")
+                                    .whereEqualTo("userId",userId).whereEqualTo("date",yesterdayDate());
+                            yesterdayQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> yesterdayTask) {
+                                    if (yesterdayTask.isSuccessful()) {
+                                        if (!yesterdayTask.getResult().getDocuments().isEmpty()){
+                                            for (QueryDocumentSnapshot yesterdayDocument : yesterdayTask.getResult()) {
+                                                if (Integer.parseInt(yesterdayDocument.get("weight").toString()) > -1){
+                                                    healthStatus(yesterdayDocument, healthStatus, 1);
+                                                    Query dayBeforeYesterdayQuery = FirebaseFirestore.getInstance().collection("HealthEntries")
+                                                            .whereEqualTo("userId",userId).whereEqualTo("date",dayBeforeYesterdayDate());
+                                                    dayBeforeYesterdayQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<QuerySnapshot> dayBeforeYesterdayTask) {
+                                                            if (dayBeforeYesterdayTask.isSuccessful()) {
+                                                                if (!dayBeforeYesterdayTask.getResult().getDocuments().isEmpty()){
+                                                                    for (QueryDocumentSnapshot dayBeforeYesterdayDocument : dayBeforeYesterdayTask.getResult()) {
+                                                                        if (Integer.parseInt(dayBeforeYesterdayDocument.get("weight").toString()) > -1){
+                                                                            healthStatus(dayBeforeYesterdayDocument, healthStatus, 2);
+                                                                            callHealthNotification.callHealthNotification(healthStatus);
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
                         }
                     }
                 }
             }
         });
+    }
 
-        Query yesterdayQuery = FirebaseFirestore.getInstance().collection("HealthEntries").whereEqualTo("userId",userId).whereEqualTo("date",yesterdayDate);
+    private void healthStatus(QueryDocumentSnapshot queryDocumentSnapshot, boolean[][] healthStatus, int row_index){
+        double weight = Integer.parseInt(queryDocumentSnapshot.get("weight").toString());
+        double height = Integer.parseInt(queryDocumentSnapshot.get("height").toString());
+        double BMI = roundBMI(weight/((height/100)*(height/100)));
+        int sys = Integer.parseInt(queryDocumentSnapshot.get("sys").toString());
+        int dia = Integer.parseInt(queryDocumentSnapshot.get("dia").toString());
+        int pulse = Integer.parseInt(queryDocumentSnapshot.get("pulse").toString());
+        // put alert for very critical value (RED INDICATOR)
+        if (BMI > 29.9 || BMI < 16.0) {
+            healthStatus[row_index][0] = true;
+        }
+        if (sys > 130 || sys < 90) {
+            healthStatus[row_index][1] = true;
+        }
+        if (dia > 90 || dia < 60) {
+            healthStatus[row_index][2] = true;
+        }
+        if (pulse > 100 || pulse < 60){ // too high and too low
+            healthStatus[row_index][2] = true;
+        }
+    }
+
+    private void sendHealthNotification(boolean[][] healthStatus){
+        if (healthStatus[0][0] && healthStatus[1][0] && healthStatus[2][0]) {
+            healthBMINotification();
+        }
+
+        if (healthStatus[0][1] && healthStatus[1][1] && healthStatus[2][1]) {
+            healthBloodPressureNotification();
+        }
+
+        if (healthStatus[0][2] && healthStatus[1][2] && healthStatus[2][2]) {
+            healthBloodPulseNotification();
+        }
+    }
+
+    private void checkYesterdayStepsCount() {
+        Query yesterdayQuery = FirebaseFirestore.getInstance().collection("HealthEntries")
+                .whereEqualTo("userId",userId).whereEqualTo("date",yesterdayDate());
         yesterdayQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> yesterdayTask) {
                 if (yesterdayTask.isSuccessful()) {
                     if (!yesterdayTask.getResult().getDocuments().isEmpty()){
                         for (QueryDocumentSnapshot yesterdayDocument : yesterdayTask.getResult()) {
-                            if (Integer.parseInt(yesterdayDocument.get("weight").toString()) > -1){
-                                //int todayStepsCount = Integer.parseInt(todayDocument.get("steps_count").toString());
-                                double yesterdayWeight = Integer.parseInt(yesterdayDocument.get("weight").toString());
-                                double yesterdayHeight = Integer.parseInt(yesterdayDocument.get("height").toString());
-                                double yesterdayBMI
-                                        = roundBMI(yesterdayWeight/((yesterdayHeight/100)*(yesterdayHeight/100)));
-                                int yesterdaySys = Integer.parseInt(yesterdayDocument.get("sys").toString());
-                                int yesterdayDia = Integer.parseInt(yesterdayDocument.get("dia").toString());
-                                int yesterdayPulse = Integer.parseInt(yesterdayDocument.get("pulse").toString());
-                                // put alert for very critical value (RED INDICATOR)
-                                if (yesterdayBMI > 29.9 || yesterdayBMI < 16.0) {
-                                    yesterdayBMIAlert = true;
-                                    Log.d("yy", "bmi alert" + yesterdayBMIAlert);
-                                }
-                                if (yesterdaySys > 130 || yesterdaySys < 90) {
-                                    yesterdayBloodPressureAlert = true;
-                                }
-                                if (yesterdayDia > 90 || yesterdayDia < 60) {
-                                    yesterdayBloodPressureAlert = true;
-                                }
-                                if (yesterdayPulse > 100 || yesterdayPulse < 60){ // too high and too low
-                                    yesterdayBloodPulseAlert = true;
+                            double yesterdayCount = Integer.parseInt(yesterdayDocument.get("steps_count").toString());
+                            double yesterdayGoalValue = Integer.parseInt(yesterdayDocument.get("steps_goal").toString());
+                            if (yesterdayGoalValue > 0) {
+                                int countprogress = (int) ((yesterdayCount / yesterdayGoalValue) * 100);
+                                if (countprogress < 100) {
+                                    healthstepsNotification();
                                 }
                             }
                         }
@@ -571,108 +608,20 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                 }
             }
         });
-
-        Query dayBeforeYesterdayQuery = FirebaseFirestore.getInstance().collection("HealthEntries").whereEqualTo("userId",userId).whereEqualTo("date",dayBeforeYesterdayDate);
-        dayBeforeYesterdayQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> dayBeforeYesterdayQueryTask) {
-                if (dayBeforeYesterdayQueryTask.isSuccessful()) {
-                    if (!dayBeforeYesterdayQueryTask.getResult().getDocuments().isEmpty()){
-                        for (QueryDocumentSnapshot dayBeforeYesterdayDocument : dayBeforeYesterdayQueryTask.getResult()) {
-                            if (Integer.parseInt(dayBeforeYesterdayDocument.get("weight").toString()) > -1){
-                                //int todayStepsCount = Integer.parseInt(todayDocument.get("steps_count").toString());
-                                double dayBeforeYesterdayWeight = Integer.parseInt(dayBeforeYesterdayDocument.get("weight").toString());
-                                double dayBeforeYesterdayHeight = Integer.parseInt(dayBeforeYesterdayDocument.get("height").toString());
-                                double dayBeforeYesterdayBMI =
-                                        roundBMI(dayBeforeYesterdayWeight/((dayBeforeYesterdayHeight/100)*(dayBeforeYesterdayHeight/100)));
-                                int dayBeforeYesterdaySys = Integer.parseInt(dayBeforeYesterdayDocument.get("sys").toString());
-                                int dayBeforeYesterdayDia = Integer.parseInt(dayBeforeYesterdayDocument.get("dia").toString());
-                                int dayBeforeYesterdayPulse = Integer.parseInt(dayBeforeYesterdayDocument.get("pulse").toString());
-                                // put alert for very critical value (RED INDICATOR)
-                                if (dayBeforeYesterdayBMI > 29.9 || dayBeforeYesterdayBMI < 16.0) {
-                                    //dayBeforeYesterdayBMIAlert = true;
-                                }
-                                if (dayBeforeYesterdaySys > 130 || dayBeforeYesterdaySys < 90) {
-                                    dayBeforeYesterdayBloodPressureAlert = true;
-                                }
-                                if (dayBeforeYesterdayDia > 90 || dayBeforeYesterdayDia < 60) {
-                                    dayBeforeYesterdayBloodPressureAlert = true;
-                                }
-                                if (dayBeforeYesterdayPulse > 100 || dayBeforeYesterdayPulse < 60){ // too high and too low
-                                    dayBeforeYesterdayBloodPulseAlert = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        });
-        Log.d("Eyy", "bmi alert" + todayBMIAlert + yesterdayBMIAlert + dayBeforeYesterdayBMIAlert);
-        if (yesterdayStepsCountAlert) {
-            healthstepsNotification();
-        }
-
-        if (todayBMIAlert && yesterdayBMIAlert && dayBeforeYesterdayBMIAlert) {
-            healthBMINotification();
-        }
-
-        if (todayBloodPressureAlert && yesterdayBloodPressureAlert && dayBeforeYesterdayBloodPressureAlert) {
-            healthBloodPressureNotification();
-        }
-
-        if (todayBloodPulseAlert && yesterdayBloodPulseAlert && dayBeforeYesterdayBloodPulseAlert) {
-            healthBloodPulseNotification();
-        }
     }
 
-    private void checkDailyHealthStatus(String date, MyCallback mycallback) {
-        // todayQuery
-        Query todayQuery = FirebaseFirestore.getInstance().collection("HealthEntries").whereEqualTo("userId",userId).whereEqualTo("date",date);
-        todayQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> todayTask) {
-                if (todayTask.isSuccessful()) {
-                    if (!todayTask.getResult().getDocuments().isEmpty()){
-                        for (QueryDocumentSnapshot todayDocument : todayTask.getResult()) {
-                            if (Integer.parseInt(todayDocument.get("weight").toString()) > -1){
-                                //int todayStepsCount = Integer.parseInt(todayDocument.get("steps_count").toString());
-                                double todayWeight = Integer.parseInt(todayDocument.get("weight").toString());
-                                double todayHeight = Integer.parseInt(todayDocument.get("height").toString());
-                                double todayBMI = roundBMI(todayWeight/((todayHeight/100)*(todayHeight/100)));
-                                int todaySys = Integer.parseInt(todayDocument.get("sys").toString());
-                                int todayDia = Integer.parseInt(todayDocument.get("dia").toString());
-                                int todayPulse = Integer.parseInt(todayDocument.get("pulse").toString());
-                                // put alert for very critical value (RED INDICATOR)
-                                if (todayBMI > 29.9 || todayBMI < 16.0) {
-
-                                    dailyStatus[0] = true;
-                                    Log.d("Ey", "omo" + dailyStatus[0]);
-                                }
-                                if (todaySys > 130 || todaySys < 90) {
-                                    dailyStatus[1] = true;
-                                }
-                                if (todayDia > 90 || todayDia < 60) {
-                                    dailyStatus[2] = true;
-                                }
-                                if (todayPulse > 100 || todayPulse < 60){ // too high and too low
-                                    dailyStatus[2] = true;
-                                    Log.d("Ey", "omo" + dailyStatus[2]);
-                                }
-                                mycallback.onCallback(dailyStatus);
-                            }
-                        }
-                    }
-                }
-            }
-
-        });
-        Log.d("Ey", "omoo" + dailyStatus[2]);
+    private String todayDate(){
+        final Calendar today = Calendar.getInstance();
+        today.add(Calendar.DATE, 0);
+        DateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
+        String todayDate = dateFormat.format(today.getTime());
+        return todayDate;
     }
 
     private String yesterdayDate(){
         final Calendar yesterday = Calendar.getInstance();
         yesterday.add(Calendar.DATE, -1);
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
         String yesterdayDate = dateFormat.format(yesterday.getTime());
         return yesterdayDate;
     }
@@ -680,7 +629,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     private String dayBeforeYesterdayDate(){
         final Calendar daybeforeyesterday = Calendar.getInstance();
         daybeforeyesterday.add(Calendar.DATE, -2);
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
         String daybeforeyesterdayDate = dateFormat.format(daybeforeyesterday.getTime());
         return daybeforeyesterdayDate;
     }
@@ -701,7 +650,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "healthnotification")
                 .setSmallIcon(R.drawable.ic_health)
                 .setContentTitle("You have not reach your yesterday steps goal")
-                .setContentText("You can replace back the lacking of steps yesterday by set higher steps goal and clear the goal. Good luck.")
+                .setContentText("You can work harder by set higher steps goal and clear the goal.")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
@@ -712,8 +661,8 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     private void healthBMINotification(){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "healthnotification")
                 .setSmallIcon(R.drawable.ic_health)
-                .setContentTitle("Abnormal BMI value")
-                .setContentText("Your blood pressure for these few days are not within normal range. You can have a better lifestyle to make your BMI back to normal range.")
+                .setContentTitle("Your blood pressure for these few days are not within normal range")
+                .setContentText("You can have a better lifestyle to make your BMI back to normal range")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
@@ -724,8 +673,8 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     private void healthBloodPressureNotification(){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "healthnotification")
                 .setSmallIcon(R.drawable.ic_health)
-                .setContentTitle("Abnormal blood pressure")
-                .setContentText("Your blood pressure for these few days are quite abnormal. Please being alert as this is dangerous for your health.")
+                .setContentTitle("Your blood pressure for these few days are quite abnormal")
+                .setContentText("Please being alert as this is dangerous for your health")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
@@ -736,8 +685,8 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     private void healthBloodPulseNotification(){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "healthnotification")
                 .setSmallIcon(R.drawable.ic_health)
-                .setContentTitle("Abnormal blood pulse rate")
-                .setContentText("Your blood pulse rate for these few days are quite abnormal. Please being alert as this is dangerous for your health.")
+                .setContentTitle("Your blood pulse rate for these few days are quite abnormal")
+                .setContentText("Please being alert as this is dangerous for your health")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
@@ -745,8 +694,8 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         notificationManagerCompat.notify(4, builder.build());
     }
 
-    public interface MyCallback {
-        void onCallback(boolean[] dailyStatus);
+    public interface HealthNotification {
+        void callHealthNotification(boolean[][] healthStatus);
     }
 }
 
