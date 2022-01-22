@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.mood.MoodEditEntry" >
+
+    <TextView
+        android:id="@+id/TVEditEntry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/rubik_medium"
+        android:text="@string/mood_diary_edit_entry"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/BTNCancelEditDiaryEntry"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/BTNCancelEditDiaryEntry"
+        style="@android:style/Widget.Material.ImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#FFFFFF"
+        android:contentDescription="Cancel editing entry"
+        android:minHeight="48dp"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/BTNSubmitEditDiaryEntry"
+        android:layout_width="67dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="18dp"
+        android:backgroundTint="#FFFFFF"
+        android:contentDescription="Submit edited entry"
+        android:src="@drawable/ic_mood_check"
+        app:layout_constraintStart_toEndOf="@+id/TVEditEntry"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/TVEditMood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="How do you feel today?"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TVEditEntry" />
+
+    <TextView
+        android:id="@+id/TVEditReason"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:text="Reason"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RGEditMood" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/CGEditMoodDiary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TVEditReason">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/CHIPEditWork"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="Work"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:checkedIconTint="#FFFFFF"
+            app:chipBackgroundColor="@color/work" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/CHIPEditFriends"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Friends"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:checkedIconTint="#FFFFFF"
+            app:chipBackgroundColor="@color/friend"
+            tools:ignore="TextContrastCheck" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/CHIPEditFamily"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Family"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:checkedIconTint="#FFFFFF"
+            app:chipBackgroundColor="@color/family" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/CHIPEditHealth"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Health"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:checkedIconTint="#FFFFFF"
+            app:chipBackgroundColor="@color/health" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/CHIPEditFinance"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Finance"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:checkedIconTint="#FFFFFF"
+            app:chipBackgroundColor="@color/finance" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/CHIPEditLove"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Love"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:checkedIconTint="#FFFFFF"
+            app:chipBackgroundColor="@color/love"
+            tools:ignore="TextContrastCheck" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <soup.neumorphism.NeumorphCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="12dp"
+        android:paddingStart="30dp"
+        android:paddingTop="0dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CGEditMoodDiary"
+        app:neumorph_shapeType="pressed">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/ETEditDiaryEntry"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="What's on your mind?"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck"
+                android:importantForAutofill="no" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <RadioGroup
+        android:id="@+id/RGEditMood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TVEditMood">
+
+        <RadioButton
+            android:id="@+id/RBEditHappy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="I am feeling happy today"
+            android:drawableStart="@drawable/ic_mood_happy"
+            android:text="happy"
+            android:textSize="0sp"/>
+
+        <RadioButton
+            android:id="@+id/RBEditSad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="I am feeling depressed today"
+            android:drawableStart="@drawable/ic_mood_sad"
+            android:text="sad"
+            android:textSize="0sp"/>
+
+        <RadioButton
+            android:id="@+id/RBEditAngry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="I feel like killing someone today"
+            android:drawableStart="@drawable/ic_mood_angry"
+            android:text="angry"
+            android:textSize="0sp"/>
+
+        <RadioButton
+            android:id="@+id/RBEditTired"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="Huh? What time is it? Is it wake up time already?"
+            android:drawableStart="@drawable/ic_mood_tired"
+            android:text="tired"
+            android:textSize="0sp"/>
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

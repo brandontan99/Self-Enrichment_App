@@ -41,7 +41,14 @@
         android:id="@+id/destMood"
         android:name="com.example.self_enrichment_app.view.mood.MoodFragment"
         android:label="@string/title_mood"
-        tools:layout="@layout/fragment_mood" />
+        tools:layout="@layout/fragment_mood" >
+        <action
+            android:id="@+id/action_destMood_to_destMoodEditEntry"
+            app:destination="@id/destMoodEditEntry" />
+        <action
+            android:id="@+id/action_destMood_to_destMoodNewEntry"
+            app:destination="@id/destMoodNewEntry" />
+    </fragment>
     <fragment
         android:id="@+id/destGoalsMilestoneFragment"
         android:name="com.example.self_enrichment_app.view.goals.GoalsMilestoneFragment"
@@ -50,6 +57,24 @@
         <action
             android:id="@+id/action_destGoalsMilestoneFragment_to_destGoals"
             app:destination="@id/destGoals" />
+    </fragment>
+    <fragment
+        android:id="@+id/destMoodEditEntry"
+        android:name="com.example.self_enrichment_app.view.mood.MoodEditEntry"
+        android:label="fragment_mood_edit_entry"
+        tools:layout="@layout/fragment_mood_edit_entry" >
+        <action
+            android:id="@+id/action_destMoodEditEntry_to_destMood"
+            app:destination="@id/destMood" />
+    </fragment>
+    <fragment
+        android:id="@+id/destMoodNewEntry"
+        android:name="com.example.self_enrichment_app.view.mood.MoodNewEntry"
+        android:label="fragment_mood_new_entry"
+        tools:layout="@layout/fragment_mood_new_entry" >
+        <action
+            android:id="@+id/action_destMoodNewEntry_to_destMood"
+            app:destination="@id/destMood" />
     </fragment>
 
 </navigation>
