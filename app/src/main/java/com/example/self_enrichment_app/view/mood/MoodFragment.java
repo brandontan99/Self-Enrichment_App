@@ -24,6 +24,15 @@ import com.example.self_enrichment_app.data.model.MoodDiaryEntry;
 import com.example.self_enrichment_app.view.MainActivity;
 import com.example.self_enrichment_app.R;
 import com.example.self_enrichment_app.viewmodel.MoodDiaryViewModel;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
@@ -32,23 +41,28 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class MoodFragment extends Fragment {
+    public static boolean overweight;
     private Calendar myCalendar = Calendar.getInstance();
     private String dateFormat ="dd MMM yyyy";
     private TextView TVDate, TVDiaryEntry;
     private ImageView IVMood;
     private ChipGroup CGMoodDiary;
     private Chip CHIPWork, CHIPFriends, CHIPFamily, CHIPHealth, CHIPFinance, CHIPLove;
-    private Button BTNAddDiaryEntry;
+    private Button BTNAddDiaryEntry, BTNMoodWeekly, BTNMoodMonthly, BTNMoodYearly;
     private ImageButton BTNEditDiaryEntry;
+    private BarChart barChart;
     private NavController navController;
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
@@ -109,6 +123,7 @@ public class MoodFragment extends Fragment {
         CHIPLove = view.findViewById(R.id.CHIPLove);
         TVDiaryEntry = view.findViewById(R.id.TVDiaryEntry);
         TVDate= view.findViewById(R.id.TVDate);
+        barChart = view.findViewById(R.id.BCMoodChart);
 
         // Adding a new entry
         BTNAddDiaryEntry = view.findViewById(R.id.BTNAddDiaryEntry);
@@ -118,8 +133,6 @@ public class MoodFragment extends Fragment {
                 navController.navigate(R.id.action_destMood_to_destMoodNewEntry);
             }
         });
-
-
 
         // Editing a new entry
         BTNEditDiaryEntry = view.findViewById(R.id.BTNEditDiaryEntry);
@@ -152,7 +165,6 @@ public class MoodFragment extends Fragment {
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH,month);
                 myCalendar.set(Calendar.DAY_OF_MONTH,day);
@@ -167,6 +179,33 @@ public class MoodFragment extends Fragment {
                 DatePickerDialog DPD = new DatePickerDialog(getContext(), date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
                 DPD.getDatePicker().setMaxDate(System.currentTimeMillis());
                 DPD.show();
+            }
+        });
+
+        // Setting the graph
+        updateGraph();
+
+        BTNMoodWeekly = view.findViewById(R.id.BTNMoodWeekly);
+        BTNMoodWeekly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        BTNMoodMonthly = view.findViewById(R.id.BTNMoodMonthly);
+        BTNMoodMonthly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        BTNMoodYearly = view.findViewById(R.id.BTNMoodYearly);
+        BTNMoodYearly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
@@ -231,6 +270,67 @@ public class MoodFragment extends Fragment {
             }
         });
 
+    }
+
+    public void updateGraph(){
+
+        firestore.collection("MoodDiaryEntries").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    // Getting all the entries
+                    ArrayList<MoodDiaryEntry> allEntries = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        allEntries.add(document.toObject(MoodDiaryEntry.class));
+                    }
+                    MoodStatistics statistics = new MoodStatistics(allEntries);
+
+                    // Creating the dataset
+                    List<BarEntry> entries = new ArrayList<>();
+                    //entries.add(new BarEntry(0f, statistics.get));
+                    entries.add(new BarEntry(1f, 8f));
+                    entries.add(new BarEntry(2f, 6f));
+                    entries.add(new BarEntry(3f, 5f));
+                    entries.add(new BarEntry(4f, 5f));
+                    entries.add(new BarEntry(5f, 5f));
+                    BarDataSet set = new BarDataSet(entries, "BarDataSet");
+
+                    BarData data = new BarData(set);
+                    data.setBarWidth(0.9f);
+
+                    // Creating the chart
+                    barChart.setDrawBarShadow(false);
+                    barChart.setDrawValueAboveBar(true);
+                    barChart.setVisibleXRange(6f, 6f);
+                    barChart.getDescription().setEnabled(false);
+                    barChart.setPinchZoom(true);
+                    barChart.setDrawGridBackground(false);
+                    barChart.getAxisRight().setEnabled(false);
+
+                    // the labels that should be drawn on the XAxis
+                    final String[] reasons = new String[] {"Work", "Friends", "Family", "Health", "Finance", "Love"};
+                    ValueFormatter formatter = new ValueFormatter() {
+                        @Override
+                        public String getAxisLabel(float value, AxisBase axis) {
+                            return reasons[(int) value];
+                        }
+                    };
+                    XAxis xl = barChart.getXAxis();
+                    xl.setGranularity(1f);
+                    xl.setCenterAxisLabels(true);
+                    //xl.setValueFormatter(formatter);
+
+                    YAxis leftAxis = barChart.getAxisLeft();
+
+                    barChart.setData(data);
+                    barChart.setFitBars(true);
+                    barChart.invalidate();
+
+                } else {
+                    Log.d("Steven", "Error getting documents: ", task.getException());
+                }
+            }
+        });
 
     }
 }
