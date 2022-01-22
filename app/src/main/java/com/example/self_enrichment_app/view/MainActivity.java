@@ -18,11 +18,13 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity extends AppCompatActivity {
     TextView tvTitle;
     BottomNavigationView bnvMain;
     Toolbar toolbar;
-    ImageButton ibtnProfile;
+    CircleImageView ibtnProfile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
