@@ -77,4 +77,8 @@
     <string name="hi_there">Hi There</string>
     <string name="logout">Logout</string>
     <string name="app_version">App Version 0.0.1</string>
+    <string name="mood_diary_add_entry">Add Entry</string>
+    <string name="mood_diary_date">Date</string>
+    <string name="mood_diary_default_date">01 Jan 2022</string>
+    <string name="mood_diary_edit_entry">Edit Entry</string>
 </resources>
