@@ -36,7 +36,11 @@
         android:id="@+id/destHealth"
         android:name="com.example.self_enrichment_app.view.health.HealthFragment"
         android:label="@string/title_health"
-        tools:layout="@layout/fragment_health" />
+        tools:layout="@layout/fragment_health" >
+        <action
+            android:id="@+id/action_destHealth_to_destHealthEntryFragment"
+            app:destination="@id/destHealthEntryFragment" />
+    </fragment>
     <fragment
         android:id="@+id/destMood"
         android:name="com.example.self_enrichment_app.view.mood.MoodFragment"
@@ -57,6 +61,15 @@
         <action
             android:id="@+id/action_destGoalsMilestoneFragment_to_destGoals"
             app:destination="@id/destGoals" />
+    </fragment>
+    <fragment
+        android:id="@+id/destHealthEntryFragment"
+        android:name="com.example.self_enrichment_app.view.health.HealthEntryFragment"
+        android:label="fragment_health_entry"
+        tools:layout="@layout/fragment_health_entry" >
+        <action
+            android:id="@+id/action_destHealthEntryFragment_to_destHealth"
+            app:destination="@id/destHealth" />
     </fragment>
     <fragment
         android:id="@+id/destMoodEditEntry"

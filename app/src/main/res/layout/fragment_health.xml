@@ -1,14 +1,437 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.self_enrichment_app.view.health.HealthFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/TVStepsCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/rubik_medium"
+        android:text="Steps Count"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/TVHealthCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/rubik_medium"
+        android:text="Health Check"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PBStepsCount" />
+
+    <ProgressBar
+        android:id="@+id/PBStepsCount"
+        style="@style/CircularDeterminateProgressBar"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="#00C3A9A9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NCVStepsCountNum"
+        tools:progress="90" />
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/NCVStepsCountNum"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:neumorph_backgroundColor="@color/light_grey"
+        app:neumorph_shapeType="pressed">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/TVStepsCountNum"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TVStepsName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/rubik_medium"
+                android:text="steps"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <TextView
+        android:id="@+id/TVDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/rubik_medium"
+        android:text="Date"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TVHealthCheck" />
+
+    <Button
+        android:id="@+id/BtnAddEntry"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#FFC107"
+        android:fontFamily="@font/rubik_medium"
+        android:text="Add / Edit Entry"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:cornerRadius="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PBStepsCount" />
+
+    <Button
+        android:id="@+id/BtnCalendar"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#FFC107"
+        android:fontFamily="@font/rubik_medium"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:cornerRadius="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BtnAddEntry" />
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/NCVWeight"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="110dp"
+        android:padding="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/NCVHeight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PBStepsCount"
+        app:neumorph_backgroundColor="@color/light_grey"
+        app:neumorph_shapeType="flat">
+
+        <LinearLayout
+            android:id="@+id/LLWeight"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TVWeightTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:text="Weight (kg)"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TVWeightValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/NCVHeight"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:padding="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/NCVBMI"
+        app:layout_constraintStart_toEndOf="@+id/NCVWeight"
+        app:layout_constraintTop_toBottomOf="@+id/PBStepsCount"
+        app:neumorph_backgroundColor="@color/light_grey"
+        app:neumorph_shapeType="flat">
+
+        <LinearLayout
+            android:id="@+id/LLHeight"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TVHeightTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:text="Height (cm)"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TVHeightValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/NCVBMI"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="16dp"
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/NCVHeight"
+        app:layout_constraintTop_toBottomOf="@+id/PBStepsCount"
+        app:neumorph_backgroundColor="@color/light_grey"
+        app:neumorph_shapeType="flat">
+
+        <LinearLayout
+            android:id="@+id/LLBMI"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TVBMITitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:text="BMI"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TVBMIValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/NCVSys"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="8dp"
+        android:padding="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/NCVDia"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NCVWeight"
+        app:neumorph_backgroundColor="@color/light_grey"
+        app:neumorph_shapeType="flat">
+
+        <LinearLayout
+            android:id="@+id/LLSys"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TVSysTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:text="Sys P. (mmHg)"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TVSysValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/NCVDia"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/NCVPulse"
+        app:layout_constraintStart_toEndOf="@+id/NCVSys"
+        app:layout_constraintTop_toBottomOf="@+id/NCVHeight"
+        app:neumorph_backgroundColor="@color/light_grey"
+        app:neumorph_shapeType="flat">
+
+        <LinearLayout
+            android:id="@+id/LLDia"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TVDiaTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:text="Dia P. (mmHg)"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TVDiaValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/NCVPulse"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/NCVDia"
+        app:layout_constraintTop_toBottomOf="@+id/NCVBMI"
+        app:neumorph_backgroundColor="@color/light_grey"
+        app:neumorph_shapeType="flat">
+
+        <LinearLayout
+            android:id="@+id/LLPulse"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TVPulseTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:text="Pulse R. (/min)"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TVPulseValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CVGoals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/PBStepsCount"
+        app:layout_constraintEnd_toEndOf="@+id/PBStepsCount"
+        app:layout_constraintStart_toStartOf="@+id/PBStepsCount"
+        app:layout_constraintTop_toTopOf="@+id/PBStepsCount">
+
+        <LinearLayout
+            android:id="@+id/LLGoals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TVGoalsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:text="Goal:"
+                android:textAlignment="center"
+                android:textColor="@color/black_50_alpha"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TVGoalValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:textAlignment="center"
+                android:textColor="@color/yellow"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/TVStepsAlertExMark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="36dp"
+        android:fontFamily="@font/rubik_medium"
+        android:text="!"
+        android:textColor="@color/red"
+        android:textSize="22dp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/PBStepsCount"
+        app:layout_constraintTop_toTopOf="@+id/PBStepsCount" />
+
+    <TextView
+        android:id="@+id/TVStepsAlertMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/rubik_medium"
+        android:text="You have not achieved the daily target"
+        android:textColor="@color/red"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/PBStepsCount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
