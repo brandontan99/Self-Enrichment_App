@@ -417,6 +417,7 @@
         android:textColor="@color/red"
         android:textSize="22dp"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/PBStepsCount"
         app:layout_constraintTop_toTopOf="@+id/PBStepsCount" />
 
@@ -428,6 +429,7 @@
         android:text="You have not achieved the daily target"
         android:textColor="@color/red"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/PBStepsCount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

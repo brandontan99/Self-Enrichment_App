@@ -69,7 +69,7 @@
                 android:ems="10"
                 android:fontFamily="@font/montserrat"
                 android:hint="Enter your weight in kg"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="14sp" />
@@ -115,7 +115,7 @@
                 android:ems="10"
                 android:fontFamily="@font/montserrat"
                 android:hint="Enter your height in cm"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="14sp" />
@@ -160,7 +160,7 @@
                 android:ems="10"
                 android:fontFamily="@font/montserrat"
                 android:hint="Enter your systolic blood pressure in mmHg"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="14sp" />
@@ -205,7 +205,7 @@
                 android:ems="10"
                 android:fontFamily="@font/montserrat"
                 android:hint="Enter your diastolic blood pressure in mmHg"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="14sp" />
@@ -250,7 +250,7 @@
                 android:ems="10"
                 android:fontFamily="@font/montserrat"
                 android:hint="Enter your blood pulse rate per minute"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="14sp" />
@@ -295,7 +295,7 @@
                 android:ems="10"
                 android:fontFamily="@font/montserrat"
                 android:hint="Enter your steps count goal value"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="14sp" />

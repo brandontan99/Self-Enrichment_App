@@ -30,6 +30,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.concurrent.TimeUnit;
+
 public class HealthEntryFragment extends Fragment {
 
     private EditText ETEnterWeight, ETEnterHeight, ETEnterSysP, ETEnterDiaP, ETEnterPulse, ETEnterStepsCount;
@@ -86,14 +88,61 @@ public class HealthEntryFragment extends Fragment {
         View.OnClickListener OCLSubmitHealthEntry = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // error handling
+                boolean error_message = false;
+                if (ETEnterWeight.getText().toString().isEmpty()) {
+                    ETEnterWeight.setError("Weight cannot be empty!");
+                    error_message = true;
+                } else if (!isPositiveInteger(ETEnterWeight.getText().toString())) {
+                    ETEnterWeight.setError("Weight can only be positive integer!");
+                    error_message = true;
+                }
+                if (ETEnterHeight.getText().toString().isEmpty()) {
+                    ETEnterHeight.setError("Height cannot be empty!");
+                    error_message = true;
+                } else if (!isPositiveInteger(ETEnterHeight.getText().toString())) {
+                    ETEnterHeight.setError("Height can only be positive integer!");
+                    error_message = true;
+                }
+                if (ETEnterSysP.getText().toString().isEmpty()) {
+                    ETEnterSysP.setError("Systolic blood pressure cannot be empty!");
+                    error_message = true;
+                } else if (!isPositiveInteger(ETEnterSysP.getText().toString())) {
+                    ETEnterSysP.setError("Systolic blood pressure can only be positive integer!");
+                    error_message = true;
+                }
+                if (ETEnterDiaP.getText().toString().isEmpty()) {
+                    ETEnterDiaP.setError("Diastolic blood pressure cannot be empty!");
+                    error_message = true;
+                } else if (!isPositiveInteger(ETEnterDiaP.getText().toString())) {
+                    ETEnterDiaP.setError("Diastolic blood pressure can only be positive integer!");
+                    error_message = true;
+                }
+                if (ETEnterPulse.getText().toString().isEmpty()) {
+                    ETEnterPulse.setError("Blood pulse rate cannot be empty!");
+                    error_message = true;
+                } else if (!isPositiveInteger(ETEnterPulse.getText().toString())) {
+                    ETEnterPulse.setError("Blood pulse rate can only be positive integer!");
+                    error_message = true;
+                }
+                if (ETEnterStepsCount.getText().toString().isEmpty()) {
+                    ETEnterStepsCount.setError("Steps count goal cannot be empty!");
+                    error_message = true;
+                } else if (!isPositiveInteger(ETEnterStepsCount.getText().toString())) {
+                    ETEnterStepsCount.setError("Steps count goal can only be positive integer!");
+                    error_message = true;
+                }
+
+                if (error_message){
+                    return;
+                }
+
                 int newWeight = Integer.parseInt(ETEnterWeight.getText().toString());
                 int newHeight = Integer.parseInt(ETEnterHeight.getText().toString());
                 int newSys = Integer.parseInt(ETEnterSysP.getText().toString());
                 int newDia = Integer.parseInt(ETEnterDiaP.getText().toString());
                 int newPulse = Integer.parseInt(ETEnterPulse.getText().toString());
                 int newStepsGoal = Integer.parseInt(ETEnterStepsCount.getText().toString());
-
-                // error handling
 
                 // Value will change to get from Firebase
                 Query query = FirebaseFirestore.getInstance().collection("HealthEntries").whereEqualTo("userId",userId).whereEqualTo("date",date);
@@ -118,9 +167,30 @@ public class HealthEntryFragment extends Fragment {
                         }
                     }
                 });
+                // wait for database updated
+                /*
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }*/
                 Navigation.findNavController(view).navigate(R.id.destHealth, bundle);
             }
         };
         BtnSubmitHealthEntry.setOnClickListener(OCLSubmitHealthEntry);
+    }
+
+    public boolean isPositiveInteger(String textnum) {
+        try {
+            int num = Integer.parseInt(textnum);
+            if (num <= 0) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
