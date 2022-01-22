@@ -266,63 +266,100 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2">
 
-            <Button
-                android:id="@+id/BTNMoodWeekly"
+            <ImageButton
+                android:id="@+id/BTNMoodHappy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:backgroundTint="@color/yellow"
+                android:backgroundTint="@color/white"
                 android:fontFamily="@font/montserrat_bold"
+                android:src="@drawable/ic_mood_happy"
                 android:text="Weekly"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 app:cornerRadius="36.5dp"
-                app:layout_constraintEnd_toStartOf="@+id/BTNMoodMonthly"
+                app:layout_constraintEnd_toStartOf="@+id/BTNMoodSad"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/BTNMoodMonthly"
+            <ImageButton
+                android:id="@+id/BTNMoodSad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/montserrat_bold"
+                android:src="@drawable/ic_mood_sad"
                 android:text="Monthly"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 app:cornerRadius="36.5dp"
-                app:layout_constraintEnd_toStartOf="@+id/BTNMoodYearly"
+                app:layout_constraintEnd_toStartOf="@+id/BTNMoodAngry"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/BTNMoodWeekly"
+                app:layout_constraintStart_toEndOf="@+id/BTNMoodHappy"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/BTNMoodYearly"
+            <ImageButton
+                android:id="@+id/BTNMoodAngry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/montserrat_bold"
+                android:src="@drawable/ic_mood_angry"
+                android:text="Yearly"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                app:cornerRadius="36.5dp"
+                app:layout_constraintEnd_toStartOf="@+id/BTNMoodTired"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/BTNMoodSad"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/BTNMoodTired"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/montserrat_bold"
+                android:src="@drawable/ic_mood_tired"
                 android:text="Yearly"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 app:cornerRadius="36.5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/BTNMoodMonthly"
+                app:layout_constraintStart_toEndOf="@+id/BTNMoodAngry"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:padding="8dp"
+            android:text="Reasons"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/BCMoodChart"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="380dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.example.self_enrichment_app.view.mood;
 
 import android.app.DatePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,7 +45,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.protobuf.Value;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,8 +64,8 @@ public class MoodFragment extends Fragment {
     private ImageView IVMood;
     private ChipGroup CGMoodDiary;
     private Chip CHIPWork, CHIPFriends, CHIPFamily, CHIPHealth, CHIPFinance, CHIPLove;
-    private Button BTNAddDiaryEntry, BTNMoodWeekly, BTNMoodMonthly, BTNMoodYearly;
-    private ImageButton BTNEditDiaryEntry;
+    private Button BTNAddDiaryEntry;
+    private ImageButton BTNEditDiaryEntry, BTNMoodHappy, BTNMoodSad, BTNMoodAngry, BTNMoodTired;
     private BarChart barChart;
     private NavController navController;
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -183,29 +187,37 @@ public class MoodFragment extends Fragment {
         });
 
         // Setting the graph
-        updateGraph();
+        updateGraph("happy");
 
-        BTNMoodWeekly = view.findViewById(R.id.BTNMoodWeekly);
-        BTNMoodWeekly.setOnClickListener(new View.OnClickListener() {
+        BTNMoodHappy = view.findViewById(R.id.BTNMoodHappy);
+        BTNMoodHappy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                updateGraph("happy");
             }
         });
 
-        BTNMoodMonthly = view.findViewById(R.id.BTNMoodMonthly);
-        BTNMoodMonthly.setOnClickListener(new View.OnClickListener() {
+        BTNMoodSad = view.findViewById(R.id.BTNMoodSad);
+        BTNMoodSad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                updateGraph("sad");
             }
         });
 
-        BTNMoodYearly = view.findViewById(R.id.BTNMoodYearly);
-        BTNMoodYearly.setOnClickListener(new View.OnClickListener() {
+        BTNMoodAngry = view.findViewById(R.id.BTNMoodAngry);
+        BTNMoodAngry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updateGraph("angry");
+            }
+        });
 
+        BTNMoodTired = view.findViewById(R.id.BTNMoodTired);
+        BTNMoodTired.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateGraph("tired");
             }
         });
     }
@@ -272,7 +284,7 @@ public class MoodFragment extends Fragment {
 
     }
 
-    public void updateGraph(){
+    public void updateGraph(String mood){
 
         firestore.collection("MoodDiaryEntries").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -284,43 +296,62 @@ public class MoodFragment extends Fragment {
                         allEntries.add(document.toObject(MoodDiaryEntry.class));
                     }
                     MoodStatistics statistics = new MoodStatistics(allEntries);
-
-                    // Creating the dataset
                     List<BarEntry> entries = new ArrayList<>();
-                    //entries.add(new BarEntry(0f, statistics.get));
-                    entries.add(new BarEntry(1f, 8f));
-                    entries.add(new BarEntry(2f, 6f));
-                    entries.add(new BarEntry(3f, 5f));
-                    entries.add(new BarEntry(4f, 5f));
-                    entries.add(new BarEntry(5f, 5f));
+                    if (mood.equalsIgnoreCase("happy")){
+                        entries = statistics.getHappyList();
+                    } else if (mood.equalsIgnoreCase("sad")){
+                        entries = statistics.getSadList();
+                    } else if (mood.equalsIgnoreCase("angry")){
+                        entries = statistics.getAngryList();
+                    } else if (mood.equalsIgnoreCase("tired")){
+                        entries = statistics.getTiredList();
+                    }
+                    // Creating the dataset
                     BarDataSet set = new BarDataSet(entries, "BarDataSet");
-
+                    int workColor = getResources().getColor(R.color.work);
+                    int friendColor = getResources().getColor(R.color.friend);
+                    int familyColor = getResources().getColor(R.color.family);
+                    int healthColor = getResources().getColor(R.color.health);
+                    int financeColor = getResources().getColor(R.color.finance);
+                    int loveColor = getResources().getColor(R.color.love);
+                    set.setColors(workColor, friendColor, familyColor, healthColor, financeColor, loveColor);
+                    set.setValueTextSize(15f);
+                    ValueFormatter valueFormatter = new ValueFormatter() {
+                        private DecimalFormat decimalFormat = new DecimalFormat("#");
+                        @Override
+                        public String getBarLabel(BarEntry barEntry) {
+                            return decimalFormat.format(barEntry.getY());
+                        }
+                    };
+                    set.setValueFormatter(valueFormatter);
                     BarData data = new BarData(set);
-                    data.setBarWidth(0.9f);
+                    data.setBarWidth(0.8f);
 
                     // Creating the chart
                     barChart.setDrawBarShadow(false);
                     barChart.setDrawValueAboveBar(true);
-                    barChart.setVisibleXRange(6f, 6f);
                     barChart.getDescription().setEnabled(false);
                     barChart.setPinchZoom(true);
                     barChart.setDrawGridBackground(false);
                     barChart.getAxisRight().setEnabled(false);
+                    barChart.getLegend().setEnabled(false);
+                    barChart.setExtraBottomOffset(10f);
+
 
                     // the labels that should be drawn on the XAxis
-                    final String[] reasons = new String[] {"Work", "Friends", "Family", "Health", "Finance", "Love"};
-                    ValueFormatter formatter = new ValueFormatter() {
-                        @Override
-                        public String getAxisLabel(float value, AxisBase axis) {
-                            return reasons[(int) value];
-                        }
-                    };
-                    XAxis xl = barChart.getXAxis();
-                    xl.setGranularity(1f);
-                    xl.setCenterAxisLabels(true);
-                    //xl.setValueFormatter(formatter);
+                    String[] reasons = new String[] {"Work", "Friends", "Family", "Health", "Finance", "Love"};
+                    XAxis xAxis = barChart.getXAxis();
+                    xAxis.setDrawGridLines(false);
+                    xAxis.setDrawAxisLine(false);
+                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                    xAxis.setGranularity(1f);
+                    xAxis.setValueFormatter( new IndexAxisValueFormatter(reasons));
+                    xAxis.setTextSize(15f);
 
-                    YAxis leftAxis = barChart.getAxisLeft();
+
+                    YAxis yAxis = barChart.getAxisLeft();
+                    yAxis.setDrawGridLines(false);
+                    yAxis.setEnabled(false);
 
                     barChart.setData(data);
                     barChart.setFitBars(true);

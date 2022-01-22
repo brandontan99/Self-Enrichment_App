@@ -1,8 +1,11 @@
 package com.example.self_enrichment_app.view.mood;
 
 import com.example.self_enrichment_app.data.model.MoodDiaryEntry;
+import com.github.mikephil.charting.data.BarEntry;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class MoodStatistics {
 
@@ -48,6 +51,50 @@ public class MoodStatistics {
                 this.tiredReasons.addAll(entry.getReasons());
             }
         }
+    }
+
+    public List<BarEntry> getHappyList() {
+        List<BarEntry> entries = new ArrayList<>();
+        entries.add(new BarEntry(0f, Collections.frequency(this.happyReasons, "Work")));
+        entries.add(new BarEntry(1f, Collections.frequency(this.happyReasons, "Friends")));
+        entries.add(new BarEntry(2f, Collections.frequency(this.happyReasons, "Family")));
+        entries.add(new BarEntry(3f, Collections.frequency(this.happyReasons, "Health")));
+        entries.add(new BarEntry(4f, Collections.frequency(this.happyReasons, "Finance")));
+        entries.add(new BarEntry(5f, Collections.frequency(this.happyReasons, "Love")));
+        return entries;
+    }
+
+    public List<BarEntry> getSadList() {
+        List<BarEntry> entries = new ArrayList<>();
+        entries.add(new BarEntry(0f, Collections.frequency(this.sadReasons, "Work")));
+        entries.add(new BarEntry(1f, Collections.frequency(this.sadReasons, "Friends")));
+        entries.add(new BarEntry(2f, Collections.frequency(this.sadReasons, "Family")));
+        entries.add(new BarEntry(3f, Collections.frequency(this.sadReasons, "Health")));
+        entries.add(new BarEntry(4f, Collections.frequency(this.sadReasons, "Finance")));
+        entries.add(new BarEntry(5f, Collections.frequency(this.sadReasons, "Love")));
+        return entries;
+    }
+
+    public List<BarEntry> getAngryList() {
+        List<BarEntry> entries = new ArrayList<>();
+        entries.add(new BarEntry(0f, Collections.frequency(this.angryReasons, "Work")));
+        entries.add(new BarEntry(1f, Collections.frequency(this.angryReasons, "Friends")));
+        entries.add(new BarEntry(2f, Collections.frequency(this.angryReasons, "Family")));
+        entries.add(new BarEntry(3f, Collections.frequency(this.angryReasons, "Health")));
+        entries.add(new BarEntry(4f, Collections.frequency(this.angryReasons, "Finance")));
+        entries.add(new BarEntry(5f, Collections.frequency(this.angryReasons, "Love")));
+        return entries;
+    }
+
+    public List<BarEntry> getTiredList() {
+        List<BarEntry> entries = new ArrayList<>();
+        entries.add(new BarEntry(0f, Collections.frequency(this.tiredReasons, "Work")));
+        entries.add(new BarEntry(1f, Collections.frequency(this.tiredReasons, "Friends")));
+        entries.add(new BarEntry(2f, Collections.frequency(this.tiredReasons, "Family")));
+        entries.add(new BarEntry(3f, Collections.frequency(this.tiredReasons, "Health")));
+        entries.add(new BarEntry(4f, Collections.frequency(this.tiredReasons, "Finance")));
+        entries.add(new BarEntry(5f, Collections.frequency(this.tiredReasons, "Love")));
+        return entries;
     }
 
     public ArrayList<MoodDiaryEntry> getAllEntries() {
