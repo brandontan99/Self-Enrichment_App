@@ -8,7 +8,6 @@ public class User {
     private int numGoals;
 
     public User(){
-
     }
 
     public User(String fullName, String userName, String birthdayYear, String birthdayMonth, String birthdayDay,

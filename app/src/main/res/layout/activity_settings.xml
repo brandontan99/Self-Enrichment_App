@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/ic_baseline_close_36"
+        android:minHeight="48dp"
+        android:src="@drawable/ic_delete"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -22,7 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="36dp"
-        android:src="@drawable/ic_comment"
+        android:minHeight="48dp"
+        android:src="@drawable/ic_done"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -92,7 +94,6 @@
         android:layout_marginStart="48dp"
         android:layout_marginTop="36dp"
         android:text="@string/push_notification"
-        android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -107,6 +108,8 @@
         android:text="@string/dark_theme"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:thumb="@drawable/thumb"
+        app:track="@drawable/track"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingsCloseButton" />
 
@@ -117,8 +120,9 @@
         android:layout_marginStart="48dp"
         android:layout_marginTop="16dp"
         android:text="@string/goals"
-        android:textColor="@android:color/secondary_text_light"
         android:textSize="20sp"
+        android:thumb="@drawable/thumb"
+        app:track="@drawable/track"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingsPushNotificationView" />
 
@@ -129,8 +133,9 @@
         android:layout_marginStart="48dp"
         android:layout_marginTop="16dp"
         android:text="@string/mood"
-        android:textColor="@android:color/secondary_text_light"
         android:textSize="20sp"
+        android:thumb="@drawable/thumb"
+        app:track="@drawable/track"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingsHealthSwitch" />
 
@@ -141,8 +146,9 @@
         android:layout_marginStart="48dp"
         android:layout_marginTop="16dp"
         android:text="@string/health"
-        android:textColor="@android:color/secondary_text_light"
         android:textSize="20sp"
+        android:thumb="@drawable/thumb"
+        app:track="@drawable/track"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingsLessonLearntSwitch" />
 
@@ -153,8 +159,9 @@
         android:layout_marginStart="48dp"
         android:layout_marginTop="16dp"
         android:text="@string/lesson_learnt"
-        android:textColor="@android:color/secondary_text_light"
         android:textSize="20sp"
+        android:thumb="@drawable/thumb"
+        app:track="@drawable/track"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingsGoalsSwitch" />
 
@@ -185,7 +192,7 @@
         android:layout_height="48dp"
         android:layout_marginStart="64dp"
         android:layout_marginTop="12dp"
-        android:src="@drawable/ic_comment"
+        android:src="@drawable/ic_forward_arrow"
         app:layout_constraintStart_toEndOf="@+id/settingsChangePasswordView"
         app:layout_constraintTop_toBottomOf="@+id/settingsAccount"
         tools:ignore="SpeakableTextPresentCheck" />

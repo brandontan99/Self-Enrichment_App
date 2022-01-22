@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageButton;
@@ -33,8 +32,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
-
-import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -218,9 +215,6 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     //Method to upload cropped profile picture to firebase storage
-    //Until now still cannot update the profile image, not sure what the situation is
-    //Can save to storage but cannot create a new field in document
-    //Need Help!!!!!!!!!!!!!
     private void uploadProfileImage() {
 
         if(imageUri != null){
