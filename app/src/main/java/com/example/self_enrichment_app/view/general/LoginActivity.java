@@ -53,7 +53,6 @@ public class LoginActivity extends AppCompatActivity {
     //custom register and sign-in video
     //https://www.youtube.com/watch?v=TGjDNNtO_3U
     
-    GoogleSignInClient mGoogleSignInClient;
     FirebaseAuth mAuth;
 
     @Override

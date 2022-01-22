@@ -218,9 +218,6 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     //Method to upload cropped profile picture to firebase storage
-    //Until now still cannot update the profile image, not sure what the situation is
-    //Can save to storage but cannot create a new field in document
-    //Need Help!!!!!!!!!!!!!
     private void uploadProfileImage() {
 
         if(imageUri != null){
