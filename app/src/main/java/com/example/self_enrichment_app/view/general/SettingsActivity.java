@@ -78,6 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
         };
         doneBtn.setOnClickListener(OCLDoneBtn);
 
+        //Dark theme switch
         SwitchCompat darkThemeSwitch = (SwitchCompat) findViewById(R.id.settingsDarkThemeSwitch);
 
         darkThemeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -106,7 +107,9 @@ public class SettingsActivity extends AppCompatActivity {
         changePasswordBtn.setOnClickListener(OCLChangePasswordBtn);
 
         //Notification switch
+        //Save the setting of switch (prevent reset after logout)
         SharedPreferences sharedPreferences = getSharedPreferences("notification", MODE_PRIVATE);
+        //Goals Switch
         SwitchCompat goalsSwitch = (SwitchCompat) findViewById(R.id.settingsGoalsSwitch);
         goalsSwitch.setChecked(sharedPreferences.getBoolean("goals value", false));
         goalsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -126,6 +129,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        //Lesson learnt switch
         SwitchCompat lessonLearntSwitch = (SwitchCompat) findViewById(R.id.settingsLessonLearntSwitch);
         lessonLearntSwitch.setChecked(sharedPreferences.getBoolean("lesson learnt value", false));
         lessonLearntSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -145,6 +149,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        //Health switch
         SwitchCompat healthSwitch = (SwitchCompat) findViewById(R.id.settingsHealthSwitch);
         healthSwitch.setChecked(sharedPreferences.getBoolean("health value", false));
         healthSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -164,6 +169,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        //Mood switch
         SwitchCompat moodSwitch = (SwitchCompat) findViewById(R.id.settingsMoodSwitch);
         moodSwitch.setChecked(sharedPreferences.getBoolean("mood value", false));
         moodSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

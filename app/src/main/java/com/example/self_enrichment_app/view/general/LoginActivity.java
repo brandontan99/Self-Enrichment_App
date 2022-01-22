@@ -37,18 +37,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {
-
-    //For now only got Google sign-in and custom email sign-in
-    //actually I think Facebook sign-in can be optional (see got time or not)
-    //Google sign-in code has no problem, but nothing pop out when I click it (need help)
-    //In my opinion, maybe my fingerprint got problem or dependencies version (maybe)
     
     //firebase documentation
     //https://firebase.google.com/docs/auth/android/google-signin?authuser=0
-    
-    //google sign-in video
-    //https://www.youtube.com/watch?v=bBJF1M5h_UU
-    //https://www.youtube.com/watch?v=gCrVwjh4LiY&t=167s
 
     //custom register and sign-in video
     //https://www.youtube.com/watch?v=TGjDNNtO_3U
