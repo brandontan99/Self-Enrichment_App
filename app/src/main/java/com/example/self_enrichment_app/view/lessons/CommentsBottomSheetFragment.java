@@ -54,7 +54,7 @@ public class CommentsBottomSheetFragment extends BottomSheetDialogFragment {
     private CommentsAdapter commentsAdapter;
     private List<Comment> items = new ArrayList<>();
     private LessonsLearntViewModel lessonsLearntViewModel;
-    private String lessonPostId;
+    private String lessonPostId,userCreatedPostId;
     private int likeCount;
     private FirebaseAuth mAuth;
     private String userId;
@@ -84,6 +84,7 @@ public class CommentsBottomSheetFragment extends BottomSheetDialogFragment {
          if (getArguments() != null) {
             this.lessonPostId = getArguments().getString("lessonPostId");
             this.likeCount = getArguments().getInt("likeCount");
+            this.userCreatedPostId = getArguments().getString("userCreatedPostId");
         }
     }
 
@@ -183,7 +184,7 @@ public class CommentsBottomSheetFragment extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "You have sent a comment successfully.",
                         Toast.LENGTH_SHORT).show();
-                lessonsLearntViewModel.addComment(lessonPostId, new Comment(userId, etComment.getText().toString()));
+                lessonsLearntViewModel.addComment(userCreatedPostId,lessonPostId, new Comment(userId, etComment.getText().toString()));
                 etComment.getText().clear();
             }
         });
@@ -191,9 +192,9 @@ public class CommentsBottomSheetFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 if (cbLike.isChecked()){
-                    lessonsLearntViewModel.addUserLiked(lessonPostId,userId);
+                    lessonsLearntViewModel.addUserLiked(userCreatedPostId,lessonPostId,userId);
                 }else{
-                    lessonsLearntViewModel.removeUserLiked(lessonPostId,userId);
+                    lessonsLearntViewModel.removeUserLiked(userCreatedPostId,lessonPostId,userId);
                 }
             }
         });
