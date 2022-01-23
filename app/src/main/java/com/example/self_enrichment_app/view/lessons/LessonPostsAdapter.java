@@ -81,12 +81,12 @@ public class LessonPostsAdapter extends FirestoreRecyclerAdapter<LessonPost, Les
             @Override
             public void onClick(View view) {
                 if(holder.cbLike.isChecked()){
-                    LessonsLearntHelper.addUserLiked(lessonPost.getLessonPostId(),userId);
+                    LessonsLearntHelper.addUserLiked(lessonPost.getCreatedBy(),lessonPost.getLessonPostId(),userId);
                     holder.cbLike.setTextColor(context.getResources().getColor(R.color.orange));
                     holder.cbLike.setTypeface(ResourcesCompat.getFont(context, R.font.montserrat_bold));
 
                 }else{
-                    LessonsLearntHelper.removeUserLiked(lessonPost.getLessonPostId(),userId);
+                    LessonsLearntHelper.removeUserLiked(lessonPost.getCreatedBy(),lessonPost.getLessonPostId(),userId);
                     holder.cbLike.setTextColor(context.getResources().getColor(R.color.black));
                     holder.cbLike.setTypeface(ResourcesCompat.getFont(context, R.font.montserrat_light));
                 }
@@ -100,6 +100,7 @@ public class LessonPostsAdapter extends FirestoreRecyclerAdapter<LessonPost, Les
                 CommentsBottomSheetFragment commentsFragment = new CommentsBottomSheetFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("lessonPostId",lessonPost.getLessonPostId());
+                bundle.putString("userCreatedPostId",lessonPost.getCreatedBy());
                 bundle.putInt("likeCount",likeCount);
                 commentsFragment.setArguments(bundle);
                 commentsFragment.show(fragmentManager,commentsFragment.getTag());

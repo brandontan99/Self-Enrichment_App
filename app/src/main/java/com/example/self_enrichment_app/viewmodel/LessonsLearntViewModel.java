@@ -27,18 +27,18 @@ public class LessonsLearntViewModel extends ViewModel {
         return lessonsLearntRepository.getUsersLikedMutableLiveData(documentId);
     }
 
-    public void addUserLiked(String lessonPostId, String userId){
-        lessonsLearntRepository.addUserLiked(lessonPostId, userId);
+    public void addUserLiked(String userCreatedPostId, String lessonPostId, String userId){
+        lessonsLearntRepository.addUserLiked(userCreatedPostId,lessonPostId, userId);
     }
-    public void removeUserLiked(String lessonPostId, String userId){
-        lessonsLearntRepository.removeUserLiked(lessonPostId, userId);
+    public void removeUserLiked(String userCreatedPostId,String lessonPostId, String userId){
+        lessonsLearntRepository.removeUserLiked(userCreatedPostId,lessonPostId, userId);
     }
 
     public void addLessonPost(LessonPost newLessonPost){
         lessonsLearntRepository.addLessonPost(newLessonPost);
     }
-    public void addComment(String documentId, Comment newComment){
-        lessonsLearntRepository.addComment(documentId,newComment);
+    public void addComment(String userCreatedPostId,String documentId, Comment newComment){
+        lessonsLearntRepository.addComment(userCreatedPostId,documentId,newComment);
     }
 
 }

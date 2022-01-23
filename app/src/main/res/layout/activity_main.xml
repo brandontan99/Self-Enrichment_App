@@ -19,7 +19,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@color/orange">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -32,23 +33,41 @@
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:fontFamily="@font/rubik_medium"
                 android:text="Title"
                 android:textColor="@color/orange"
-                android:textSize="30sp"></TextView>
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ibtnProfile"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="16dp"
                 android:src="@mipmap/profile"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvTitle" />
+
+            <TextView
+                android:id="@+id/tvSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:alpha="0.8"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Steven"
+                android:textAllCaps="false"
+                android:textColor="@color/orange"
+                android:textSize="18sp"
+                android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 
 
