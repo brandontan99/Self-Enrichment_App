@@ -1,14 +1,23 @@
 package com.example.self_enrichment_app.view.mood;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDeepLinkBuilder;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -24,6 +33,7 @@ import android.widget.TextView;
 import com.example.self_enrichment_app.data.model.MoodDiaryEntry;
 import com.example.self_enrichment_app.view.MainActivity;
 import com.example.self_enrichment_app.R;
+import com.example.self_enrichment_app.view.general.LoginActivity;
 import com.example.self_enrichment_app.viewmodel.MoodDiaryViewModel;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -39,6 +49,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.common.net.InternetDomainName;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -59,6 +70,7 @@ import java.util.Locale;
 public class MoodFragment extends Fragment {
     public static boolean overweight;
     private Calendar myCalendar = Calendar.getInstance();
+    private Calendar notificationCalendar;
     private String dateFormat ="dd MMM yyyy";
     private TextView TVDate, TVDiaryEntry;
     private ImageView IVMood;
@@ -74,6 +86,7 @@ public class MoodFragment extends Fragment {
     private String userId;
     private String currentDate, selectedDate;
     private SimpleDateFormat simpleDateFormat;
+    private static boolean notificationCreated;
 
 
     public MoodFragment() {
@@ -99,6 +112,19 @@ public class MoodFragment extends Fragment {
             Log.d("Steven", "onCreate: " + selectedDate);
         }
 
+        // Creating the notification
+        // Notification will check every 9pm
+        createNotificationChannel();
+
+        notificationCalendar = Calendar.getInstance();
+        notificationCalendar.set(Calendar.HOUR_OF_DAY, 17);
+        notificationCalendar.set(Calendar.MINUTE, 15);
+        notificationCalendar.set(Calendar.SECOND, 0);
+
+        if (Calendar.getInstance().after(notificationCalendar)){
+            notificationCalendar.add(Calendar.DAY_OF_MONTH, 1);
+            notificationCreated = false;
+        }
     }
 
     @Override
@@ -285,7 +311,6 @@ public class MoodFragment extends Fragment {
     }
 
     public void updateGraph(String mood){
-
         firestore.collection("MoodDiaryEntries").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -296,6 +321,30 @@ public class MoodFragment extends Fragment {
                         allEntries.add(document.toObject(MoodDiaryEntry.class));
                     }
                     MoodStatistics statistics = new MoodStatistics(allEntries);
+
+                    // Creating a notification if the user's been sad for a while
+                    if ((statistics.getTotalPositives() < statistics.getTotalEntries()/2) && notificationCreated == false){
+                        Intent intent = new Intent(getContext(), MoodAlarmReceiver.class);
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(),
+                                0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                        AlarmManager alarmManager = (AlarmManager) getActivity()
+                                .getSystemService(Context.ALARM_SERVICE);
+                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                                notificationCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY
+                                , pendingIntent);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, notificationCalendar.getTimeInMillis(), pendingIntent);
+                        }
+                        notificationCreated = true;
+                        Log.d("Steven", "New notification created");
+                    } else {
+                        if (notificationCreated == true)
+                            Log.d("Steven","Notification has been created");
+                        else
+                            Log.d("Steven","User is not depressed, no notification needed");
+                    }
+                    // Creating the dataset
                     List<BarEntry> entries = new ArrayList<>();
                     if (mood.equalsIgnoreCase("happy")){
                         entries = statistics.getHappyList();
@@ -306,7 +355,6 @@ public class MoodFragment extends Fragment {
                     } else if (mood.equalsIgnoreCase("tired")){
                         entries = statistics.getTiredList();
                     }
-                    // Creating the dataset
                     BarDataSet set = new BarDataSet(entries, "BarDataSet");
                     int workColor = getResources().getColor(R.color.work);
                     int friendColor = getResources().getColor(R.color.friend);
@@ -362,6 +410,19 @@ public class MoodFragment extends Fragment {
                 }
             }
         });
+    }
 
+    public void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "MoodDiaryNotificationChannel";
+            String description = "Mental health notifications";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("MoodDiary", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getContext().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        } else {
+            Log.d("Steven", "Android SDK too old, doesn't require notification channel");
+        }
     }
 }
