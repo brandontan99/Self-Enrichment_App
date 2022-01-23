@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.self_enrichment_app.R;
@@ -21,19 +22,30 @@ import com.example.self_enrichment_app.data.model.Comment;
 import com.example.self_enrichment_app.data.model.LessonPost;
 import com.example.self_enrichment_app.data.model.LessonPostNotification;
 import com.example.self_enrichment_app.data.model.MainGoals;
+import com.example.self_enrichment_app.data.model.MoodDiaryEntry;
 import com.example.self_enrichment_app.data.model.User;
 import com.example.self_enrichment_app.view.MainActivity;
 import com.example.self_enrichment_app.view.lessons.CommentsAdapter;
 import com.example.self_enrichment_app.view.lessons.LessonPostsAdapter;
 import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class DashboardFragment extends Fragment {
     private RecyclerView rvDashboardNotifications,rvDashboardGoals;
@@ -44,6 +56,7 @@ public class DashboardFragment extends Fragment {
     private String userId;
     private NotificationsAdapter notificationsAdapter;
     private GoalsAdapter goalsAdapter;
+    private ImageView IVDashboardMoodDiary;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -93,6 +106,39 @@ public class DashboardFragment extends Fragment {
                 rvDashboardGoals.scrollToPosition(goalsAdapter.getItemCount() - 1);
             }
         });
+
+        // Mood diary section
+        IVDashboardMoodDiary = view.findViewById(R.id.IVDashboardMoodDiary);
+        Date today = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+        String currentDate = simpleDateFormat.format(today);
+        DocumentReference docRef = db.collection("MoodDiaryEntries").document(userId+currentDate);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        MoodDiaryEntry latestEntry = document.toObject(MoodDiaryEntry.class);
+                        if (latestEntry.getMood() != null) {
+                            if (latestEntry.getMood().equalsIgnoreCase("happy")){
+                                IVDashboardMoodDiary.setImageResource(R.drawable.ic_mood_happy);
+                            } else if (latestEntry.getMood().equalsIgnoreCase("sad")) {
+                                IVDashboardMoodDiary.setImageResource(R.drawable.ic_mood_sad);
+                            } else if (latestEntry.getMood().equalsIgnoreCase("angry")) {
+                                IVDashboardMoodDiary.setImageResource(R.drawable.ic_mood_angry);
+                            } else if (latestEntry.getMood().equalsIgnoreCase("tired")) {
+                                IVDashboardMoodDiary.setImageResource(R.drawable.ic_mood_tired);
+                            }
+                        } else {
+                            IVDashboardMoodDiary.setImageResource(R.drawable.ic_mood_tired);
+                        }
+                    }
+                }
+            }
+        });
+
+
     }
     @Override
     public void onStart() {
