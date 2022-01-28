@@ -92,7 +92,7 @@ public class DashboardFragment extends Fragment {
         notificationsAdapter.registerAdapterDataObserver(    new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
-                rvDashboardNotifications.scrollToPosition(notificationsAdapter.getItemCount() - 1);
+                rvDashboardNotifications.scrollToPosition(0);
             }
         });
         query = FirebaseFirestore.getInstance()
@@ -103,7 +103,7 @@ public class DashboardFragment extends Fragment {
         goalsAdapter.registerAdapterDataObserver(    new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
-                rvDashboardGoals.scrollToPosition(goalsAdapter.getItemCount() - 1);
+                rvDashboardGoals.scrollToPosition(0);
             }
         });
 

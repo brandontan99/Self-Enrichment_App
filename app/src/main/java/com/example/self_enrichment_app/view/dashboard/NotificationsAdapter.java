@@ -44,15 +44,19 @@ public class NotificationsAdapter extends FirestoreRecyclerAdapter<LessonPostNot
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull LessonPostNotification lessonPostNotification) {
         int imgRes;
+        String actionText;
         switch(lessonPostNotification.getAction()){
             case "commented":
                 imgRes = R.drawable.ic_comment;
+                actionText = "commented on your post";
                 break;
             case "liked":
                 imgRes = R.drawable.ic_liked;
+                actionText = "liked your post";
                 break;
             default:
                 imgRes = R.drawable.ic_like;
+                actionText = "unliked your post";
                 break;
         }
 
@@ -60,7 +64,7 @@ public class NotificationsAdapter extends FirestoreRecyclerAdapter<LessonPostNot
         StringBuilder notificationText = new StringBuilder("");
         lessonsLearntViewModel.getLiveUserData(lessonPostNotification.getCreatedBy()).observe(lifecycleOwner, notificationUser -> {
             notificationText.append(notificationUser.getUserName());
-            notificationText.append(" ").append(lessonPostNotification.getAction()).append(" on your post");
+            notificationText.append(" ").append(actionText);
             holder.tvNotification.setText(notificationText.toString());
         });
     }

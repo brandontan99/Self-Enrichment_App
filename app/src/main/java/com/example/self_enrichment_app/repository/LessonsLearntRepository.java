@@ -53,7 +53,9 @@ public class LessonsLearntRepository {
         firestore.collection("LessonPosts").document(documentId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot doc, @Nullable FirebaseFirestoreException error) {
-                usersLiked.postValue(doc.toObject(LessonPost.class).getUsersLiked());
+                if (doc !=null){
+                    usersLiked.postValue(doc.toObject(LessonPost.class).getUsersLiked());
+                }
             }
         });
         return usersLiked;
