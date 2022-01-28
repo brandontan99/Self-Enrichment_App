@@ -146,6 +146,8 @@ public class DashboardFragment extends Fragment {
         super.onStart();
         notificationsAdapter.startListening();
         goalsAdapter.startListening();
+        notificationsAdapter.notifyDataSetChanged();
+        goalsAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -159,8 +161,6 @@ public class DashboardFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getUserInfo();
-        notificationsAdapter.notifyDataSetChanged();
-        goalsAdapter.notifyDataSetChanged();
     }
     //Get user name and profile picture from database
     private void getUserInfo() {

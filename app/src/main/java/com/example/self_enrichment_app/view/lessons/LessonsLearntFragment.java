@@ -114,6 +114,7 @@ public class LessonsLearntFragment extends Fragment {
     public void onStart() {
         super.onStart();
         lessonPostsAdapter.startListening();
+        lessonPostsAdapter.notifyDataSetChanged();
     }
 
     @Override
