@@ -107,6 +107,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+
         // Mood diary section
         IVDashboardMoodDiary = view.findViewById(R.id.IVDashboardMoodDiary);
         Date today = Calendar.getInstance().getTime();
@@ -158,6 +159,8 @@ public class DashboardFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getUserInfo();
+        notificationsAdapter.notifyDataSetChanged();
+        goalsAdapter.notifyDataSetChanged();
     }
     //Get user name and profile picture from database
     private void getUserInfo() {

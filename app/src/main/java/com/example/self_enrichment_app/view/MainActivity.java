@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-                finish();
             }
         });
         getUserInfo();
@@ -85,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User user = documentSnapshot.toObject(User.class);
-                String name = user.getUserName();
                 String imageURL = user.getImageURL();
 
                 Picasso.get().load(imageURL).into(ibtnProfile);
