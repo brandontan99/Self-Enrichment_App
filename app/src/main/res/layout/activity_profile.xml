@@ -19,8 +19,9 @@
         android:id="@+id/profileNameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="28dp"
+        android:text="Brandon"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/profilePictureView"
@@ -30,11 +31,10 @@
         android:id="@+id/hiThereView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="164dp"
+        android:layout_marginStart="8dp"
         android:text="@string/hi_there"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profilePictureView"
         app:layout_constraintTop_toBottomOf="@+id/profileNameView" />
 
     <soup.neumorphism.NeumorphCardView
@@ -176,11 +176,10 @@
         android:id="@+id/AppVersionView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="0dp"
         android:gravity="center"
         android:text="@string/app_version"
         android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardViewProfileLogOutButton" />
 

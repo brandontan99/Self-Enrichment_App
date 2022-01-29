@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.self_enrichment_app.data.model.Comment;
 import com.example.self_enrichment_app.data.model.LessonPost;
+import com.example.self_enrichment_app.data.model.LessonPostNotification;
 import com.example.self_enrichment_app.data.model.User;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -40,7 +41,9 @@ public class LessonsLearntRepository {
         firestore.collection("Users").document(userId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot doc, @Nullable FirebaseFirestoreException error) {
-                user.postValue(doc.toObject(User.class));
+                if (doc !=null){
+                    user.postValue(doc.toObject(User.class));
+                }
             }
         });
         return user;
@@ -50,29 +53,37 @@ public class LessonsLearntRepository {
         firestore.collection("LessonPosts").document(documentId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot doc, @Nullable FirebaseFirestoreException error) {
-                usersLiked.postValue(doc.toObject(LessonPost.class).getUsersLiked());
+                if (doc !=null){
+                    usersLiked.postValue(doc.toObject(LessonPost.class).getUsersLiked());
+                }
             }
         });
         return usersLiked;
     }
 
-    public void addUserLiked(String lessonPostId, String userId){
-        DocumentReference docRef = firestore.collection("LessonPosts").document(lessonPostId);
-        docRef.update("usersLiked", FieldValue.arrayUnion(userId));
+    public void addUserLiked(String userCreatedPostId, String lessonPostId, String userLikedId){
+        DocumentReference lessonPostDocRef = firestore.collection("LessonPosts").document(lessonPostId);
+        lessonPostDocRef.update("usersLiked", FieldValue.arrayUnion(userLikedId));
+        CollectionReference userColRef = firestore.collection("Users").document(userCreatedPostId).collection("Notifications");
+        userColRef.add(new LessonPostNotification(userLikedId,lessonPostId,"liked"));
     }
-    public void removeUserLiked(String lessonPostId, String userId){
-        DocumentReference docRef = firestore.collection("LessonPosts").document(lessonPostId);
-        docRef.update("usersLiked", FieldValue.arrayRemove(userId));
+    public void removeUserLiked(String userCreatedPostId, String lessonPostId, String userLikedId){
+        DocumentReference lessonPostDocRef = firestore.collection("LessonPosts").document(lessonPostId);
+        lessonPostDocRef.update("usersLiked", FieldValue.arrayRemove(userLikedId));
+        CollectionReference userColRef = firestore.collection("Users").document(userCreatedPostId).collection("Notifications");
+        userColRef.add(new LessonPostNotification(userLikedId,lessonPostId,"unliked"));
     }
 
     public void addLessonPost(LessonPost newLessonPost){
         firestore.collection("LessonPosts").add(newLessonPost);
     }
-    public void addComment(String documentId, Comment newComment){
+    public void addComment(String userCreatedPostId, String documentId, Comment newComment){
         CollectionReference colRef = firestore.collection("LessonPosts").document(documentId).collection("Comments");
         colRef.add(newComment);
         // Update commentCount
         DocumentReference docRef = firestore.collection("LessonPosts").document(documentId);
         docRef.update("commentCount", FieldValue.increment(1));
+        CollectionReference userColRef = firestore.collection("Users").document(userCreatedPostId).collection("Notifications");
+        userColRef.add(new LessonPostNotification(newComment.getUserId(),documentId,"commented"));
     }
 }
