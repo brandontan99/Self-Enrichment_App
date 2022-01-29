@@ -44,8 +44,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ibtnProfile"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginEnd="16dp"
                 android:src="@mipmap/profile"
                 android:visibility="visible"

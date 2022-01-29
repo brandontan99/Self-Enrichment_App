@@ -38,12 +38,6 @@ import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {
     
-    //firebase documentation
-    //https://firebase.google.com/docs/auth/android/google-signin?authuser=0
-
-    //custom register and sign-in video
-    //https://www.youtube.com/watch?v=TGjDNNtO_3U
-    
     FirebaseAuth mAuth;
 
     @Override
@@ -129,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
 
         FirebaseUser user = mAuth.getCurrentUser();
 
+        //Navigate to MainActivity directly if user is not null
         if (user != null) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);

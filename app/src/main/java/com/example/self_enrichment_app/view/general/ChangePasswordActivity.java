@@ -79,6 +79,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     Toast.makeText(ChangePasswordActivity.this, "Please enter again your new password.", Toast.LENGTH_SHORT).show();
 
                 }else if(changeNewPassword.equals(confirmChangeNewPassword)){
+                    //Update the password at auth
                     firebaseUser.updatePassword(changeNewPassword).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

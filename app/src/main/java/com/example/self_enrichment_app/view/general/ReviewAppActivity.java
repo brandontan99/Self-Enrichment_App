@@ -27,7 +27,6 @@ public class ReviewAppActivity extends AppCompatActivity {
     FirebaseAuth mauth;
     FirebaseFirestore db;
     DocumentReference documentReference;
-    FirebaseUser firebaseUser;
     String userID;
 
     RatingBar ratingBar;
