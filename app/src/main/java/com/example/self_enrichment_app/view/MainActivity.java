@@ -10,6 +10,7 @@ import com.example.self_enrichment_app.R;
 import com.example.self_enrichment_app.data.model.User;
 import com.example.self_enrichment_app.view.general.EditProfileActivity;
 import com.example.self_enrichment_app.view.general.ProfileActivity;
+import com.example.self_enrichment_app.view.health.StepsCountBackgroundService;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;

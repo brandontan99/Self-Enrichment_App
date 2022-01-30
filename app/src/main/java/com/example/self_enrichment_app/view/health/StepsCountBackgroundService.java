@@ -33,9 +33,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-public class StepsCountBackgroundService {
-//public class StepsCountBackgroundService extends Service implements SensorEventListener {
-/*
+//public class StepsCountBackgroundService {
+public class StepsCountBackgroundService extends Service implements SensorEventListener {
+
     private SensorManager sensorManager;
     private Sensor stepsCounter;
     private int previousTotalStepsCount = 0;
@@ -52,12 +52,12 @@ public class StepsCountBackgroundService {
 
     public StepsCountBackgroundService() {
     }
-
+/*
     MyCallback myCallback = null;
     public StepsCountBackgroundService(MyCallback callback){
         this.myCallback = callback;
     }
-
+*/
 
 
     @Override
@@ -65,7 +65,7 @@ public class StepsCountBackgroundService {
         super.onCreate();
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getUid();
-        sensorManager = (SensorManager) getApplicationContext().getSystemService(this.SENSOR_SERVICE);
+        sensorManager = (SensorManager) getSystemService(this.SENSOR_SERVICE);
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER) != null) {
             stepsCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
@@ -75,6 +75,11 @@ public class StepsCountBackgroundService {
             Toast.makeText(this,"No sensor detected",Toast.LENGTH_SHORT).show();
         }
 
+
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
         if (stepsCounter != null){
             sensorManager.registerListener(this, stepsCounter, SensorManager.SENSOR_DELAY_UI);
             Toast.makeText(this,"start sensor...",Toast.LENGTH_SHORT).show();
@@ -82,17 +87,12 @@ public class StepsCountBackgroundService {
         else {
             Toast.makeText(this, "no sensor to start...", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
 
 
 
         return START_STICKY;
     }
-
+/*
     @Override
     public void onResume() {
         super.onResume();
@@ -112,7 +112,7 @@ public class StepsCountBackgroundService {
         sensorManager.unregisterListener(this, stepsCounter);
         Toast.makeText(this,"pause sensor.",Toast.LENGTH_SHORT).show();
     }
-
+*/
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -146,11 +146,15 @@ public class StepsCountBackgroundService {
             saveStepsCount();
             Toast.makeText(this, "Current steps " + currentStepsCount, Toast.LENGTH_SHORT).show();
             Toast.makeText(this, "Saving data", Toast.LENGTH_SHORT).show();
-            //HealthFragment healthFragment = new HealthFragment();
+            HealthFragment healthFragment = new HealthFragment();
+            healthFragment.changeStepsCount(todayDate(),currentStepsCount);
+
             //Log.d()
+            /*
             if (myCallback != null) {
+
                 myCallback.changeStepsCount(todayDate(), currentStepsCount);
-            }
+            }*/
 
             Toast.makeText(this, "Total " + totalStepsCount + "Previous " + previousTotalStepsCount, Toast.LENGTH_SHORT).show();
         }
@@ -178,7 +182,7 @@ public class StepsCountBackgroundService {
 
 /*
     private void changeStepsCount(String todayDate, int currentStepsCount) {
-        Button BtnCalendar = (Button) get.findViewById(R.id);
+        //Button BtnCalendar = (Button) get.findViewById(R.id);
         // Value will change to get from Firebase
         Query query = FirebaseFirestore.getInstance().collection("HealthEntries").whereEqualTo("userId",userId).whereEqualTo("date",todayDate);
         // not realtime
@@ -202,7 +206,7 @@ public class StepsCountBackgroundService {
                         String date = healthFragment.BtnCalendar.getText().toString();
                         if (date.equals(healthFragment.todayDate())){
                             healthFragment.setEmptyText(0);
-                            healthFragment.PBStepsCount.setProgress(100);
+                            //healthFragment.PBStepsCount.setProgress(100);
                         }
                     }
                     else {
@@ -219,28 +223,28 @@ public class StepsCountBackgroundService {
                             //healthFragment
                             String date = getText().toString();
                             if (date.equals(healthFragment.todayDate())){
-                                healthFragment.TVStepsCountNum.setText(Integer.toString(currentCount));
+                                //healthFragment.TVStepsCountNum.setText(Integer.toString(currentCount));
                                 double stepscountnum = currentCount;
                                 double goalvalue = Integer.parseInt(document.get("steps_goal").toString());
                                 if (goalvalue > 0) {
                                     int countprogress = (int) ((stepscountnum / goalvalue) * 100);
                                     if (countprogress >= 100) {
                                         countprogress = 100;
-                                        healthFragment.TVStepsAlertMsg.setVisibility(View.INVISIBLE);
-                                        healthFragment.TVStepsAlertExMark.setVisibility(View.INVISIBLE);
+                                        //healthFragment.TVStepsAlertMsg.setVisibility(View.INVISIBLE);
+                                        //healthFragment.TVStepsAlertExMark.setVisibility(View.INVISIBLE);
                                         //PBStepsCount.setDrawingCacheBackgroundColor(Color.GREEN);
                                     }
                                     else{
-                                        healthFragment.TVStepsAlertMsg.setVisibility(View.VISIBLE);
-                                        healthFragment.TVStepsAlertExMark.setVisibility(View.VISIBLE);
+                                        //healthFragment.TVStepsAlertMsg.setVisibility(View.VISIBLE);
+                                        //healthFragment.TVStepsAlertExMark.setVisibility(View.VISIBLE);
                                     }
                                     Log.d("PROGRESS", "PERCENTAGE" + countprogress);
-                                    healthFragment.PBStepsCount.setProgress(countprogress);
+                                    //healthFragment.PBStepsCount.setProgress(countprogress);
                                 }
                                 else {
-                                    healthFragment.TVStepsAlertMsg.setVisibility(View.INVISIBLE);
-                                    healthFragment.TVStepsAlertExMark.setVisibility(View.INVISIBLE);
-                                    healthFragment.PBStepsCount.setProgress(100);
+                                    //healthFragment.TVStepsAlertMsg.setVisibility(View.INVISIBLE);
+                                    //healthFragment.TVStepsAlertExMark.setVisibility(View.INVISIBLE);
+                                    //healthFragment.PBStepsCount.setProgress(100);
                                 }
                             }
                         }
@@ -249,8 +253,8 @@ public class StepsCountBackgroundService {
             }
         });
     }
-
-
+*/
+/*
     public interface MyCallback {
     // Declaration of the template function for the interface
         public void changeStepsCount(String todayDate, int currentStepsCount);
