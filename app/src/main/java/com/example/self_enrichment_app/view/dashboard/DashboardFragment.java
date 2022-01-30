@@ -1,5 +1,6 @@
 package com.example.self_enrichment_app.view.dashboard;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -30,6 +31,7 @@ import com.example.self_enrichment_app.data.model.MoodDiaryEntry;
 import com.example.self_enrichment_app.data.model.User;
 import com.example.self_enrichment_app.view.MainActivity;
 import com.example.self_enrichment_app.view.health.HealthFragment;
+import com.example.self_enrichment_app.view.health.StepsCountBackgroundService;
 import com.example.self_enrichment_app.view.lessons.CommentsAdapter;
 import com.example.self_enrichment_app.view.lessons.LessonPostsAdapter;
 import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
@@ -148,6 +150,7 @@ public class DashboardFragment extends Fragment {
         });
 
         // Health and fitness section
+
         TVGoalValueDashboard = view.findViewById(R.id.TVGoalValueDashboard);
         PBDashboardStepsCount = view.findViewById(R.id.PBDashboardStepsCount);
         Date stepstoday = Calendar.getInstance().getTime();
