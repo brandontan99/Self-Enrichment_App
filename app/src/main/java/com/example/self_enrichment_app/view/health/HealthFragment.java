@@ -54,7 +54,7 @@ import java.util.Calendar;
 
 import soup.neumorphism.NeumorphCardView;
 
-//public class HealthFragment extends Fragment implements StepsCountBackgroundService.MyCallback {
+//public class HealthFragment extends Fragment  {
 public class HealthFragment extends Fragment implements SensorEventListener {
     public static boolean[][] healthStatus = {{false,false,false},{false,false,false},{false,false,false}};
     private Button BtnAddEntry, BtnCalendar;
@@ -77,17 +77,19 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     }
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        /*
+/*
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         if (ActivityCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED) {
 
             // test
-            getActivity().startService(new Intent(getActivity(), StepsCountBackgroundService.class));
+            //getContext().startService(new Intent(getContext(), StepsCountBackgroundService.class));
 
 
 
@@ -148,6 +150,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
+
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getUid();
         healthEntriesViewModel = new HealthEntriesViewModel();
@@ -428,12 +431,12 @@ public class HealthFragment extends Fragment implements SensorEventListener {
             int currentStepsCount = totalStepsCount - previousTotalStepsCount;
             previousTotalStepsCount = totalStepsCount;
             saveStepsCount();
-            Toast.makeText(getActivity(),"Current steps " + currentStepsCount,Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(),"Current steps " + currentStepsCount,Toast.LENGTH_SHORT).show();
             //previousStepsCount = (int) event.values[0];
             //TVStepsCountNum.setText(Integer.toString(stepsCount));
-            Toast.makeText(getActivity(),"Saving data",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(),"Saving data",Toast.LENGTH_SHORT).show();
             changeStepsCount(todayDate, currentStepsCount);
-            Toast.makeText(getActivity(),"Total " + totalStepsCount + "Previous " + previousTotalStepsCount,Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(),"Total " + totalStepsCount + "Previous " + previousTotalStepsCount,Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -446,14 +449,15 @@ public class HealthFragment extends Fragment implements SensorEventListener {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+
                     if (task.getResult().getDocuments().isEmpty()){
                         HealthEntry newHealthEntry = new HealthEntry(todayDate, userId, -1, -1, -1,-1,-1,0, 0);
                         healthEntriesViewModel.addHealthEntry(newHealthEntry);
                         //previousTotalStepsCount = totalStepsCount;
                         //saveStepsCount();
-                        Toast.makeText(getActivity(),"Now steps " + currentStepsCount,Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(),"Now steps " + currentStepsCount,Toast.LENGTH_SHORT).show();
                         //Toast.makeText(getActivity(),"Totalsss " + totalStepsCount + "Previous " + previousTotalStepsCount,Toast.LENGTH_SHORT).show();
-                        Toast.makeText(getActivity(),"New data",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(),"New data",Toast.LENGTH_SHORT).show();
                         //TVStepsCountNum.setText(currentStepsCount);
                         // 100% by default
                         String date = BtnCalendar.getText().toString();
@@ -469,7 +473,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                             int oldStepsCount = Integer.parseInt(document.get("steps_count").toString());
                             //tempoldcount = oldStepsCount;
                             int currentCount = currentStepsCount + oldStepsCount;
-                            Toast.makeText(getActivity(),currentStepsCount + " + " + oldStepsCount + " = " + currentCount,Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(),currentStepsCount + " + " + oldStepsCount + " = " + currentCount,Toast.LENGTH_SHORT).show();
                             //Toast.makeText(getActivity(),"Totalsss " + totalStepsCount + "Previous " + previousTotalStepsCount,Toast.LENGTH_SHORT).show();
                             healthEntriesViewModel.updateStepsCount(document.getId(), currentCount);
                             //int newStepsCount = stepsCount;
@@ -684,7 +688,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "healthnotification")
                 .setSmallIcon(R.drawable.ic_health)
                 .setContentTitle("You have not reach your yesterday steps goal")
-                .setContentText("You can work harder by set higher steps goal and clear the goal.")
+                .setContentText("Try work harder and clear today's goal.")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
@@ -695,8 +699,8 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     private void healthBMINotification(){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "healthnotification")
                 .setSmallIcon(R.drawable.ic_health)
-                .setContentTitle("Your blood pressure for these few days are not within normal range")
-                .setContentText("You can have a better lifestyle to make your BMI back to normal range")
+                .setContentTitle("Your BMI for these few days are not within normal range")
+                .setContentText("Have a better lifestyle to revert your BMI to normal range")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
@@ -719,7 +723,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     private void healthBloodPulseNotification(){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "healthnotification")
                 .setSmallIcon(R.drawable.ic_health)
-                .setContentTitle("Your blood pulse rate for these few days are quite abnormal")
+                .setContentTitle("Your blood pulse for these few days are quite abnormal")
                 .setContentText("Please being alert as this is dangerous for your health")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
