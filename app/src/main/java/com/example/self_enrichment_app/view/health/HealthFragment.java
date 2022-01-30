@@ -124,7 +124,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         }
         if (ActivityCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
-            Toast.makeText(getActivity(),"Please allow the motion and fitness permission.",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(),"Please allow the motion and fitness permission.",Toast.LENGTH_SHORT).show();
         }
 
 
@@ -132,7 +132,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER) != null) {
             stepsCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-            Toast.makeText(getActivity(),"Has sensor detected",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(),"Has sensor detected",Toast.LENGTH_SHORT).show();
         }
         else{
             Toast.makeText(getActivity(),"No sensor detected",Toast.LENGTH_SHORT).show();
@@ -261,7 +261,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                         //HealthEntry newHealthEntry = new HealthEntry(todayDate, userId, -1, -1, -1,-1,-1,0, 0);
                         //healthEntriesViewModel.addHealthEntry(newHealthEntry);
                         setEmptyText(0);
-                        Toast.makeText(getActivity(),"Empty data",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(),"Empty data",Toast.LENGTH_SHORT).show();
                         TVStepsAlertMsg.setVisibility(View.INVISIBLE);
                         TVStepsAlertExMark.setVisibility(View.INVISIBLE);
                         PBStepsCount.setProgress(100);
@@ -395,10 +395,10 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         super.onResume();
         if (stepsCounter != null){
             sensorManager.registerListener(this, stepsCounter, SensorManager.SENSOR_DELAY_UI);
-            Toast.makeText(getActivity(),"start sensor...",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(),"start sensor...",Toast.LENGTH_SHORT).show();
         }
         else {
-            Toast.makeText(getActivity(), "no sensor to start...", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "no sensor to start...", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -407,7 +407,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         super.onPause();
         // sensorManager.unregisterListener(this);
         sensorManager.unregisterListener(this, stepsCounter);
-        Toast.makeText(getActivity(),"pause sensor.",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(),"pause sensor.",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -544,8 +544,8 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                     if (!todayTask.getResult().getDocuments().isEmpty()){
                         for (QueryDocumentSnapshot todayDocument : todayTask.getResult()) {
                             if (Integer.parseInt(todayDocument.get("weight").toString()) > -1){
-                                Log.d("TEXT","Dayb4yesterday:" + healthStatus[0][0] + healthStatus[0][1] + healthStatus[0][2]);
-                                Toast.makeText(getActivity(),"Dayb4yesterday:" + healthStatus[0][0] + healthStatus[0][1] + healthStatus[0][2],Toast.LENGTH_SHORT).show();
+                                //Log.d("TEXT","Dayb4yesterday:" + healthStatus[0][0] + healthStatus[0][1] + healthStatus[0][2]);
+                                //Toast.makeText(getActivity(),"Dayb4yesterday:" + healthStatus[0][0] + healthStatus[0][1] + healthStatus[0][2],Toast.LENGTH_SHORT).show();
                                 healthStatus(todayDocument, healthStatus, 0);
                             }
                             Query yesterdayQuery = FirebaseFirestore.getInstance().collection("HealthEntries")
