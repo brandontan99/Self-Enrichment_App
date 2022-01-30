@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -53,10 +54,9 @@ import java.util.Calendar;
 
 import soup.neumorphism.NeumorphCardView;
 
+//public class HealthFragment extends Fragment implements StepsCountBackgroundService.MyCallback {
 public class HealthFragment extends Fragment implements SensorEventListener {
     public static boolean[][] healthStatus = {{false,false,false},{false,false,false},{false,false,false}};
-    public static boolean[] testing = {false,false,false};
-    public static boolean[] dailyStatus = {false,false,false};
     private Button BtnAddEntry, BtnCalendar;
     private TextView TVStepsCountNum, TVGoalValue, TVStepsAlertExMark, TVStepsAlertMsg;
     private TextView TVWeightValue, TVHeightValue, TVBMIValue, TVSysValue, TVDiaValue, TVPulseValue;
@@ -72,10 +72,6 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     private String todayDate;
     // notification
 
-
-    private boolean yesterdayStepsCountAlert = false;
-
-
     public HealthFragment() {
         // Required empty public constructor
     }
@@ -84,16 +80,42 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        if (ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED) {
+
+            // test
+            getActivity().startService(new Intent(getActivity(), StepsCountBackgroundService.class));
+
+
+
+        } else {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 99);
+        }
+        if (ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
+            Toast.makeText(getActivity(),"Please allow the motion and fitness permission.",Toast.LENGTH_SHORT).show();
+        }*/
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ((MainActivity)getActivity()).setToolbarTitle(R.string.title_health);
+
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         if (ActivityCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED) {
+
+            // test
+            //getActivity().startService(new Intent(getActivity(), StepsCountBackgroundService.class));
+
+
+
         } else {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 99);
@@ -102,6 +124,8 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                 Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
             Toast.makeText(getActivity(),"Please allow the motion and fitness permission.",Toast.LENGTH_SHORT).show();
         }
+
+
         sensorManager = (SensorManager)getActivity().getSystemService(getActivity().SENSOR_SERVICE);
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER) != null) {
@@ -111,6 +135,10 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         else{
             Toast.makeText(getActivity(),"No sensor detected",Toast.LENGTH_SHORT).show();
         }
+
+
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_health, container, false);
     }
@@ -160,6 +188,10 @@ public class HealthFragment extends Fragment implements SensorEventListener {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("date",BtnCalendar.getText().toString());
+
+                //getActivity().stopService(new Intent(getActivity(), StepsCountBackgroundService.class));
+
+
                 Navigation.findNavController(view).navigate(R.id.destHealthEntryFragment, bundle);
             }
         };
@@ -180,6 +212,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         BtnCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //getActivity().startService(new Intent(getActivity(), StepsCountBackgroundService.class));
                 DatePickerDialog HealthDatePicker = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
@@ -191,9 +224,9 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                 HealthDatePicker.show();
             }
         });
-        checkHealthNotification(new HealthNotification() {
+        checkHealthNotification(new HealthNotificationCallback() {
             @Override
-            public void callHealthNotification(boolean[][] healthStatus) {
+            public void HealthNotificationCallback(boolean[][] healthStatus) {
                 Log.d("TEXT","Today:" + healthStatus[0][0] + healthStatus[0][1] + healthStatus[0][2]);
                 Log.d("TEXT","Yesterday:" + healthStatus[1][0] + healthStatus[1][1] + healthStatus[1][2]);
                 Log.d("TEXT","Dayb4yesterday:" + healthStatus[2][0] + healthStatus[2][1] + healthStatus[2][2]);
@@ -404,7 +437,8 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         }
     }
 
-    private void changeStepsCount(String todayDate, int currentStepsCount) {
+
+    public void changeStepsCount(String todayDate, int currentStepsCount) {
         // Value will change to get from Firebase
         Query query = FirebaseFirestore.getInstance().collection("HealthEntries").whereEqualTo("userId",userId).whereEqualTo("date",todayDate);
         // not realtime
@@ -418,7 +452,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                         //previousTotalStepsCount = totalStepsCount;
                         //saveStepsCount();
                         Toast.makeText(getActivity(),"Now steps " + currentStepsCount,Toast.LENGTH_SHORT).show();
-                        Toast.makeText(getActivity(),"Totalsss " + totalStepsCount + "Previous " + previousTotalStepsCount,Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(),"Totalsss " + totalStepsCount + "Previous " + previousTotalStepsCount,Toast.LENGTH_SHORT).show();
                         Toast.makeText(getActivity(),"New data",Toast.LENGTH_SHORT).show();
                         //TVStepsCountNum.setText(currentStepsCount);
                         // 100% by default
@@ -436,7 +470,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                             //tempoldcount = oldStepsCount;
                             int currentCount = currentStepsCount + oldStepsCount;
                             Toast.makeText(getActivity(),currentStepsCount + " + " + oldStepsCount + " = " + currentCount,Toast.LENGTH_SHORT).show();
-                            Toast.makeText(getActivity(),"Totalsss " + totalStepsCount + "Previous " + previousTotalStepsCount,Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(),"Totalsss " + totalStepsCount + "Previous " + previousTotalStepsCount,Toast.LENGTH_SHORT).show();
                             healthEntriesViewModel.updateStepsCount(document.getId(), currentCount);
                             //int newStepsCount = stepsCount;
                             String date = BtnCalendar.getText().toString();
@@ -472,7 +506,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         });
     }
 
-    private void setEmptyText(int stepsCount) {
+    public void setEmptyText(int stepsCount) {
         TVWeightValue.setText("-");
         TVHeightValue.setText("-");
         TVBMIValue.setText("-");
@@ -496,7 +530,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         previousTotalStepsCount = prevTotalSteps;
     }
 
-    private void checkHealthNotification(HealthNotification callHealthNotification) {
+    private void checkHealthNotification(HealthNotificationCallback HealthNotificationCallback) {
         Query todayQuery = FirebaseFirestore.getInstance().collection("HealthEntries")
                 .whereEqualTo("userId",userId).whereEqualTo("date",todayDate());
         todayQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -530,7 +564,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                                                                     for (QueryDocumentSnapshot dayBeforeYesterdayDocument : dayBeforeYesterdayTask.getResult()) {
                                                                         if (Integer.parseInt(dayBeforeYesterdayDocument.get("weight").toString()) > -1){
                                                                             healthStatus(dayBeforeYesterdayDocument, healthStatus, 2);
-                                                                            callHealthNotification.callHealthNotification(healthStatus);
+                                                                            HealthNotificationCallback.HealthNotificationCallback(healthStatus);
                                                                         }
                                                                     }
                                                                 }
@@ -694,8 +728,8 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         notificationManagerCompat.notify(4, builder.build());
     }
 
-    public interface HealthNotification {
-        void callHealthNotification(boolean[][] healthStatus);
+    public interface HealthNotificationCallback {
+        void HealthNotificationCallback(boolean[][] healthStatus);
     }
 }
 
