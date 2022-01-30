@@ -1,5 +1,7 @@
 package com.example.self_enrichment_app.view.dashboard;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,12 +12,15 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.self_enrichment_app.R;
 import com.example.self_enrichment_app.data.model.Comment;
@@ -25,6 +30,8 @@ import com.example.self_enrichment_app.data.model.MainGoals;
 import com.example.self_enrichment_app.data.model.MoodDiaryEntry;
 import com.example.self_enrichment_app.data.model.User;
 import com.example.self_enrichment_app.view.MainActivity;
+import com.example.self_enrichment_app.view.health.HealthFragment;
+import com.example.self_enrichment_app.view.health.StepsCountBackgroundService;
 import com.example.self_enrichment_app.view.lessons.CommentsAdapter;
 import com.example.self_enrichment_app.view.lessons.LessonPostsAdapter;
 import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
@@ -37,6 +44,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -57,6 +66,8 @@ public class DashboardFragment extends Fragment {
     private NotificationsAdapter notificationsAdapter;
     private GoalsAdapter goalsAdapter;
     private ImageView IVDashboardMoodDiary;
+    private TextView TVGoalValueDashboard;
+    private ProgressBar PBDashboardStepsCount;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -139,7 +150,45 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        // Health and fitness section
 
+        TVGoalValueDashboard = view.findViewById(R.id.TVGoalValueDashboard);
+        PBDashboardStepsCount = view.findViewById(R.id.PBDashboardStepsCount);
+        Date stepstoday = Calendar.getInstance().getTime();
+        SimpleDateFormat stepsdate = new SimpleDateFormat("dd/M/yyyy");
+        String stepstodaydate = stepsdate.format(stepstoday);
+        Query stepsquery = FirebaseFirestore.getInstance().collection("HealthEntries").whereEqualTo("userId",userId).whereEqualTo("date",stepstodaydate);
+        stepsquery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (task.getResult().getDocuments().isEmpty()){
+                        Log.d("TAG", "No data");
+                        Toast.makeText(getActivity(),"Empty data",Toast.LENGTH_SHORT).show();
+                        TVGoalValueDashboard.setText("0");
+                        PBDashboardStepsCount.setProgress(100);
+                    }
+                    else{
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d("TAG", "Document Id: " + document.getId() + "==" + document.getData());
+                            TVGoalValueDashboard.setText(document.get("steps_goal").toString());
+                            double stepscountnum = Integer.parseInt(document.get("steps_count").toString());
+                            double goalvalue = Integer.parseInt(document.get("steps_goal").toString());
+                            if (goalvalue > 0) {
+                                int countprogress = (int) ((stepscountnum / goalvalue) * 100);
+                                if (countprogress >= 100) {
+                                    countprogress = 100;
+                                }
+                                Log.d("PROGRESS", "PERCENTAGE" + countprogress);
+                                PBDashboardStepsCount.setProgress(countprogress);
+                            } else {
+                                PBDashboardStepsCount.setProgress(100);
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
     @Override
     public void onStart() {
@@ -160,6 +209,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        steps();
         getUserInfo();
     }
     //Get user name and profile picture from database
@@ -170,6 +220,46 @@ public class DashboardFragment extends Fragment {
                 User user = documentSnapshot.toObject(User.class);
                 String name = user.getUserName();
                 ((MainActivity)getActivity()).setToolbarTitle("Welcome",name);
+            }
+        });
+    }
+
+    private void steps(){
+        Date stepstoday = Calendar.getInstance().getTime();
+        SimpleDateFormat stepsdate = new SimpleDateFormat("dd/M/yyyy");
+        String stepstodaydate = stepsdate.format(stepstoday);
+        Query stepsquery = FirebaseFirestore.getInstance().collection("HealthEntries").whereEqualTo("userId",userId).whereEqualTo("date",stepstodaydate);
+        stepsquery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (task.getResult().getDocuments().isEmpty()){
+                        Log.d("TAG", "No data");
+                        Toast.makeText(getActivity(),"Empty data",Toast.LENGTH_SHORT).show();
+                        TVGoalValueDashboard.setText("0");
+                        PBDashboardStepsCount.setProgress(100);
+                    }
+                    else{
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d("TAG", "Document Id: " + document.getId() + "==" + document.getData());
+                            if (Integer.parseInt(document.get("weight").toString()) > -1) {
+                                TVGoalValueDashboard.setText(document.get("steps_goal").toString());
+                                double stepscountnum = Integer.parseInt(document.get("steps_count").toString());
+                                double goalvalue = Integer.parseInt(document.get("steps_goal").toString());
+                                if (goalvalue > 0) {
+                                    int countprogress = (int) ((stepscountnum / goalvalue) * 100);
+                                    if (countprogress >= 100) {
+                                        countprogress = 100;
+                                    }
+                                    Log.d("PROGRESS", "PERCENTAGE" + countprogress);
+                                    PBDashboardStepsCount.setProgress(countprogress);
+                                } else {
+                                    PBDashboardStepsCount.setProgress(100);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         });
     }

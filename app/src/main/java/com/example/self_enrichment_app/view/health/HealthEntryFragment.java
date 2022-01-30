@@ -155,6 +155,7 @@ public class HealthEntryFragment extends Fragment {
                                 HealthEntry healthEntry = new HealthEntry(date, userId, newWeight, newHeight,
                                         newSys, newDia, newPulse, 0, newStepsGoal);
                                 healthEntriesViewModel.addHealthEntry(healthEntry);
+                                Navigation.findNavController(view).navigate(R.id.destHealth, bundle);
                             }
                             else{
                                 for (QueryDocumentSnapshot document : task.getResult()) {
@@ -162,6 +163,7 @@ public class HealthEntryFragment extends Fragment {
                                     //int stepscount = Integer.parseInt(document.get("steps_count").toString());
                                     healthEntriesViewModel.updateHealthEntry(document.getId(), newWeight, newHeight, newSys, newDia,
                                         newPulse, newStepsGoal);
+                                    Navigation.findNavController(view).navigate(R.id.destHealth, bundle);
                                 }
                             }
                         }
@@ -174,7 +176,7 @@ public class HealthEntryFragment extends Fragment {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }*/
-                Navigation.findNavController(view).navigate(R.id.destHealth, bundle);
+                //Navigation.findNavController(view).navigate(R.id.destHealth, bundle);
             }
         };
         BtnSubmitHealthEntry.setOnClickListener(OCLSubmitHealthEntry);
@@ -192,5 +194,9 @@ public class HealthEntryFragment extends Fragment {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public interface UpdateHealthEntryCallback {
+        void UpdateHealthEntryCallback();
     }
 }

@@ -105,6 +105,49 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView5"
                 app:srcCompat="@drawable/ic_step" />
+
+            <ProgressBar
+                android:id="@+id/PBDashboardStepsCount"
+                style="@style/CircularDeterminateProgressBar"
+                android:layout_width="91dp"
+                android:layout_height="91dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/PBDashboardStepsCount"
+                app:layout_constraintEnd_toEndOf="@+id/PBDashboardStepsCount"
+                app:layout_constraintStart_toStartOf="@+id/PBDashboardStepsCount"
+                app:layout_constraintTop_toTopOf="@+id/PBDashboardStepsCount">
+
+                <TextView
+                    android:id="@+id/TVStepsGoalDashboard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/rubik_medium"
+                    android:gravity="center"
+                    android:text="Goal:"
+                    android:textAlignment="center"
+                    android:textColor="@color/black_50_alpha"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/TVGoalValueDashboard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/rubik_medium"
+                    android:textAlignment="center"
+                    android:textColor="@color/yellow"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </soup.neumorphism.NeumorphCardView>
 

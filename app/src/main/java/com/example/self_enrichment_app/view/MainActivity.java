@@ -10,6 +10,7 @@ import com.example.self_enrichment_app.R;
 import com.example.self_enrichment_app.data.model.User;
 import com.example.self_enrichment_app.view.general.EditProfileActivity;
 import com.example.self_enrichment_app.view.general.ProfileActivity;
+import com.example.self_enrichment_app.view.health.StepsCountBackgroundService;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         NavHostFragment host = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nhfMain);
         NavController navController = host.getNavController();
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.destGoals,R.id.destLessons,R.id.destDashboard,R.id.destHealth,R.id.destMood).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bnvMain, navController);
         ibtnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
