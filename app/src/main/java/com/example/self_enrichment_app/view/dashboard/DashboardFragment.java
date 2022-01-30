@@ -247,7 +247,7 @@ public class DashboardFragment extends Fragment {
                         Log.d("TAG", "No data");
                         Toast.makeText(getActivity(),"Empty data",Toast.LENGTH_SHORT).show();
                         TVGoalValueDashboard.setText("0");
-                        PBDashboardStepsCount.setProgress(100);
+                        PBDashboardStepsCount.setProgress(0);
                     }
                     else{
                         for (QueryDocumentSnapshot document : task.getResult()) {
@@ -264,7 +264,7 @@ public class DashboardFragment extends Fragment {
                                     Log.d("PROGRESS", "PERCENTAGE" + countprogress);
                                     PBDashboardStepsCount.setProgress(countprogress);
                                 } else {
-                                    PBDashboardStepsCount.setProgress(100);
+                                    PBDashboardStepsCount.setProgress(0);
                                 }
                             }
                         }
