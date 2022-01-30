@@ -309,6 +309,8 @@ public class MoodFragment extends Fragment {
                         IVMood.setImageResource(R.drawable.ic_mood_sad);
                         CGMoodDiary.clearCheck();
                         TVDiaryEntry.setText("No entry for this date. Add entry?");
+                        BTNAddDiaryEntry.setEnabled(true);
+                        BTNAddDiaryEntry.setVisibility(View.VISIBLE);
                         Log.d("Steven", "No such document");
                     }
                 } else{
