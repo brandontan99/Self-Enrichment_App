@@ -11,35 +11,53 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="60dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:neumorph_backgroundColor="#ECF0F1">
 
-        <TextView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableStart="@mipmap/ic_logo_graybg"
-            android:ems="10"
-            android:minHeight="48dp"
-            android:paddingLeft="12dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="25dp"
-            android:text="@string/tracker_name"
-            android:textColor="#E67E22"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:padding="8dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="100dp"
-            android:layout_marginBottom="15dp"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/app_descr"
-            android:textColor="#E67E22"
-            android:textSize="14sp"
-            android:textStyle="italic" />
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/montserrat_light"
+                android:text="Daily Self-Care Mood &amp; Health Tracker"
+                android:textColor="@color/light_orange"
+                android:textStyle="italic"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
+                android:inputType="textMultiLine"
+                android:lines="2"
+                android:text="IKIGAI - SELF \nENRICHMENT TRACKER"
+                android:textColor="@color/light_orange"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ikigai_logo" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </soup.neumorphism.NeumorphCardView>
 
@@ -72,6 +90,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginView">
 
@@ -94,8 +114,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="12dp"
-            android:textSize="12sp"
-            android:text="@string/email"/>
+            android:text="@string/email"
+            android:textSize="12sp" />
 
     </soup.neumorphism.NeumorphCardView>
 
@@ -105,6 +125,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardViewEmailAddress">
 
@@ -113,8 +135,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="12dp"
-            android:textSize="12sp"
-            android:text="@string/password" />
+            android:text="@string/password"
+            android:textSize="12sp" />
 
         <EditText
             android:id="@+id/editTextLoginPassword"

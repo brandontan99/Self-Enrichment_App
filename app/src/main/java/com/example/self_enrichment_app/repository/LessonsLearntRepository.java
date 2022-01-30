@@ -1,5 +1,7 @@
 package com.example.self_enrichment_app.repository;
 
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
@@ -53,7 +55,7 @@ public class LessonsLearntRepository {
         firestore.collection("LessonPosts").document(documentId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot doc, @Nullable FirebaseFirestoreException error) {
-                if (doc !=null){
+                if (doc !=null && doc.toObject(LessonPost.class) != null){
                     usersLiked.postValue(doc.toObject(LessonPost.class).getUsersLiked());
                 }
             }

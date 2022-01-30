@@ -83,7 +83,6 @@ public class MoodFragment extends Fragment {
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
     private MoodDiaryViewModel moodDiaryViewModel;
-    private MoodDiaryEntry displayedEntry;
     private String userId;
     private String currentDate, selectedDate;
     private SimpleDateFormat simpleDateFormat;
@@ -118,8 +117,8 @@ public class MoodFragment extends Fragment {
         createNotificationChannel();
 
         notificationCalendar = Calendar.getInstance();
-        notificationCalendar.set(Calendar.HOUR_OF_DAY, 21);
-        notificationCalendar.set(Calendar.MINUTE, 10);
+        notificationCalendar.set(Calendar.HOUR_OF_DAY, 22);
+        notificationCalendar.set(Calendar.MINUTE, 30);
         notificationCalendar.set(Calendar.SECOND, 0);
 
         if (Calendar.getInstance().after(notificationCalendar)){
@@ -173,7 +172,6 @@ public class MoodFragment extends Fragment {
                 String editingDate = TVDate.getText().toString();
                 Bundle bundle = new Bundle();
                 bundle.putString("editingDate", editingDate);
-                bundle.putParcelable("displayedEntry", displayedEntry);
                 navController.navigate(R.id.action_destMood_to_destMoodEditEntry, bundle);
             }
         });
@@ -221,7 +219,6 @@ public class MoodFragment extends Fragment {
         BTNMoodHappy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                selectMood("happy");
                 updateGraph("happy");
             }
         });
@@ -251,14 +248,6 @@ public class MoodFragment extends Fragment {
         });
     }
 
-//    private void selectMood(String mood) {
-//        if (mood.equalsIgnoreCase("happy")){
-//
-//        } else if (mood.equalsIgnoreCase("happy")) {
-//
-//        } else if (mood.equalsIgnoreCase("happy"))
-//    }
-
     public void updateLabel(){
         String entryDate = simpleDateFormat.format(myCalendar.getTime());
         TVDate.setText(entryDate);
@@ -270,7 +259,6 @@ public class MoodFragment extends Fragment {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()){
                         MoodDiaryEntry diaryEntry = document.toObject(MoodDiaryEntry.class);
-                        displayedEntry = diaryEntry;
                         String mood = diaryEntry.getMood();
                         Log.d("Steven", "Mood: " + mood);
                         if (mood.equalsIgnoreCase("happy"))
@@ -325,7 +313,7 @@ public class MoodFragment extends Fragment {
     }
 
     public void updateGraph(String mood){
-        firestore.collection("MoodDiaryEntries").whereEqualTo("createdBy", userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firestore.collection("MoodDiaryEntries").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()){
