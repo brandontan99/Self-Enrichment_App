@@ -155,6 +155,8 @@ public class HealthEntryFragment extends Fragment {
                                 HealthEntry healthEntry = new HealthEntry(date, userId, newWeight, newHeight,
                                         newSys, newDia, newPulse, 0, newStepsGoal);
                                 healthEntriesViewModel.addHealthEntry(healthEntry);
+                                //HealthFragment healthFragment = new HealthFragment();
+                                //healthFragment.searchEntry(date);
                                 Navigation.findNavController(view).navigate(R.id.destHealth, bundle);
                             }
                             else{
