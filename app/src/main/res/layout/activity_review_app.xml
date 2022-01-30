@@ -43,21 +43,22 @@
 
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/carViewReviewAppDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reviewAppDescriptionView" >
+        app:layout_constraintTop_toBottomOf="@+id/reviewAppDescriptionView">
 
         <EditText
             android:id="@+id/reviewAppEditDescription"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="@string/edit_description"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:text="@string/edit_description"
             android:textSize="16sp" />
 
     </soup.neumorphism.NeumorphCardView>
