@@ -33,14 +33,16 @@ import java.util.List;
 public class MoodEditEntry extends Fragment {
     private ImageButton BTNCancelEditDiaryEntry, BTNSubmitEditDiaryEntry;
     private ChipGroup CGEditMoodDiary;
+    private Chip CHIPEditWork, CHIPEditFriends, CHIPEditFamily, CHIPEditHealth, CHIPEditFinance, CHIPEditLove;
     private RadioGroup RGEditMood;
-    private RadioButton RBEditSelectedMood;
+    private RadioButton RBEditSelectedMood, RBEditHappy, RBEditSad, RBEditAngry, RBEditTired;
     private EditText ETEditDiaryEntry;
     private NavController navController;
     private String editingDate;
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
     private MoodDiaryViewModel moodDiaryViewModel;
+    private MoodDiaryEntry displayedEntry;
     private String userId;
 
     public MoodEditEntry() {
@@ -59,6 +61,7 @@ public class MoodEditEntry extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         editingDate = bundle.getString("editingDate");
+        displayedEntry = bundle.getParcelable("displayedEntry");
     }
 
     @Override
@@ -75,6 +78,47 @@ public class MoodEditEntry extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getUid();
         moodDiaryViewModel = new ViewModelProvider(this).get(MoodDiaryViewModel.class);
+
+        RBEditHappy = view.findViewById(R.id.RBEditHappy);
+        RBEditSad = view.findViewById(R.id.RBEditSad);
+        RBEditAngry = view.findViewById(R.id.RBEditAngry);
+        RBEditTired = view.findViewById(R.id.RBEditTired);
+
+        CHIPEditWork = view.findViewById(R.id.CHIPEditWork);
+        CHIPEditFriends = view.findViewById(R.id.CHIPEditFriends);
+        CHIPEditFamily = view.findViewById(R.id.CHIPEditFamily);
+        CHIPEditHealth = view.findViewById(R.id.CHIPEditHealth);
+        CHIPEditFinance = view.findViewById(R.id.CHIPEditFinance);
+        CHIPEditLove = view.findViewById(R.id.CHIPEditLove);
+
+        ETEditDiaryEntry = view.findViewById(R.id.ETEditDiaryEntry);
+
+        String selectedMood = displayedEntry.getMood();
+        if (selectedMood.equalsIgnoreCase("happy")){
+            RBEditHappy.setChecked(true);
+        } else if (selectedMood.equalsIgnoreCase("sad")){
+            RBEditSad.setChecked(true);
+        } else if (selectedMood.equalsIgnoreCase("angry")){
+            RBEditAngry.setChecked(true);
+        } else if (selectedMood.equalsIgnoreCase("tired")){
+            RBEditTired.setChecked(true);
+        }
+
+        List<String> selectedReasons = displayedEntry.getReasons();
+        if (selectedReasons.contains("Work"))
+            CHIPEditWork.setChecked(true);
+        if (selectedReasons.contains("Friends"))
+            CHIPEditFriends.setChecked(true);
+        if (selectedReasons.contains("Family"))
+            CHIPEditFamily.setChecked(true);
+        if (selectedReasons.contains("Health"))
+            CHIPEditHealth.setChecked(true);
+        if (selectedReasons.contains("Finance"))
+            CHIPEditFinance.setChecked(true);
+        if (selectedReasons.contains("Love"))
+            CHIPEditLove.setChecked(true);
+
+        ETEditDiaryEntry.setText(displayedEntry.getEntryDescription());
 
         // Cancel editing an entry
         BTNCancelEditDiaryEntry = view.findViewById(R.id.BTNCancelEditDiaryEntry);

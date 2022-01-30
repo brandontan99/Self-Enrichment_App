@@ -1,5 +1,8 @@
 package com.example.self_enrichment_app.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.firestore.DocumentId;
 
 import java.text.SimpleDateFormat;
@@ -9,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MoodDiaryEntry {
+public class MoodDiaryEntry implements Parcelable {
     private String mood;
     private List<String> reasons;
     private String entryDescription;
@@ -30,6 +33,27 @@ public class MoodDiaryEntry {
         this.createdBy = userId;
         this.createdDate = createdDate;
     }
+
+    protected MoodDiaryEntry(Parcel in) {
+        mood = in.readString();
+        reasons = in.createStringArrayList();
+        entryDescription = in.readString();
+        sentiment = in.readInt();
+        createdBy = in.readString();
+        createdDate = in.readString();
+    }
+
+    public static final Creator<MoodDiaryEntry> CREATOR = new Creator<MoodDiaryEntry>() {
+        @Override
+        public MoodDiaryEntry createFromParcel(Parcel in) {
+            return new MoodDiaryEntry(in);
+        }
+
+        @Override
+        public MoodDiaryEntry[] newArray(int size) {
+            return new MoodDiaryEntry[size];
+        }
+    };
 
     public String getMood() {return mood;}
 
@@ -69,6 +93,21 @@ public class MoodDiaryEntry {
                 ", createdBy='" + createdBy + '\'' +
                 ", createdDate='" + createdDate + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mood);
+        parcel.writeStringList(reasons);
+        parcel.writeString(entryDescription);
+        parcel.writeInt(sentiment);
+        parcel.writeString(createdBy);
+        parcel.writeString(createdDate);
     }
 }
 
