@@ -135,7 +135,7 @@
         app:layout_constraintEnd_toStartOf="@+id/NCVHeight"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PBStepsCount"
-        app:neumorph_backgroundColor="@color/light_grey"
+        app:neumorph_backgroundColor="@color/white"
         app:neumorph_shapeType="flat">
 
         <LinearLayout
@@ -175,7 +175,7 @@
         app:layout_constraintEnd_toStartOf="@+id/NCVBMI"
         app:layout_constraintStart_toEndOf="@+id/NCVWeight"
         app:layout_constraintTop_toBottomOf="@+id/PBStepsCount"
-        app:neumorph_backgroundColor="@color/light_grey"
+        app:neumorph_backgroundColor="@color/white"
         app:neumorph_shapeType="flat">
 
         <LinearLayout
@@ -216,7 +216,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/NCVHeight"
         app:layout_constraintTop_toBottomOf="@+id/PBStepsCount"
-        app:neumorph_backgroundColor="@color/light_grey"
+        app:neumorph_backgroundColor="@color/white"
         app:neumorph_shapeType="flat">
 
         <LinearLayout
@@ -257,7 +257,7 @@
         app:layout_constraintEnd_toStartOf="@+id/NCVDia"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NCVWeight"
-        app:neumorph_backgroundColor="@color/light_grey"
+        app:neumorph_backgroundColor="@color/white"
         app:neumorph_shapeType="flat">
 
         <LinearLayout
@@ -297,7 +297,7 @@
         app:layout_constraintEnd_toStartOf="@+id/NCVPulse"
         app:layout_constraintStart_toEndOf="@+id/NCVSys"
         app:layout_constraintTop_toBottomOf="@+id/NCVHeight"
-        app:neumorph_backgroundColor="@color/light_grey"
+        app:neumorph_backgroundColor="@color/white"
         app:neumorph_shapeType="flat">
 
         <LinearLayout
@@ -338,7 +338,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/NCVDia"
         app:layout_constraintTop_toBottomOf="@+id/NCVBMI"
-        app:neumorph_backgroundColor="@color/light_grey"
+        app:neumorph_backgroundColor="@color/white"
         app:neumorph_shapeType="flat">
 
         <LinearLayout
