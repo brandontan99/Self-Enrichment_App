@@ -122,7 +122,8 @@ public class RegisterActivity extends AppCompatActivity {
                                         Toast.makeText(RegisterActivity.this, "User Register Failed", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-                                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                                mauth.signOut();
+                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                             }else{
                                 Toast.makeText(RegisterActivity.this, "User Register Failed", Toast.LENGTH_SHORT).show();
                             }

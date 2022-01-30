@@ -181,6 +181,7 @@ public class GoalsFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mainGoalsAdapter.startListening();
+        mainGoalsAdapter.notifyDataSetChanged();
     }
 
     @Override

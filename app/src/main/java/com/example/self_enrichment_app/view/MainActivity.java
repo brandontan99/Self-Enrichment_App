@@ -57,14 +57,11 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         NavHostFragment host = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nhfMain);
         NavController navController = host.getNavController();
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.destGoals,R.id.destLessons,R.id.destDashboard,R.id.destHealth,R.id.destMood).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bnvMain, navController);
         ibtnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-                finish();
             }
         });
         getUserInfo();
@@ -86,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User user = documentSnapshot.toObject(User.class);
-                String name = user.getUserName();
                 String imageURL = user.getImageURL();
 
                 Picasso.get().load(imageURL).into(ibtnProfile);

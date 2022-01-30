@@ -40,7 +40,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     CircleImageView ProfilePicture;
     TextView userName;
-    BottomNavigationView bnvProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +62,6 @@ public class ProfileActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         userID = mauth.getCurrentUser().getUid();
         documentReference = db.collection("Users").document(userID);
-
-        //NavHostFragment host = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nhfProfile);
-        //NavController navController = host.getNavController();
-        //AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.destGoals,R.id.destLessons,R.id.destDashboard,R.id.destHealth,R.id.destMood).build();
-        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        //NavigationUI.setupWithNavController(bnvProfile, navController);
 
         //get username from current user dataset (not used)
         //userName.setText(GlobalVariable.currentUser.getUserName());

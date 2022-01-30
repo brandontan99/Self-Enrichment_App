@@ -78,8 +78,8 @@ public class SettingsActivity extends AppCompatActivity {
         };
         doneBtn.setOnClickListener(OCLDoneBtn);
 
-        //Dark theme switch
-        SwitchCompat darkThemeSwitch = (SwitchCompat) findViewById(R.id.settingsDarkThemeSwitch);
+        //Dark theme switch (discarded)
+        /*SwitchCompat darkThemeSwitch = (SwitchCompat) findViewById(R.id.settingsDarkThemeSwitch);
 
         darkThemeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -92,7 +92,7 @@ public class SettingsActivity extends AppCompatActivity {
                     darkThemeSwitch.setChecked(false);
                 }
             }
-        });
+        });*/
 
         //Change password
         ImageButton changePasswordBtn = (ImageButton) findViewById(R.id.settingsChangePasswordButton);
