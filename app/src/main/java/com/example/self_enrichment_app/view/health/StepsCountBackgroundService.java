@@ -33,9 +33,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-//public class StepsCountBackgroundService {
-public class StepsCountBackgroundService extends Service implements SensorEventListener {
-
+public class StepsCountBackgroundService {
+//public class StepsCountBackgroundService extends Service implements SensorEventListener {
+/*
     private SensorManager sensorManager;
     private Sensor stepsCounter;
     private int previousTotalStepsCount = 0;
@@ -59,7 +59,7 @@ public class StepsCountBackgroundService extends Service implements SensorEventL
     }
 */
 
-
+/*
     @Override
     public void onCreate() {
         super.onCreate();
@@ -112,7 +112,7 @@ public class StepsCountBackgroundService extends Service implements SensorEventL
         sensorManager.unregisterListener(this, stepsCounter);
         Toast.makeText(this,"pause sensor.",Toast.LENGTH_SHORT).show();
     }
-*/
+/*
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -150,16 +150,16 @@ public class StepsCountBackgroundService extends Service implements SensorEventL
             healthFragment.changeStepsCount(todayDate(),currentStepsCount);
 
             //Log.d()
-            /*
+
             if (myCallback != null) {
 
                 myCallback.changeStepsCount(todayDate(), currentStepsCount);
-            }*/
+            }
 
             Toast.makeText(this, "Total " + totalStepsCount + "Previous " + previousTotalStepsCount, Toast.LENGTH_SHORT).show();
         }
-    }
-
+    }*/
+/*
     public String todayDate(){
         final Calendar today = Calendar.getInstance();
         today.add(Calendar.DATE, 0);
@@ -179,7 +179,7 @@ public class StepsCountBackgroundService extends Service implements SensorEventL
         int prevTotalSteps = sharedPreferences.getInt("steps", 0);
         previousTotalStepsCount = prevTotalSteps;
     }
-
+*/
 /*
     private void changeStepsCount(String todayDate, int currentStepsCount) {
         //Button BtnCalendar = (Button) get.findViewById(R.id);

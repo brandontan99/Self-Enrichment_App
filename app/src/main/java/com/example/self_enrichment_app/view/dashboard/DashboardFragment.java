@@ -154,6 +154,8 @@ public class DashboardFragment extends Fragment {
 
         TVGoalValueDashboard = view.findViewById(R.id.TVGoalValueDashboard);
         PBDashboardStepsCount = view.findViewById(R.id.PBDashboardStepsCount);
+        PBDashboardStepsCount.setProgress(1);
+        PBDashboardStepsCount.setProgress(0);
         Date stepstoday = Calendar.getInstance().getTime();
         SimpleDateFormat stepsdate = new SimpleDateFormat("dd/M/yyyy");
         String stepstodaydate = stepsdate.format(stepstoday);
@@ -166,7 +168,7 @@ public class DashboardFragment extends Fragment {
                         Log.d("TAG", "No data");
                         Toast.makeText(getActivity(),"Empty data",Toast.LENGTH_SHORT).show();
                         TVGoalValueDashboard.setText("0");
-                        PBDashboardStepsCount.setProgress(100);
+                        PBDashboardStepsCount.setProgress(0);
                     }
                     else{
                         for (QueryDocumentSnapshot document : task.getResult()) {
@@ -177,12 +179,20 @@ public class DashboardFragment extends Fragment {
                             if (goalvalue > 0) {
                                 int countprogress = (int) ((stepscountnum / goalvalue) * 100);
                                 if (countprogress >= 100) {
-                                    countprogress = 100;
+                                    Log.d("PROGRESS", "PERCENTAGE" + countprogress);
+                                    PBDashboardStepsCount.setProgress(100);
                                 }
-                                Log.d("PROGRESS", "PERCENTAGE" + countprogress);
-                                PBDashboardStepsCount.setProgress(countprogress);
+                                else if(countprogress == 0){
+                                    Log.d("PROGRESS", "PERCENTAGE" + countprogress);
+                                    PBDashboardStepsCount.setProgress(0);
+                                }
+                                else{
+                                    Log.d("PROGRESS", "PERCENTAGE" + countprogress);
+                                    PBDashboardStepsCount.setProgress(countprogress);
+                                }
+
                             } else {
-                                PBDashboardStepsCount.setProgress(100);
+                                PBDashboardStepsCount.setProgress(0);
                             }
                         }
                     }
@@ -237,7 +247,7 @@ public class DashboardFragment extends Fragment {
                         Log.d("TAG", "No data");
                         Toast.makeText(getActivity(),"Empty data",Toast.LENGTH_SHORT).show();
                         TVGoalValueDashboard.setText("0");
-                        PBDashboardStepsCount.setProgress(100);
+                        PBDashboardStepsCount.setProgress(0);
                     }
                     else{
                         for (QueryDocumentSnapshot document : task.getResult()) {
@@ -254,7 +264,7 @@ public class DashboardFragment extends Fragment {
                                     Log.d("PROGRESS", "PERCENTAGE" + countprogress);
                                     PBDashboardStepsCount.setProgress(countprogress);
                                 } else {
-                                    PBDashboardStepsCount.setProgress(100);
+                                    PBDashboardStepsCount.setProgress(0);
                                 }
                             }
                         }
