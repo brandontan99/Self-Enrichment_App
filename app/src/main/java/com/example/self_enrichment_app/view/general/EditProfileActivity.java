@@ -97,9 +97,6 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 validateAndSave();
-
-                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                finish();
             }
         };
 
@@ -164,6 +161,8 @@ public class EditProfileActivity extends AppCompatActivity {
                             Toast.makeText(EditProfileActivity.this, "Profile failed to update.", Toast.LENGTH_SHORT).show();
                         }
                     });
+                    startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                    finish();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
