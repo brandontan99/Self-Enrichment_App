@@ -51,6 +51,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 import soup.neumorphism.NeumorphCardView;
 
@@ -211,7 +212,28 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         todayDate = todayDate();
         Log.d("TEXTNEW","Today:" + todayDate);
         BtnCalendar.setText(currentDayMonth + "/" + (currentMonth + 1) + "/" + currentYear);
-        searchEntry(BtnCalendar.getText().toString());
+        searchEntry(BtnCalendar.getText().toString(), new ProgressBarCallback() {
+            @Override
+            public void ProgressBarCallback(int countprogress) {
+                Log.d("PROGRESS", "PERCENTAGE" + countprogress);
+                if (countprogress >= 100) {
+                    TVStepsAlertMsg.setVisibility(View.INVISIBLE);
+                    TVStepsAlertExMark.setVisibility(View.INVISIBLE);
+                    //PBStepsCount.setDrawingCacheBackgroundColor(Color.GREEN);
+                    PBStepsCount.setProgress(100);
+                }
+                else if (countprogress == 0){
+                    PBStepsCount.setProgress(0);
+                    TVStepsAlertMsg.setVisibility(View.VISIBLE);
+                    TVStepsAlertExMark.setVisibility(View.VISIBLE);
+                }
+                else{
+                    PBStepsCount.setProgress(countprogress);
+                    TVStepsAlertMsg.setVisibility(View.VISIBLE);
+                    TVStepsAlertExMark.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         BtnCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,7 +243,28 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                                 BtnCalendar.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
-                                searchEntry(BtnCalendar.getText().toString());
+                                searchEntry(BtnCalendar.getText().toString(), new ProgressBarCallback() {
+                                    @Override
+                                    public void ProgressBarCallback(int countprogress) {
+                                        Log.d("PROGRESS", "PERCENTAGE" + countprogress);
+                                        if (countprogress >= 100) {
+                                            TVStepsAlertMsg.setVisibility(View.INVISIBLE);
+                                            TVStepsAlertExMark.setVisibility(View.INVISIBLE);
+                                            //PBStepsCount.setDrawingCacheBackgroundColor(Color.GREEN);
+                                            PBStepsCount.setProgress(100);
+                                        }
+                                        else if (countprogress == 0){
+                                            PBStepsCount.setProgress(0);
+                                            TVStepsAlertMsg.setVisibility(View.VISIBLE);
+                                            TVStepsAlertExMark.setVisibility(View.VISIBLE);
+                                        }
+                                        else{
+                                            PBStepsCount.setProgress(countprogress);
+                                            TVStepsAlertMsg.setVisibility(View.VISIBLE);
+                                            TVStepsAlertExMark.setVisibility(View.VISIBLE);
+                                        }
+                                    }
+                                });
                             }
                         }, currentYear, currentMonth, currentDayMonth);
                 HealthDatePicker.show();
@@ -247,7 +290,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         return BMIValue;
     }
 
-    private void searchEntry(String newDate) {
+    public void searchEntry(String newDate, ProgressBarCallback progressBarCallback) {
         // Value will change to get from Firebase
         Query query = FirebaseFirestore.getInstance().collection("HealthEntries").whereEqualTo("userId",userId).whereEqualTo("date",newDate);
         // not realtime
@@ -265,6 +308,10 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                         TVStepsAlertMsg.setVisibility(View.INVISIBLE);
                         TVStepsAlertExMark.setVisibility(View.INVISIBLE);
                         PBStepsCount.setProgress(100);
+                        NCVBMI.setBackgroundColor(Color.WHITE);
+                        NCVSys.setBackgroundColor(Color.WHITE);
+                        NCVDia.setBackgroundColor(Color.WHITE);
+                        NCVPulse.setBackgroundColor(Color.WHITE);
                     }
                     else{
                         for (QueryDocumentSnapshot document : task.getResult()) {
@@ -289,18 +336,25 @@ public class HealthFragment extends Fragment implements SensorEventListener {
 
                                 if (goalvalue > 0) {
                                     int countprogress = (int) ((stepscountnum / goalvalue) * 100);
+                                    progressBarCallback.ProgressBarCallback(countprogress);
+                                    /*
+                                    Log.d("PROGRESS", "PERCENTAGE" + countprogress);
                                     if (countprogress >= 100) {
-                                        countprogress = 100;
                                         TVStepsAlertMsg.setVisibility(View.INVISIBLE);
                                         TVStepsAlertExMark.setVisibility(View.INVISIBLE);
                                         //PBStepsCount.setDrawingCacheBackgroundColor(Color.GREEN);
+                                        PBStepsCount.setProgress(100);
                                     }
-                                    else{
+                                    else if (countprogress == 0){
+                                        PBStepsCount.setProgress(0);
                                         TVStepsAlertMsg.setVisibility(View.VISIBLE);
                                         TVStepsAlertExMark.setVisibility(View.VISIBLE);
                                     }
-                                    Log.d("PROGRESS", "PERCENTAGE" + countprogress);
-                                    PBStepsCount.setProgress(countprogress);
+                                    else{
+                                        PBStepsCount.setProgress(countprogress);
+                                        TVStepsAlertMsg.setVisibility(View.VISIBLE);
+                                        TVStepsAlertExMark.setVisibility(View.VISIBLE);
+                                    }*/
                                 }
                                 else {
                                     TVStepsAlertMsg.setVisibility(View.INVISIBLE);
@@ -482,20 +536,28 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                                 TVStepsCountNum.setText(Integer.toString(currentCount));
                                 double stepscountnum = currentCount;
                                 double goalvalue = Integer.parseInt(document.get("steps_goal").toString());
+
                                 if (goalvalue > 0) {
                                     int countprogress = (int) ((stepscountnum / goalvalue) * 100);
                                     if (countprogress >= 100) {
-                                        countprogress = 100;
+                                        Log.d("PROGRESS", "PERCENTAGE" + countprogress);
+                                        PBStepsCount.setProgress(100);
                                         TVStepsAlertMsg.setVisibility(View.INVISIBLE);
                                         TVStepsAlertExMark.setVisibility(View.INVISIBLE);
                                         //PBStepsCount.setDrawingCacheBackgroundColor(Color.GREEN);
                                     }
-                                    else{
+                                    else if (countprogress == 0){
+                                        PBStepsCount.setProgress(0);
                                         TVStepsAlertMsg.setVisibility(View.VISIBLE);
                                         TVStepsAlertExMark.setVisibility(View.VISIBLE);
                                     }
-                                    Log.d("PROGRESS", "PERCENTAGE" + countprogress);
-                                    PBStepsCount.setProgress(countprogress);
+                                    else{
+                                        Log.d("PROGRESS", "PERCENTAGE" + countprogress);
+                                        PBStepsCount.setProgress(countprogress);
+                                        TVStepsAlertMsg.setVisibility(View.VISIBLE);
+                                        TVStepsAlertExMark.setVisibility(View.VISIBLE);
+                                    }
+
                                 }
                                 else {
                                     TVStepsAlertMsg.setVisibility(View.INVISIBLE);
@@ -699,7 +761,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     private void healthBMINotification(){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "healthnotification")
                 .setSmallIcon(R.drawable.ic_health)
-                .setContentTitle("Your BMI for these few days are not within normal range")
+                .setContentTitle("Your BMI for these three days are not within normal range")
                 .setContentText("Have a better lifestyle to revert your BMI to normal range")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
@@ -711,7 +773,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     private void healthBloodPressureNotification(){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "healthnotification")
                 .setSmallIcon(R.drawable.ic_health)
-                .setContentTitle("Your blood pressure for these few days are quite abnormal")
+                .setContentTitle("Your blood pressure for these three days are quite abnormal")
                 .setContentText("Please being alert as this is dangerous for your health")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
@@ -723,7 +785,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     private void healthBloodPulseNotification(){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "healthnotification")
                 .setSmallIcon(R.drawable.ic_health)
-                .setContentTitle("Your blood pulse for these few days are quite abnormal")
+                .setContentTitle("Your blood pulse for these three days are quite abnormal")
                 .setContentText("Please being alert as this is dangerous for your health")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
@@ -734,6 +796,10 @@ public class HealthFragment extends Fragment implements SensorEventListener {
 
     public interface HealthNotificationCallback {
         void HealthNotificationCallback(boolean[][] healthStatus);
+    }
+
+    public interface ProgressBarCallback {
+        void ProgressBarCallback(int countprogress);
     }
 }
 
