@@ -12,14 +12,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/cvHealth"
-        app:layout_constraintTop_toBottomOf="@+id/cvLessonsLearnt">
+        app:layout_constraintTop_toTopOf="@+id/cvMood"
+        app:layout_constraintVertical_weight="10">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout3"
@@ -78,7 +77,8 @@
         app:layout_constraintEnd_toStartOf="@+id/cvGoals"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cvMood">
+        app:layout_constraintTop_toBottomOf="@+id/cvMood"
+        app:layout_constraintVertical_weight="5">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -155,15 +155,17 @@
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/cvLessonsLearnt"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
+        app:layout_constraintBottom_toTopOf="@id/cvMood"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintVertical_weight="5">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -184,7 +186,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvDashboardNotifications"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -213,14 +215,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="4dp"
         app:layout_constraintBottom_toTopOf="@+id/cvHealth"
         app:layout_constraintEnd_toStartOf="@+id/cvGoals"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cvLessonsLearnt"
-        >
+        app:layout_constraintVertical_weight="5">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
