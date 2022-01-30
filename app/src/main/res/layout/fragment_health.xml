@@ -40,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NCVStepsCountNum"
-        tools:progress="90" />
+        tools:progress="0" />
 
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/NCVStepsCountNum"
