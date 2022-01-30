@@ -132,10 +132,10 @@ public class HealthFragment extends Fragment implements SensorEventListener {
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER) != null) {
             stepsCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-            Toast.makeText(getActivity(),"Has sensor detected",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(),"Has sensor detected",Toast.LENGTH_SHORT).show();
         }
         else{
-            //Toast.makeText(getActivity(),"No sensor detected",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),"No sensor detected",Toast.LENGTH_SHORT).show();
         }
 
 
@@ -395,10 +395,10 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         super.onResume();
         if (stepsCounter != null){
             sensorManager.registerListener(this, stepsCounter, SensorManager.SENSOR_DELAY_UI);
-            Toast.makeText(getActivity(),"start sensor...",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(),"start sensor...",Toast.LENGTH_SHORT).show();
         }
         else {
-            Toast.makeText(getActivity(), "no sensor to start...", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "no sensor to start...", Toast.LENGTH_SHORT).show();
         }
     }
 
