@@ -119,7 +119,7 @@ public class MoodFragment extends Fragment {
 
         notificationCalendar = Calendar.getInstance();
         notificationCalendar.set(Calendar.HOUR_OF_DAY, 21);
-        notificationCalendar.set(Calendar.MINUTE, 10);
+        notificationCalendar.set(Calendar.MINUTE, 0);
         notificationCalendar.set(Calendar.SECOND, 0);
 
         if (Calendar.getInstance().after(notificationCalendar)){
@@ -161,11 +161,14 @@ public class MoodFragment extends Fragment {
         BTNAddDiaryEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_destMood_to_destMoodNewEntry);
+                String editingDate = TVDate.getText().toString();
+                Bundle bundle = new Bundle();
+                bundle.putString("editingDate", editingDate);
+                navController.navigate(R.id.action_destMood_to_destMoodNewEntry, bundle);
             }
         });
 
-        // Editing a new entry
+        // Editing an old entry
         BTNEditDiaryEntry = view.findViewById(R.id.BTNEditDiaryEntry);
         BTNEditDiaryEntry.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -306,6 +309,7 @@ public class MoodFragment extends Fragment {
                         BTNAddDiaryEntry.setEnabled(false);
                         BTNAddDiaryEntry.setVisibility(View.GONE);
                     } else {
+                        displayedEntry = null;
                         IVMood.setImageResource(R.drawable.ic_mood_sad);
                         CGMoodDiary.clearCheck();
                         TVDiaryEntry.setText("No entry for this date. Add entry?");
@@ -314,6 +318,7 @@ public class MoodFragment extends Fragment {
                         Log.d("Steven", "No such document");
                     }
                 } else{
+                    displayedEntry = null;
                     IVMood.setBackgroundResource(R.drawable.ic_mood_happy);
                     CGMoodDiary.clearCheck();
                     TVDiaryEntry.setText("No entry for this date. Add entry?");

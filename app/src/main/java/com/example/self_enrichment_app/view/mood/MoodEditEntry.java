@@ -45,6 +45,8 @@ public class MoodEditEntry extends Fragment {
     private MoodDiaryEntry displayedEntry;
     private String userId;
 
+    private boolean newEntry;
+
     public MoodEditEntry() {
         // Required empty public constructor
     }
@@ -62,6 +64,14 @@ public class MoodEditEntry extends Fragment {
         Bundle bundle = getArguments();
         editingDate = bundle.getString("editingDate");
         displayedEntry = bundle.getParcelable("displayedEntry");
+        if (displayedEntry != null){
+            newEntry = false;
+            Log.d("steven", "onViewCreated: Not new entry");
+        } else {
+            newEntry = true;
+            Log.d("steven", "onViewCreated: New entry");
+        }
+
     }
 
     @Override
@@ -79,11 +89,13 @@ public class MoodEditEntry extends Fragment {
         userId = mAuth.getUid();
         moodDiaryViewModel = new ViewModelProvider(this).get(MoodDiaryViewModel.class);
 
+        RGEditMood = view.findViewById(R.id.RGEditMood);
         RBEditHappy = view.findViewById(R.id.RBEditHappy);
         RBEditSad = view.findViewById(R.id.RBEditSad);
         RBEditAngry = view.findViewById(R.id.RBEditAngry);
         RBEditTired = view.findViewById(R.id.RBEditTired);
 
+        CGEditMoodDiary = view.findViewById(R.id.CGEditMoodDiary);
         CHIPEditWork = view.findViewById(R.id.CHIPEditWork);
         CHIPEditFriends = view.findViewById(R.id.CHIPEditFriends);
         CHIPEditFamily = view.findViewById(R.id.CHIPEditFamily);
@@ -93,39 +105,47 @@ public class MoodEditEntry extends Fragment {
 
         ETEditDiaryEntry = view.findViewById(R.id.ETEditDiaryEntry);
 
-        String selectedMood = displayedEntry.getMood();
-        if (selectedMood.equalsIgnoreCase("happy")){
-            RBEditHappy.setChecked(true);
-        } else if (selectedMood.equalsIgnoreCase("sad")){
-            RBEditSad.setChecked(true);
-        } else if (selectedMood.equalsIgnoreCase("angry")){
-            RBEditAngry.setChecked(true);
-        } else if (selectedMood.equalsIgnoreCase("tired")){
-            RBEditTired.setChecked(true);
+        if (newEntry == false){
+            String selectedMood = displayedEntry.getMood();
+            if (selectedMood.equalsIgnoreCase("happy")){
+                RBEditHappy.setChecked(true);
+            } else if (selectedMood.equalsIgnoreCase("sad")){
+                RBEditSad.setChecked(true);
+            } else if (selectedMood.equalsIgnoreCase("angry")){
+                RBEditAngry.setChecked(true);
+            } else if (selectedMood.equalsIgnoreCase("tired")){
+                RBEditTired.setChecked(true);
+            }
+
+            List<String> selectedReasons = displayedEntry.getReasons();
+            if (selectedReasons.contains("Work"))
+                CHIPEditWork.setChecked(true);
+            if (selectedReasons.contains("Friends"))
+                CHIPEditFriends.setChecked(true);
+            if (selectedReasons.contains("Family"))
+                CHIPEditFamily.setChecked(true);
+            if (selectedReasons.contains("Health"))
+                CHIPEditHealth.setChecked(true);
+            if (selectedReasons.contains("Finance"))
+                CHIPEditFinance.setChecked(true);
+            if (selectedReasons.contains("Love"))
+                CHIPEditLove.setChecked(true);
+
+            ETEditDiaryEntry.setText(displayedEntry.getEntryDescription());
+        } else {
+            RGEditMood.clearCheck();
+            CGEditMoodDiary.clearCheck();
+            ETEditDiaryEntry.setText("What's on your mind?");
         }
-
-        List<String> selectedReasons = displayedEntry.getReasons();
-        if (selectedReasons.contains("Work"))
-            CHIPEditWork.setChecked(true);
-        if (selectedReasons.contains("Friends"))
-            CHIPEditFriends.setChecked(true);
-        if (selectedReasons.contains("Family"))
-            CHIPEditFamily.setChecked(true);
-        if (selectedReasons.contains("Health"))
-            CHIPEditHealth.setChecked(true);
-        if (selectedReasons.contains("Finance"))
-            CHIPEditFinance.setChecked(true);
-        if (selectedReasons.contains("Love"))
-            CHIPEditLove.setChecked(true);
-
-        ETEditDiaryEntry.setText(displayedEntry.getEntryDescription());
 
         // Cancel editing an entry
         BTNCancelEditDiaryEntry = view.findViewById(R.id.BTNCancelEditDiaryEntry);
         BTNCancelEditDiaryEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_destMoodEditEntry_to_destMood);
+                Bundle bundle = new Bundle();
+                bundle.putString("editingDate", editingDate);
+                navController.navigate(R.id.action_destMoodEditEntry_to_destMood, bundle);
             }
         });
 
