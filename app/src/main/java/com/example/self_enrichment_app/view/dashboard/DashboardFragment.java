@@ -1,7 +1,5 @@
 package com.example.self_enrichment_app.view.dashboard;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,24 +14,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.self_enrichment_app.R;
-import com.example.self_enrichment_app.data.model.Comment;
-import com.example.self_enrichment_app.data.model.LessonPost;
 import com.example.self_enrichment_app.data.model.LessonPostNotification;
 import com.example.self_enrichment_app.data.model.MainGoals;
 import com.example.self_enrichment_app.data.model.MoodDiaryEntry;
 import com.example.self_enrichment_app.data.model.User;
 import com.example.self_enrichment_app.view.MainActivity;
-import com.example.self_enrichment_app.view.health.HealthFragment;
-import com.example.self_enrichment_app.view.health.StepsCountBackgroundService;
-import com.example.self_enrichment_app.view.lessons.CommentsAdapter;
-import com.example.self_enrichment_app.view.lessons.LessonPostsAdapter;
 import com.example.self_enrichment_app.viewmodel.LessonsLearntViewModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,12 +36,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -157,7 +143,7 @@ public class DashboardFragment extends Fragment {
         PBDashboardStepsCount.setProgress(1);
         PBDashboardStepsCount.setProgress(0);
         Date stepstoday = Calendar.getInstance().getTime();
-        SimpleDateFormat stepsdate = new SimpleDateFormat("dd/M/yyyy");
+        SimpleDateFormat stepsdate = new SimpleDateFormat("d/M/yyyy");
         String stepstodaydate = stepsdate.format(stepstoday);
         Query stepsquery = FirebaseFirestore.getInstance().collection("HealthEntries").whereEqualTo("userId",userId).whereEqualTo("date",stepstodaydate);
         stepsquery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -166,7 +152,7 @@ public class DashboardFragment extends Fragment {
                 if (task.isSuccessful()) {
                     if (task.getResult().getDocuments().isEmpty()){
                         Log.d("TAG", "No data");
-                        Toast.makeText(getActivity(),"Empty data",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(),"Empty data",Toast.LENGTH_SHORT).show();
                         TVGoalValueDashboard.setText("0");
                         PBDashboardStepsCount.setProgress(0);
                     }
@@ -236,7 +222,7 @@ public class DashboardFragment extends Fragment {
 
     private void steps(){
         Date stepstoday = Calendar.getInstance().getTime();
-        SimpleDateFormat stepsdate = new SimpleDateFormat("dd/M/yyyy");
+        SimpleDateFormat stepsdate = new SimpleDateFormat("d/M/yyyy");
         String stepstodaydate = stepsdate.format(stepstoday);
         Query stepsquery = FirebaseFirestore.getInstance().collection("HealthEntries").whereEqualTo("userId",userId).whereEqualTo("date",stepstodaydate);
         stepsquery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -245,7 +231,7 @@ public class DashboardFragment extends Fragment {
                 if (task.isSuccessful()) {
                     if (task.getResult().getDocuments().isEmpty()){
                         Log.d("TAG", "No data");
-                        Toast.makeText(getActivity(),"Empty data",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(),"Empty data",Toast.LENGTH_SHORT).show();
                         TVGoalValueDashboard.setText("0");
                         PBDashboardStepsCount.setProgress(0);
                     }

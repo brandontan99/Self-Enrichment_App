@@ -5,7 +5,6 @@ import android.app.DatePickerDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -15,7 +14,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -23,7 +21,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +31,6 @@ import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.self_enrichment_app.data.model.HealthEntry;
 import com.example.self_enrichment_app.view.MainActivity;
 import com.example.self_enrichment_app.R;
@@ -46,16 +42,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
-
 import soup.neumorphism.NeumorphCardView;
 
-//public class HealthFragment extends Fragment  {
 public class HealthFragment extends Fragment implements SensorEventListener {
     public static boolean[][] healthStatus = {{false,false,false},{false,false,false},{false,false,false}};
     private Button BtnAddEntry, BtnCalendar;
@@ -77,31 +68,9 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         // Required empty public constructor
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-/*
-        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        if (ActivityCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED) {
-
-            // test
-            //getContext().startService(new Intent(getContext(), StepsCountBackgroundService.class));
-
-
-
-        } else {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 99);
-        }
-        if (ActivityCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
-            Toast.makeText(getActivity(),"Please allow the motion and fitness permission.",Toast.LENGTH_SHORT).show();
-        }*/
     }
 
     @Override
@@ -113,19 +82,12 @@ public class HealthFragment extends Fragment implements SensorEventListener {
 
         if (ActivityCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED) {
-
-            // test
-            //getActivity().startService(new Intent(getActivity(), StepsCountBackgroundService.class));
-
-
-
         } else {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 99);
         }
         if (ActivityCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
-            //Toast.makeText(getActivity(),"Please allow the motion and fitness permission.",Toast.LENGTH_SHORT).show();
         }
 
 
@@ -133,15 +95,10 @@ public class HealthFragment extends Fragment implements SensorEventListener {
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER) != null) {
             stepsCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-            //Toast.makeText(getActivity(),"Has sensor detected",Toast.LENGTH_SHORT).show();
         }
         else{
             Toast.makeText(getActivity(),"No sensor detected",Toast.LENGTH_SHORT).show();
         }
-
-
-
-
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_health, container, false);
     }
@@ -172,31 +129,14 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         TVStepsAlertExMark = view.findViewById(R.id.TVStepsAlertExMark);
         TVStepsAlertMsg = view.findViewById(R.id.TVStepsAlertMsg);
         PBStepsCount = view.findViewById(R.id.PBStepsCount);
-        PBStepsCount.setProgress(1);
         PBStepsCount.setProgress(0);
-        /*
-        //realtime
-        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                for (DocumentChange documentChange : documentSnapshots.getDocumentChanges())
-                {
-                    String   isAttendance =  documentChange.getDocument().getData().get("weight").toString();
-                    String  isCalender   =  documentChange.getDocument().getData().get("height").toString();
-                    String isEnablelocation = documentChange.getDocument().getData().get("pulse").toString();
-                    Log.d("TEST",isAttendance + "=====");
-                }
-            }
-        */
+
         BtnAddEntry = view.findViewById(R.id.BtnAddEntry);
         View.OnClickListener OCLAddEntry = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("date",BtnCalendar.getText().toString());
-
-                //getActivity().stopService(new Intent(getActivity(), StepsCountBackgroundService.class));
-
-
                 Navigation.findNavController(view).navigate(R.id.destHealthEntryFragment, bundle);
             }
         };
@@ -217,7 +157,6 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         BtnCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //getActivity().startService(new Intent(getActivity(), StepsCountBackgroundService.class));
                 DatePickerDialog HealthDatePicker = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
@@ -254,18 +193,13 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         // Value will change to get from Firebase
         PBStepsCount.setProgress(0);
         Query query = FirebaseFirestore.getInstance().collection("HealthEntries").whereEqualTo("userId",userId).whereEqualTo("date",newDate);
-        // not realtime
-
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     if (task.getResult().getDocuments().isEmpty()){
                         Log.d("TAG", "No data");
-                        //HealthEntry newHealthEntry = new HealthEntry(todayDate, userId, -1, -1, -1,-1,-1,0, 0);
-                        //healthEntriesViewModel.addHealthEntry(newHealthEntry);
                         setEmptyText(0);
-                        //Toast.makeText(getActivity(),"Empty data",Toast.LENGTH_SHORT).show();
                         TVStepsAlertMsg.setVisibility(View.INVISIBLE);
                         TVStepsAlertExMark.setVisibility(View.INVISIBLE);
                         PBStepsCount.setProgress(0);
@@ -302,11 +236,9 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                                     if (countprogress >= 100) {
                                         TVStepsAlertMsg.setVisibility(View.INVISIBLE);
                                         TVStepsAlertExMark.setVisibility(View.INVISIBLE);
-                                        //PBStepsCount.setDrawingCacheBackgroundColor(Color.GREEN);
                                         PBStepsCount.setProgress(100);
                                     }
                                     else if (countprogress == 0){
-                                        //PBStepsCount.setProgress(1);
                                         PBStepsCount.setProgress(0);
                                         TVStepsAlertMsg.setVisibility(View.VISIBLE);
                                         TVStepsAlertExMark.setVisibility(View.VISIBLE);
@@ -321,7 +253,6 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                                     TVStepsAlertMsg.setVisibility(View.INVISIBLE);
                                     TVStepsAlertExMark.setVisibility(View.INVISIBLE);
                                     PBStepsCount.setProgress(0);
-                                    //PBStepsCount.setProgress(1);
                                 }
                                 TVBMIValue.setText(Double.toString(BMIValue));
                                 // BMI
@@ -397,7 +328,6 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                             else {
                                 int stepsCount = Integer.parseInt(document.get("steps_count").toString());
                                 setEmptyText(stepsCount);
-                                //PBStepsCount.setProgress(1);
                                 PBStepsCount.setProgress(0);
                                 NCVBMI.setBackgroundColor(Color.WHITE);
                                 NCVSys.setBackgroundColor(Color.WHITE);
@@ -416,19 +346,15 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         super.onResume();
         if (stepsCounter != null){
             sensorManager.registerListener(this, stepsCounter, SensorManager.SENSOR_DELAY_UI);
-            //Toast.makeText(getActivity(),"start sensor...",Toast.LENGTH_SHORT).show();
         }
         else {
-            //Toast.makeText(getActivity(), "no sensor to start...", Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        // sensorManager.unregisterListener(this);
         sensorManager.unregisterListener(this, stepsCounter);
-        //Toast.makeText(getActivity(),"pause sensor.",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -452,68 +378,44 @@ public class HealthFragment extends Fragment implements SensorEventListener {
             int currentStepsCount = totalStepsCount - previousTotalStepsCount;
             previousTotalStepsCount = totalStepsCount;
             saveStepsCount();
-            //Toast.makeText(getActivity(),"Current steps " + currentStepsCount,Toast.LENGTH_SHORT).show();
-            //previousStepsCount = (int) event.values[0];
-            //TVStepsCountNum.setText(Integer.toString(stepsCount));
-            //Toast.makeText(getActivity(),"Saving data",Toast.LENGTH_SHORT).show();
             changeStepsCount(todayDate, currentStepsCount);
-            //Toast.makeText(getActivity(),"Total " + totalStepsCount + "Previous " + previousTotalStepsCount,Toast.LENGTH_SHORT).show();
         }
     }
 
-
-    public void changeStepsCount(String todayDate, int currentStepsCount) {
+    private void changeStepsCount(String todayDate, int currentStepsCount) {
         // Value will change to get from Firebase
         Query query = FirebaseFirestore.getInstance().collection("HealthEntries").whereEqualTo("userId",userId).whereEqualTo("date",todayDate);
-        // not realtime
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-
                     if (task.getResult().getDocuments().isEmpty()){
                         HealthEntry newHealthEntry = new HealthEntry(todayDate, userId, -1, -1, -1,-1,-1,0, 0);
                         healthEntriesViewModel.addHealthEntry(newHealthEntry);
-                        //previousTotalStepsCount = totalStepsCount;
-                        //saveStepsCount();
-                        //Toast.makeText(getActivity(),"Now steps " + currentStepsCount,Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(getActivity(),"Totalsss " + totalStepsCount + "Previous " + previousTotalStepsCount,Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(getContext(),"New data",Toast.LENGTH_SHORT).show();
-                        //TVStepsCountNum.setText(currentStepsCount);
-                        // 100% by default
                         String date = BtnCalendar.getText().toString();
                         if (date.equals(todayDate())){
                             setEmptyText(0);
-                            //PBStepsCount.setProgress(1);
                             PBStepsCount.setProgress(0);
                         }
                     }
                     else {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d("TAG", "Document Id: " + document.getId() + "==" + document.getData());
-                            //int newStepsCount = stepsCount + (int) document.get("steps_count");
                             int oldStepsCount = Integer.parseInt(document.get("steps_count").toString());
-                            //tempoldcount = oldStepsCount;
                             int currentCount = currentStepsCount + oldStepsCount;
-                            //Toast.makeText(getActivity(),currentStepsCount + " + " + oldStepsCount + " = " + currentCount,Toast.LENGTH_SHORT).show();
-                            //Toast.makeText(getActivity(),"Totalsss " + totalStepsCount + "Previous " + previousTotalStepsCount,Toast.LENGTH_SHORT).show();
                             healthEntriesViewModel.updateStepsCount(document.getId(), currentCount);
-                            //int newStepsCount = stepsCount;
                             String date = BtnCalendar.getText().toString();
                             if (date.equals(todayDate())){
                                 TVStepsCountNum.setText(Integer.toString(currentCount));
                                 double stepscountnum = currentCount;
                                 double goalvalue = Integer.parseInt(document.get("steps_goal").toString());
-
                                 if (goalvalue > 0) {
                                     int countprogress = (int) ((stepscountnum / goalvalue) * 100);
                                     if (countprogress >= 100) {
                                         Log.d("PROGRESS", "PERCENTAGE" + countprogress);
-                                        //PBStepsCount.setProgress(1);
                                         PBStepsCount.setProgress(100);
                                         TVStepsAlertMsg.setVisibility(View.INVISIBLE);
                                         TVStepsAlertExMark.setVisibility(View.INVISIBLE);
-                                        //PBStepsCount.setDrawingCacheBackgroundColor(Color.GREEN);
                                     }
                                     else if (countprogress == 0){
                                         PBStepsCount.setProgress(0);
@@ -532,7 +434,6 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                                     TVStepsAlertMsg.setVisibility(View.INVISIBLE);
                                     TVStepsAlertExMark.setVisibility(View.INVISIBLE);
                                     PBStepsCount.setProgress(0);
-                                    //PBStepsCount.setProgress(1);
                                 }
                             }
                         }
@@ -542,7 +443,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
         });
     }
 
-    public void setEmptyText(int stepsCount) {
+    private void setEmptyText(int stepsCount) {
         TVWeightValue.setText("-");
         TVHeightValue.setText("-");
         TVBMIValue.setText("-");
@@ -576,8 +477,6 @@ public class HealthFragment extends Fragment implements SensorEventListener {
                     if (!todayTask.getResult().getDocuments().isEmpty()){
                         for (QueryDocumentSnapshot todayDocument : todayTask.getResult()) {
                             if (Integer.parseInt(todayDocument.get("weight").toString()) > -1){
-                                //Log.d("TEXT","Dayb4yesterday:" + healthStatus[0][0] + healthStatus[0][1] + healthStatus[0][2]);
-                                //Toast.makeText(getActivity(),"Dayb4yesterday:" + healthStatus[0][0] + healthStatus[0][1] + healthStatus[0][2],Toast.LENGTH_SHORT).show();
                                 healthStatus(todayDocument, healthStatus, 0);
                             }
                             Query yesterdayQuery = FirebaseFirestore.getInstance().collection("HealthEntries")
@@ -683,7 +582,7 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     private String todayDate(){
         final Calendar today = Calendar.getInstance();
         today.add(Calendar.DATE, 0);
-        DateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
         String todayDate = dateFormat.format(today.getTime());
         return todayDate;
     }
@@ -691,15 +590,15 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     private String yesterdayDate(){
         final Calendar yesterday = Calendar.getInstance();
         yesterday.add(Calendar.DATE, -1);
-        DateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
         String yesterdayDate = dateFormat.format(yesterday.getTime());
         return yesterdayDate;
     }
 
     private String dayBeforeYesterdayDate(){
         final Calendar daybeforeyesterday = Calendar.getInstance();
-        daybeforeyesterday.add(Calendar.DATE, -2);
-        DateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
+        daybeforeyesterday.add(Calendar.DATE, -3);
+        DateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
         String daybeforeyesterdayDate = dateFormat.format(daybeforeyesterday.getTime());
         return daybeforeyesterdayDate;
     }
@@ -767,16 +666,4 @@ public class HealthFragment extends Fragment implements SensorEventListener {
     public interface HealthNotificationCallback {
         void HealthNotificationCallback(boolean[][] healthStatus);
     }
-
-
 }
-
-// Reference:
-// https://www.youtube.com/watch?v=WSx2a99kPY4&t=140s&ab_channel=CodePalace
-// https://www.youtube.com/watch?v=NnvJylicKvE&ab_channel=SarthiTechnology
-// https://stackoverflow.com/questions/59954588/how-to-implement-step-counter-in-android-studio-if-pedometer-sensor-not-availabl
-// https://www.youtube.com/watch?v=YsHHXg1vbcc&ab_channel=CodinginFlow
-// https://www.youtube.com/watch?v=3uVoU9-VzD4&ab_channel=LemubitAcademy
-//
-//https://www.youtube.com/watch?v=Y73r1Q7RZwM&ab_channel=LemubitAcademy
-//https://stackoverflow.com/questions/50109885/firestore-how-can-read-data-from-outside-void-oncomplete-methods

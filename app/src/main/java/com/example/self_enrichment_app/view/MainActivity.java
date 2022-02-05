@@ -3,14 +3,11 @@ package com.example.self_enrichment_app.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.self_enrichment_app.R;
 import com.example.self_enrichment_app.data.model.User;
-import com.example.self_enrichment_app.view.general.EditProfileActivity;
 import com.example.self_enrichment_app.view.general.ProfileActivity;
-import com.example.self_enrichment_app.view.health.StepsCountBackgroundService;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import de.hdodenhof.circleimageview.CircleImageView;
