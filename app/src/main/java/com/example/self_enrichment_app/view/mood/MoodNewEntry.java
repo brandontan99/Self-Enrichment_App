@@ -39,6 +39,7 @@ public class MoodNewEntry extends Fragment {
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private EditText ETDiaryEntry;
+    private String editingDate;
     private NavController navController;
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
@@ -51,14 +52,16 @@ public class MoodNewEntry extends Fragment {
 
     public static MoodNewEntry newInstance(String param1, String param2) {
         MoodNewEntry fragment = new MoodNewEntry();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+//        Bundle args = new Bundle();
+//        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        editingDate = bundle.getString("editingDate");
     }
 
     @Override
@@ -81,7 +84,10 @@ public class MoodNewEntry extends Fragment {
         BTNCancelAddDiaryEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_destMoodNewEntry_to_destMood);
+                Bundle bundle = new Bundle();
+                bundle.putString("editingDate", editingDate);
+                navController.navigate(R.id.action_destMoodNewEntry_to_destMood, bundle);
+//                navController.navigate(R.id.action_destMoodNewEntry_to_destMood);
             }
         });
 
@@ -109,16 +115,16 @@ public class MoodNewEntry extends Fragment {
                 String entryDescription = ETDiaryEntry.getText().toString();
 
                 // Uploading all this data into the database
-                Date currentDate = Calendar.getInstance().getTime();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-                String date = dateFormat.format(currentDate);
-                MoodDiaryEntry newEntry = new MoodDiaryEntry(mood, reasons, entryDescription, userId, date);
+//                Date currentDate = Calendar.getInstance().getTime();
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+//                String date = dateFormat.format(currentDate);
+                MoodDiaryEntry newEntry = new MoodDiaryEntry(mood, reasons, entryDescription, userId, editingDate);
                 moodDiaryViewModel.addNewMoodDiaryEntry(newEntry);
 
                 // Navigating back to the mood diary main page
                 Toast.makeText(getContext(), "Added new entry!", Toast.LENGTH_SHORT).show();
                 Bundle bundle = new Bundle();
-                bundle.putString("editingDate", date);
+                bundle.putString("editingDate", editingDate);
                 navController.navigate(R.id.action_destMoodNewEntry_to_destMood, bundle);
             }
         });
