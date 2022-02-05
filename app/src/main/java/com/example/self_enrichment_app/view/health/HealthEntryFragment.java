@@ -1,6 +1,5 @@
 package com.example.self_enrichment_app.view.health;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,8 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.appcompat.widget.AppCompatImageButton;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.self_enrichment_app.R;
 import com.example.self_enrichment_app.data.model.HealthEntry;
@@ -29,8 +26,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.concurrent.TimeUnit;
 
 public class HealthEntryFragment extends Fragment {
 
@@ -155,14 +150,11 @@ public class HealthEntryFragment extends Fragment {
                                 HealthEntry healthEntry = new HealthEntry(date, userId, newWeight, newHeight,
                                         newSys, newDia, newPulse, 0, newStepsGoal);
                                 healthEntriesViewModel.addHealthEntry(healthEntry);
-                                //HealthFragment healthFragment = new HealthFragment();
-                                //healthFragment.searchEntry(date);
                                 Navigation.findNavController(view).navigate(R.id.destHealth, bundle);
                             }
                             else{
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     Log.d("TAG", "Document Id: " + document.getId() + "==" + document.getData());
-                                    //int stepscount = Integer.parseInt(document.get("steps_count").toString());
                                     healthEntriesViewModel.updateHealthEntry(document.getId(), newWeight, newHeight, newSys, newDia,
                                         newPulse, newStepsGoal);
                                     Navigation.findNavController(view).navigate(R.id.destHealth, bundle);
@@ -171,14 +163,6 @@ public class HealthEntryFragment extends Fragment {
                         }
                     }
                 });
-                // wait for database updated
-                /*
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }*/
-                //Navigation.findNavController(view).navigate(R.id.destHealth, bundle);
             }
         };
         BtnSubmitHealthEntry.setOnClickListener(OCLSubmitHealthEntry);
@@ -196,9 +180,5 @@ public class HealthEntryFragment extends Fragment {
         } catch (NumberFormatException e) {
             return false;
         }
-    }
-
-    public interface UpdateHealthEntryCallback {
-        void UpdateHealthEntryCallback();
     }
 }

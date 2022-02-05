@@ -60,7 +60,6 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"
             />
-        <service android:name=".view.health.StepsCountBackgroundService"/>
     </application>
 
 </manifest>
